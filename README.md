@@ -5,7 +5,7 @@
 That's very easy. Instuction tested on Debian 10.
 1) First, twitter23 uses php7.3, so install require dependences:
 ```bash
-sudo apt install php php-pdo pdo-mysql php-xml php-gd php-tokenizer
+sudo apt install php php-pdo php-mysql php-xml php-gd php-tokenizer
 sudo apt install php-curl php-zip php-yaml composer git mariadb-server
 ```
 2) Clone repository and move folders from /src directory to root directory. Install requirements
