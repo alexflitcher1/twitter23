@@ -20,7 +20,7 @@ class Signup extends Model
         return [
             [['username', 'password', 'repass', 'email',
              'name', 'gender', 'language'], 
-             'required', 'message' => 'Заполните поле'],
+             'required', 'message' => ''],
             ['repass', 'compare', 'compareAttribute' => 'password',
              'message' => 'Пароли не совпадают'],
             ['username', 'unique', 'targetClass' => User::className(),

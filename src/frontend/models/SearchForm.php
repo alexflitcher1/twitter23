@@ -15,7 +15,7 @@ class SearchForm extends Model
     public function rules()
     {
         return [
-            [['text'], 'required', 'message' => 'Заполните поле'],
+            [['text'], 'required', 'message' => ''],
         ];
     }
 

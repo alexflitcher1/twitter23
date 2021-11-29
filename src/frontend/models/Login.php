@@ -18,7 +18,7 @@ class Login extends Model
     public function rules() 
     {
         return [
-            [['username', 'password'], 'required', 'message' => 'Заполните поле'],
+            [['username', 'password'], 'required', 'message' => ''],
             ['username', 'exist', 'targetClass' => User::className(),
             'message' => 'Пользователя не существует'],
         ];

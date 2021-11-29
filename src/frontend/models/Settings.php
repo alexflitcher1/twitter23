@@ -17,7 +17,7 @@ class Settings extends Model
     public function rules()
     {
         return [ 
-            [['gender', 'name'], 'required', 'message' => 'Заполните поле'],
+            [['gender', 'name'], 'required', 'message' => ''],
             [['telegram', 'city', 'site', 'about', 'username'], 'string'],
             [['img'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
         ];
