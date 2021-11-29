@@ -40,7 +40,7 @@ class SearchController extends Controller
         if (!$cookies->get("auth"))
             return $this->redirect("/login");
         $cookie = $cookies->get('auth');
-        $offset = 10;
+        $offset = 50;
         $username = $cookie->value;
         $user  = User::findOne(['username' => htmlentities($username)]);
         $suber = count(Friends::find()
