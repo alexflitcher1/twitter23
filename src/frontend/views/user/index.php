@@ -232,7 +232,7 @@ $this->title = "Профиль";
 						<a href="/notifications">
 							<div class="page_menu_nav_link">Уведомления</div>
 						</a>
-						<a href="#">
+						<a href="/settings-profile">
 							<div class="page_menu_nav_link">Редактировать</div>
 						</a>
 					</div>
