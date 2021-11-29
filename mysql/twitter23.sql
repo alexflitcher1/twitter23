@@ -153,7 +153,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `img` varchar(255) DEFAULT 'default.png',
-  `username` varchar(255) NOT NULL,
+  `username` varchar(127) NOT NULL,
   `password` varchar(255) NOT NULL,
   `language` enum('russian','english') DEFAULT NULL,
   `gender` enum('man','woman','other') DEFAULT 'man',
@@ -163,7 +163,7 @@ CREATE TABLE `user` (
   `telegram` varchar(255) DEFAULT NULL,
   `status` enum('user','admin','helper','ban') DEFAULT 'user',
   `regdate` datetime DEFAULT NULL,
-  `email` varchar(255) NOT NULL,
+  `email` varchar(127) NOT NULL,
   `name` varchar(255) NOT NULL,
   `bgimage` varchar(255) DEFAULT 'defaultbg.png',
   PRIMARY KEY (`id`,`username`,`email`),

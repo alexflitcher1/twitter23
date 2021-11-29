@@ -52,7 +52,7 @@ $this->title = "Авторизация";
                     </div>
                 </div>
                 <div class="page_body_login_right_bt">
-                    <?=Html::submitButton('Регистрация', ['class' => 'btn btn-success'])?>
+                    <?=Html::submitButton('Войти', ['class' => 'btn btn-success'])?>
                 </div>
             </div>
         <?php ActiveForm::end(); ?>
