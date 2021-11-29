@@ -19,6 +19,7 @@ Thumbs.db
 
 # composer vendor dir
 /src/vendor
+/vendor
 
 # composer itself is not needed
 composer.phar
@@ -41,4 +42,3 @@ phpunit.phar
 /src/backend/web/index.php
 /src/backend/web/index-test.php
 /src/backend/web/robots.txt
-/src/frontend/uploads/*

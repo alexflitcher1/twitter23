@@ -74,7 +74,7 @@
 				<div class="page_menu_bio">
 					<div class="page_menu_bio_str">
 						<span class="page_menu_bio_str_name">О себе</span>
-						 Люблю какать
+						 
 					</div>
 					<div class="page_menu_bio_str">
 						<span class="page_menu_bio_str_name">Пол</span>

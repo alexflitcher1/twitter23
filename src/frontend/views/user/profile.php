@@ -197,7 +197,7 @@ $this->title = $user->username;
 					</div>
 					<div class="page_menu_bio_str">
 						<span class="page_menu_bio_str_name">Дата Регистрации</span>
-						<?=Html::encode($user->regdate)?>
+						<?=Html::encode(date("d.m.Y", strtotime($user->regdate)))?>
 					</div>
 				</div>
 				<div class="fl_menu">
