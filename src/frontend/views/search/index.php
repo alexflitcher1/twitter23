@@ -50,7 +50,7 @@ $this->title = "Поиск";
 							<div class="post_content_name">
 								<?=Html::encode($users[$i]->name)?>
 								<a href="/profile?id=<?=Html::encode($users[$i]->username)?>">
-									<?=Html::encode($users[$i]->username)?>
+									@<?=Html::encode($users[$i]->username)?>
 								</a>
 							</div>
 							<div class="post_content_data">
@@ -85,7 +85,7 @@ $this->title = "Поиск";
 								<div class="post_content_name">
 									<?=Html::encode($posts[$i]['authordata']->name)?>
 									<a href="/profile?id=<?=Html::encode($posts[$i]['authordata']->username)?>">
-										<?=Html::encode($posts[$i]['authordata']->username)?>
+										@<?=Html::encode($posts[$i]['authordata']->username)?>
 									</a>
 								</div>
 								<div class="post_content_data">
@@ -123,7 +123,7 @@ $this->title = "Поиск";
 									<div class="post_content_name">
 										<?=Html::encode($posts[$i]['authordata']->name)?>
 										<a href="/profile?id=<?=Html::encode($posts[$i]['authordata']->username)?>">
-											<?=Html::encode($posts[$i]['authordata']->username)?>
+											@<?=Html::encode($posts[$i]['authordata']->username)?>
 										</a>
 									</div>
 									<div class="post_content_data">
@@ -161,7 +161,7 @@ $this->title = "Поиск";
 											<div class="post_content_name">
 												<?=Html::encode($repliers[$i][$j]->name)?> 
 												<a href="/profile?id=<?=Html::encode($repliers[$i][$j]->username)?>">
-													<?=Html::encode($repliers[$i][$j]->username)?>
+													@<?=Html::encode($repliers[$i][$j]->username)?>
 												</a>
 											</div>
 											<div class="post_content_data">
@@ -169,7 +169,7 @@ $this->title = "Поиск";
 											</div>
 											<div class="post_content_text">
 												<a href="#">
-													<?=Html::encode($posts[$i]['authordata']->username)?>
+													@<?=Html::encode($posts[$i]['authordata']->username)?>
 												</a> 
 												<?=Html::encode($posts[$i]['replies'][$j]->text)?>
 											</div>
@@ -225,7 +225,7 @@ $this->title = "Поиск";
 					<img src="/<?=Html::encode($user->img)?>" class="profile_names_ava">
 				</div>
 				<div class="profile_names_right">
-					<div class="profile_names_username"><?=Html::encode($user->username)?></div>
+					<div class="profile_names_username">@<?=Html::encode($user->username)?></div>
 					<div class="profile_names_name"><?=Html::encode($user->name)?></div>
 				</div>
 			</div>

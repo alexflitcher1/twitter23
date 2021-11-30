@@ -36,7 +36,7 @@ $this->title = "Профиль";
 							<div class="post_content_name">
 								<?=Html::encode($user->name)?>
 								<a href="/profile?id=<?=Html::encode($user->username)?>">
-									<?=Html::encode($user->username)?>
+									@<?=Html::encode($user->username)?>
 								</a>
 							</div>
 							<div class="post_content_data">
@@ -80,7 +80,7 @@ $this->title = "Профиль";
 									<div class="post_content_name">
 										<?=Html::encode($user->name)?>
 										<a href="/profile?id=<?=Html::encode($user->username)?>">
-											<?=Html::encode($user->username)?>
+											@<?=Html::encode($user->username)?>
 										</a>
 									</div>
 									<div class="post_content_data">
@@ -122,14 +122,14 @@ $this->title = "Профиль";
 											<div class="post_content_name">
 												<?=Html::encode($repliers[$i][$j]->name)?>
 												<a href="/profile?id=<?=Html::encode($repliers[$i][$j]->username)?>">
-													<?=Html::encode($repliers[$i][$j]->username)?>
+													@<?=Html::encode($repliers[$i][$j]->username)?>
 												</a>
 											</div>
 											<div class="post_content_data">
 												<?=Html::encode($posts[$i]['replies'][$j]->date)?>
 											</div>
 											<div class="post_content_text">
-												<a href="#"><?=Html::encode($user->username)?></a>
+												<a href="#">@<?=Html::encode($user->username)?></a>
 												<?=Html::encode($posts[$i]['replies'][$j]->text)?>
 											</div>
 											<?php if ($posts[$i]['replies'][$j]->img != null): ?>
@@ -171,7 +171,7 @@ $this->title = "Профиль";
 						</div>
 						<div class="profile_names_right">
 							<div class="profile_names_username">
-								<?=Html::encode($user->username)?>
+								@<?=Html::encode($user->username)?>
 							</div>
 							<div class="profile_names_name">
 								<?=Html::encode($user->name)?>
