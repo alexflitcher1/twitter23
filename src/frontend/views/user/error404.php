@@ -20,7 +20,7 @@ $this->title = "Упсс...";
                     <div class="post_content_name">
                     <?=Html::encode($randpost['authordata']->name)?> 
                     <a href="/profile?id=<?=Html::encode($randpost['authordata']->username)?>">
-                        <?=Html::encode($randpost['authordata']->username)?>
+                        @<?=Html::encode($randpost['authordata']->username)?>
                     </a>
                     </div>
                     <div class="post_content_data">
@@ -53,7 +53,7 @@ $this->title = "Упсс...";
 				</div>
 			    <div class="profile_names_right">
     				<div class="profile_names_username">
-	    				<?=Html::encode($user->username)?>
+	    				@<?=Html::encode($user->username)?>
 		    		</div>
 			    	<div class="profile_names_name">
 						<?=Html::encode($user->name)?>
