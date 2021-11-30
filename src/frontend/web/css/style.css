@@ -637,3 +637,6 @@ span {
 	display: inline-block;
 	flex-grow: 1;
 }
+.newpost_feed {
+	margin-bottom: 2%;
+}

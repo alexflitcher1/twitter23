@@ -5,6 +5,21 @@ $this->title = "Лента";
 ?>
 <div class="page_body">
 	<div class="page_content">
+		<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
+				<div class="newpost_feed">
+					<div class="newpost_textarea">
+						<?=$form->field($model, 'text')->textarea(['rows' => 10, 'placeholder' => "Что нового?"])?>
+					</div>
+					<div class="newpost_bts">
+						<div class="newpost_tw">
+							<a href="#"><?=$form->field($model, 'img')->fileInput()?></a>
+						</div>
+						<div class="newpost_bt">
+							<button>Опубликовать</button>
+						</div>
+					</div>
+				</div>
+		<?php ActiveForm::end() ?>
 		<?php if (count($posts)): ?>
 			<div class="pagination">
 				<div class="left">
