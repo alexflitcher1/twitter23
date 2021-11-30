@@ -11,7 +11,7 @@ use yii\base\Model;
  */
 class Settings extends Model 
 {
-    public $gender, $about, $city, $site;
+    public $gender, $about, $city, $site, $bgimage;
     public $name, $telegram, $img, $username;
 
     public function rules()
@@ -19,7 +19,7 @@ class Settings extends Model
         return [ 
             [['gender', 'name'], 'required', 'message' => ''],
             [['telegram', 'city', 'site', 'about', 'username'], 'string'],
-            [['img'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+            [['img', 'bgimage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, gif, webp'],
         ];
     }
 
@@ -31,8 +31,29 @@ class Settings extends Model
                 for ($i = 0; $i < 10; $i++) {
                     $rand .= rand(0, 100);
                 }
-                $this->img->saveAs('uploads/' . time() . $rand . '.' . $this->img->extension);
-                return 'uploads/' . time() . $rand . '.' . $this->img->extension;
+                $img = 'uploads/' . time() . $rand . '.' . $this->img->extension;
+                $this->img->saveAs($img);
+                $this->img = null;
+                return $img;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function uploadBg()
+    {
+        if ($this->validate()) {
+            if (isset($this->bgimage->baseName)) { 
+                $rand = "";
+                for ($i = 0; $i < 10; $i++) {
+                    $rand .= rand(0, 100);
+                }
+                $img = 'bg/' . time() . $rand . '.' . $this->bgimage->extension;
+                $this->bgimage->saveAs($img);
+                $this->bgimage = null;
+                return $img;
             }
             return true;
         } else {
@@ -51,6 +72,7 @@ class Settings extends Model
             'telegram' => '',
             'img' => '',
             'username' => '',
+            'bgimage' => '',
         ];
     }
 }

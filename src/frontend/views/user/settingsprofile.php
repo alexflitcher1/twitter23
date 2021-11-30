@@ -87,6 +87,18 @@ $this->title = "Ваши настройки";
 					</div>
 				</div>
 			</div>
+			<div class="set_str">
+				<div class="set_name">
+					Фон
+				</div>
+				<div class="set_input">
+					<div class="set_bt_input">
+						<a href="#">
+							<?=$form->field($model, 'bgimage')->fileInput()?>
+						</a>
+					</div>
+				</div>
+			</div>
 			<div class="set_bt">
 				<button>Сохранить</button>
 			</div>

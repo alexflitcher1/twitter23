@@ -20,7 +20,7 @@ class PostForm extends Model
     {
         return [
             [['text'], 'required', 'message' => ''],
-            [['img'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+            [['img'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, gif, webp'],
         ];
     }
     

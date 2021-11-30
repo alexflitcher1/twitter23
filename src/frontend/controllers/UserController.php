@@ -364,6 +364,8 @@ class UserController extends Controller
         if ($model->load(Yii::$app->request->post()) 
         && $model->validate()) {
             $model->img = UploadedFile::getInstance($model, 'img');
+            $model->bgimage = UploadedFile::getInstance($model, 'bgimage');
+            $imgname2 = $model->uploadBg();
             $imgname = $model->upload();
             $error = null;
             if ($imgname) {
@@ -383,6 +385,7 @@ class UserController extends Controller
                 $user->name         = htmlentities($model->name);
                 $user->telegram     = htmlentities($model->telegram);
                 $user->img          = ($imgname === true) ? $user->img : $imgname;
+                $user->bgimage          = ($imgname2 === true) ? $user->bgimage : $imgname2;
                 if ($user->save()) {
                     $cookies = Yii::$app->response->cookies;
                     $cookies->add(new \yii\web\Cookie([
