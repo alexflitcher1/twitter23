@@ -180,8 +180,10 @@ $this->title = "Профиль";
 					</div>
 					<div class="page_menu_bio">
 						<div class="page_menu_bio_str">
-							<span class="page_menu_bio_str_name">О себе</span>
-							<?=Html::encode($user->about)?>
+							<?php if (strlen($user->about)): ?>
+								<span class="page_menu_bio_str_name">О себе</span>
+								<?=Html::encode($user->about)?>
+							<?php endif; ?>
 						</div>
 						<div class="page_menu_bio_str">
 							<span class="page_menu_bio_str_name">Пол</span>
@@ -194,20 +196,26 @@ $this->title = "Профиль";
 							<?php endif; ?>
 						</div>
 						<div class="page_menu_bio_str">
-							<span class="page_menu_bio_str_name">Город</span>
-							<?=Html::encode($user->city)?>
+							<?php if (strlen($user->city)): ?>
+								<span class="page_menu_bio_str_name">Город</span>
+								<?=Html::encode($user->city)?>
+							<?php endif; ?>
 						</div>
 						<div class="page_menu_bio_str">
-							<span class="page_menu_bio_str_name">Сайт</span>
-							<a href="<?=Html::encode($user->site)?>">
-								<?=Html::encode($user->site)?>
-							</a>
+							<?php if (strlen($user->site)): ?>
+								<span class="page_menu_bio_str_name">Сайт</span>
+								<a href="<?=Html::encode($user->site)?>">
+									<?=Html::encode($user->site)?>
+								</a>
+							<?php endif; ?>
 						</div>
 						<div class="page_menu_bio_str">
-							<span class="page_menu_bio_str_name">Telegram</span>
-							<a href="https://t.me/<?=Html::encode($user->telegram)?>">
-								<?=Html::encode($user->telegram)?>
-							</a>
+							<?php if (strlen($user->telegram)): ?>
+								<span class="page_menu_bio_str_name">Telegram</span>
+								<a href="https://t.me/<?=Html::encode($user->telegram)?>">
+									<?=Html::encode($user->telegram)?>
+								</a>
+							<?php endif; ?>
 						</div>
 						<div class="page_menu_bio_str">
 							<span class="page_menu_bio_str_name">Дата Регистрации</span>
