@@ -27,7 +27,7 @@ $this->title = "Упсс...";
                         <?=Html::encode($randpost['date'])?>
                     </div>
                     <div class="post_content_text">
-                        <?=Html::encode($randpost['text'])?>
+                        <?=$randpost['text']?>
                     </div>
                     <div class="post_content_nav">
                         <div class="post_content_nav_left">

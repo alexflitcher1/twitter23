@@ -41,7 +41,7 @@ $this->title = $user->username;
 								<?=Html::encode($posts[$i]['date'])?>
 							</div>
 							<div class="post_content_text">
-								<?=Html::encode($posts[$i]['text'])?>
+								<?=$posts[$i]['text']?>
 							</div>
 							<?php if ($posts[$i]['img']): ?>
 								<div class="post_content_img">
@@ -79,7 +79,7 @@ $this->title = $user->username;
 									<?=Html::encode($posts[$i]['date'])?>
 								</div>
 								<div class="post_content_text">
-									<?=Html::encode($posts[$i]['text'])?>
+									<?=$posts[$i]['text']?>
 								</div>
 								<?php if ($posts[$i]['img']): ?>
 									<div class="post_content_img">
@@ -120,7 +120,7 @@ $this->title = $user->username;
 											<a href="#">
 												@<?=Html::encode($user->username)?>
 											</a>
-											<?=Html::encode($posts[$i]['replies'][$j]->text)?>
+											<?=$posts[$i]['replies'][$j]->text?>
 										</div>
 										<?php if ($posts[$i]['replies'][$j]->img != null): ?>
 											<div class="post_content_img">

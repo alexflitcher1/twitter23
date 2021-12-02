@@ -110,6 +110,7 @@ class PostsController extends Controller
                     $npost->userid = htmlentities($user->id);
                     $npost->date = date('Y-m-d H:i:s', time());
                     $npost->text = htmlentities($model->text);
+                    $npost->text = str_replace("\n", "<br>", $model->text);
                     $imgname = ($imgname === true) ? null : "/" . $imgname;
                     $npost->img = $imgname;
                     $npost->likes = 0;

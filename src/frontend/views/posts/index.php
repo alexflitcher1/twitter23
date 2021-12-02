@@ -48,7 +48,7 @@ $this->title = "Лента";
 								<?=Html::encode($posts[$i]['date'])?>
 							</div>
 							<div class="post_content_text">
-								<?=Html::encode($posts[$i]['text'])?>
+								<?=$posts[$i]['text']?>
 							</div>
 							<?php if ($posts[$i]['img']): ?>
 								<div class="post_content_img">
@@ -81,7 +81,7 @@ $this->title = "Лента";
 									<?=Html::encode($posts[$i]['date'])?>
 								</div>
 								<div class="post_content_text">
-									<?=Html::encode($posts[$i]['text'])?>
+									<?=$posts[$i]['text']?>
 								</div>
 								<?php if ($posts[$i]['img']): ?>
 									<div class="post_content_img">
@@ -116,7 +116,7 @@ $this->title = "Лента";
 											<?=Html::encode($posts[$i]['replies'][$j]->date)?>
 										</div>
 										<div class="post_content_text">
-											<a href="#">@<?=Html::encode($posts[$i]['authordata']->username)?></a> <?=Html::encode($posts[$i]['replies'][$j]->text)?>
+											<a href="#">@<?=Html::encode($posts[$i]['authordata']->username)?></a> <?=$posts[$i]['replies'][$j]->text?>
 										</div>
 										<?php if ($posts[$i]['replies'][$j]->img != null): ?>
 											<div class="post_content_img">
