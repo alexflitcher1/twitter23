@@ -272,4 +272,43 @@ class PostsController extends Controller
         return $this->render('edit', ['model' => $model, 'user' => $user,
                                       'post' => $post]);
     }
+
+    public function actionLoadMore($offset, $limit, $p)
+    {
+        $cookies = Yii::$app->request->cookies;
+        if (!$cookies->get("auth"))
+            return $this->redirect("/login");
+        $this->layout = "none";
+        $username = $cookies->get("auth")->value;
+        $user  = User::findOne(['username' => htmlentities($username)]);
+        $posts = Posts::find()
+                            ->where(['replyid' => '0'])
+                            ->orderBy(['date' => SORT_DESC])
+                            ->limit($limit)
+                            ->offset($p*$offset)
+                            ->all();
+        $post  = [];
+        for ($i = 0; $i < count($posts); $i++)
+        {
+            // get author post data
+            $posts[$i]['authordata'] = User::findOne(['id' => $posts[$i]['userid']]);
+        }
+        $replier = [];
+        for ($i = 0; $i < count($posts); $i++)
+        {
+            // find all notes where replyid = postid
+            $replies = Posts::find()->where(['replyid' => $posts[$i]['id']])->all();
+            if (count($replies)) {
+                $posts[$i]['replies'] = $replies;
+                for ($j = 0; $j < count($replies); $j++)
+                {
+                    // find reply author
+                    $replier[$i][$j] = User::findOne(['id' => $posts[$i]['replies'][$j]['userid']]);
+                }
+            }
+        }
+        return $this->render('load-more', ['user' => $user,
+        'repliers' => $replier,
+        'posts' => $posts, 'page' => $p]);
+    }
 }

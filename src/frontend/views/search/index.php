@@ -22,23 +22,6 @@ $this->title = "Поиск";
 				</div>
 			</div>
 		<?php ActiveForm::end(); ?>
-		<?php if (count($posts) || count($users)): ?>
-			<div class="pagination">
-				<div class="left">
-					<a href="/search?p=<?=Html::encode(intval($page)-1)?>&search=<?=Html::encode($search)?>&mode=<?=Html::encode($mode)?>">
-						<<<?=Html::encode(intval($page)-1)?>
-					</a>
-				</div>
-				<div class="center">
-					Страница <?=Html::encode($page)?>
-				</div>
-				<div class="right">
-					<a href="/search?p=<?=Html::encode(intval($page)+1)?>&search=<?=Html::encode($search)?>&mode=<?=Html::encode($mode)?>">
-						<?=Html::encode(intval($page)+1)?>>>
-					</a>
-				</div>
-			</div>
-		<?php endif; ?>
 		<div class="posts">
 			<?php if (($mode == 1 || $mode == 0) && $page == 0 && isset($users) && count($users)): ?>
 				<?php for ($i = 0; $i < count($users); $i++): ?>
@@ -69,7 +52,7 @@ $this->title = "Поиск";
 				<?php if ($mode == 0): ?>
 					<div class="showmore">
 						<a href="/search?search=<?=Html::encode($search)?>&mode=1">
-							<button>Показать ещё</button>
+							<button class='.load_more'>Показать ещё</button>
 						</a>
 					</div>
 				<?php endif; ?>
@@ -202,21 +185,9 @@ $this->title = "Поиск";
 							</div>
 						<?php endif; ?>
 					<?php endfor; ?>
-					<div class="pagination">
-						<div class="left">
-							<a href="/search?p=<?=Html::encode(intval($page)-1)?>&search=<?=Html::encode($search)?>&mode=<?=Html::encode($mode)?>">
-								<<<?=Html::encode(intval($page)-1)?>
-							</a>
-						</div>
-						<div class="center">
-							Страница <?=Html::encode($page)?>
-						</div>
-						<div class="right">
-							<a href="/search?p=<?=Html::encode(intval($page)+1)?>&search=<?=Html::encode($search)?>&mode=<?=Html::encode($mode)?>">
-								<?=Html::encode(intval($page)+1)?>>>
-							</a>
-						</div>
-					</div>
+				</div>
+				<div class="pagination">
+					<div class="center"><button class="load_more">Показать ещё</button></div>
 				</div>
 			</div>
 			<div class="page_menu"><div class="page_menu_sticky">
@@ -284,9 +255,10 @@ $this->title = "Поиск";
 </div>
 <?php
 $js = <<<JS
-$('.like').click(function(e) {
+var p = 1;
+$('.posts').on('click', '.like', function(e) {
 	var postid = $(this).attr("data-id")
-	var it = this
+	var it = e.target;
 	$.ajax({
 		method: 'GET', 
 		url: '/posts/like?id=' + postid,
@@ -296,15 +268,34 @@ $('.like').click(function(e) {
 		console.log(it.innerHTML.match(/\d+/g))
 	});
 });
-$('.delete').click(function(e) {
+$('.posts').on('click', '.delete', function(e) {
 	var postid = $(this).attr("data-id")
-	var it = this
+	var it = e.target;
 	$.ajax({
 		method: 'GET', 
 		url: '/posts/delete?id=' + postid,
 	}).done(function(data) {
 		location.reload();
 	});
+});
+$('body').on('click', '.load_more', function(e) {
+	if ($mode == 0 || $mode == 2) {
+		$.ajax({
+			method: 'GET',
+			url: '/search/search-more?offset=50&limit=50&search=$search&p=' + p,
+		}).done(function(data) {
+			p += 1;
+			$('.posts').append(data);
+		});
+	} else if ($mode == 1) {
+		$.ajax({
+			method: 'GET',
+			url: '/search/search-users?offset=50&limit=50&search=$search&p=' + p,
+		}).done(function(data) {
+			p += 1;
+			$('.posts').append(data);
+		});
+	}
 });
 JS;
 $this->registerJs($js);

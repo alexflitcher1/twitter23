@@ -20,19 +20,6 @@ $this->title = "Лента";
 					</div>
 				</div>
 		<?php ActiveForm::end() ?>
-		<?php if (count($posts)): ?>
-			<div class="pagination">
-				<div class="left">
-					<a href="/feed?p=<?=Html::encode(intval($page)-1)?>"><<<?=Html::encode(intval($page)-1)?></a>
-				</div>
-				<div class="center">
-					Страница <?=Html::encode($page)?>
-				</div>
-				<div class="right">
-					<a href="/feed?p=<?=Html::encode(intval($page)+1)?>"><?=Html::encode(intval($page)+1)?>>></a>
-				</div>
-			</div>
-		<?php endif; ?>
 		<div class="posts">
 			<?php for ($i = 0; $i < count($posts); $i++): ?>
 				<?php if (empty($posts[$i]['replies']) && $posts[$i]['replyid'] == 0): ?>
@@ -143,13 +130,12 @@ $this->title = "Лента";
 						</div>
 					<?php endif; ?>
 				<?php endfor; ?>
-				<div class="pagination">
-					<div class="left"><a href="/feed?p=<?=Html::encode(intval($page)-1)?>"><<<?=Html::encode(intval($page)-1)?></a></div>
-					<div class="center">Страница <?=Html::encode($page)?></div>
-					<div class="right"><a href="/feed?p=<?=Html::encode(intval($page)+1)?>"><?=Html::encode(intval($page)+1)?>>></a></div>
-				</div>
+			</div>
+			<div class="pagination">
+				<div class="center"><button class="load_more">Показать ещё</button></div>
 			</div>
 		</div>
+		
 		<div class="page_menu"><div class="page_menu_sticky">
 			<div class="profile_names">
 				<div class="profile_names_left">
@@ -213,9 +199,10 @@ $this->title = "Лента";
 </div>
 <?php
 $js = <<<JS
-$('.like').click(function(e) {
+var p = 1;
+$('.posts').on('click', '.like', function(e) {
 	var postid = $(this).attr("data-id")
-	var it = this
+	var it = e.target;
 	$.ajax({
 		method: 'GET', 
 		url: '/posts/like?id=' + postid,
@@ -225,14 +212,23 @@ $('.like').click(function(e) {
 		console.log(it.innerHTML.match(/\d+/g))
 	});
 });
-$('.delete').click(function(e) {
+$('.posts').on('click', '.delete', function(e) {
 	var postid = $(this).attr("data-id")
-	var it = this
+	var it = e.target;
 	$.ajax({
 		method: 'GET', 
 		url: '/posts/delete?id=' + postid,
 	}).done(function(data) {
 		location.reload();
+	});
+});
+$('body').on('click', '.load_more', function(e) {
+	$.ajax({
+		method: 'GET',
+		url: '/posts/load-more?offset=50&limit=50&p=' + p,
+	}).done(function(data) {
+		p += 1;
+		$('.posts').append(data);
 	});
 });
 JS;
