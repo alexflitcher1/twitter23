@@ -283,6 +283,7 @@ span {
 }
 .page_menu_newpost_bts {
 	display: flex;
+	flex-direction: column;
 	justify-content: space-between;
 	margin-top: 7px;
 }
@@ -640,3 +641,6 @@ span {
 .newpost_feed {
 	margin-bottom: 2%;
 }
+ #postform-img {
+	 opacity: 0;
+ }

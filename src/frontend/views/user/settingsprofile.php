@@ -181,20 +181,33 @@ $this->title = "Ваши настройки";
 					<div class="page_menu_nav_link_active">Профиль</div>
 				</a>
 			</div>
+			<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 			<div class="page_menu_newpost">
 				<div class="page_menu_newpost_textarea">
-					<textarea placeholder="Что нового?"></textarea>
+					<?=$form->field($model1, 'text')->textarea(['rows' => 10, 'placeholder' => "Что нового?"])?>
 				</div>
 				<div class="page_menu_newpost_bts">
 					<div class="page_menu_newpost_tw">
-						<a href="#">Прикрепить</a>
+						<label for="postform-img" class="btn" id="img-label">Прикрепить <a href="#"></a></label>
+						<a href="#"><?=$form->field($model1, 'img')->fileInput()?></a>
 					</div>
 					<div class="page_menu_newpost_bt">
 							<button>Опубликовать</button>
 						</div>
 					</div>
 				</div>
+			<?php ActiveForm::end(); ?>
 			</div>
 		</div>
 	</div>
 </div>
+<?php
+$js = <<<JS
+$("#postform-img").change(function() {
+  filename = this.files[0].name
+  $("#img-label a").html(filename)
+  console.log(filename);
+});
+JS;
+$this->registerJS($js);
+?>

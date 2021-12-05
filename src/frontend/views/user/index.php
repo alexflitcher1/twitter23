@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\file\FileInput;
 $this->title = "Профиль";
 ?>
 <div class="page_body">
@@ -17,6 +18,7 @@ $this->title = "Профиль";
 				</div>
 				<div class="newpost_bts">
 					<div class="newpost_tw">
+						<label for="postform-img" class="btn" id="img-label">Прикрепить <a href="#"></a></label>
 						<a href="#"><?=$form->field($model, 'img')->fileInput()?></a>
 					</div>
 					<div class="newpost_bt">
@@ -245,20 +247,24 @@ $this->title = "Профиль";
 						</a>
 					</div>
 					<div class="page_menu_newpost">
+					<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 						<div class="page_menu_newpost_textarea">
-							<textarea placeholder="Что нового?"></textarea>
+							<?=$form->field($model, 'text')->textarea(['rows' => 10, 'placeholder' => "Что нового?"])?>
 						</div>
 						<div class="page_menu_newpost_bts">
 							<div class="page_menu_newpost_tw">
-								<a href="#">Прикрепить</a>
+								<label for="postform-img" class="btn" id="img-label">Прикрепить <a href="#"></a></label>
+								<a href="#"><?=$form->field($model, 'img')->fileInput()?></a>
+								
 							</div>
 							<div class="page_menu_newpost_bt">
 								<button>Опубликовать</button>
 							</div>
 						</div>
+					<?php ActiveForm::end() ?>
+						</div>
 					</div>
 				</div>
-			</div>
 </div>
 <?php
 $js = <<<JS
@@ -283,6 +289,11 @@ $('.delete').click(function(e) {
 	}).done(function(data) {
 		location.reload();
 	});
+});
+$("#postform-img").change(function() {
+  filename = this.files[0].name
+  $("#img-label a").html(filename)
+  console.log(filename);
 });
 JS;
 $this->registerJs($js);

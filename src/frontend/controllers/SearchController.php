@@ -135,6 +135,43 @@ class SearchController extends Controller
         // users shows only on first page
         if ($p != 0) $users = [];
 
+        $model1 = new PostForm();
+        if ($model1->load(Yii::$app->request->post()) 
+        && $model1->validate()) {
+            $model1->img = UploadedFile::getInstance($model1, 'img');
+            $imgname = $model1->upload();
+            if ($imgname) {
+                // count entered words
+                $allwords = explode(" ", htmlentities($model1->text));
+                for ($i = 0; $i < count($allwords); $i++) {
+                    $words[$allwords[$i]] = isset($words[$allwords[$i]]) ? 
+                                                  $words[$allwords[$i]] + 1 : 1;
+                }
+                for ($i = 0; $i < count($allwords); $i++) {
+                    $word = Popular::findOne(['text' => $allwords[$i]]);
+                    if ($word) {
+                        $word->count = $word->count + $words[$allwords[$i]];
+                        $word->save();
+                    } else {
+                        $word = new Popular();
+                        $word->text = $allwords[$i];
+                        $word->count = $words[$allwords[$i]];
+                        $word->save();
+                    }
+                }
+                $npost = new Posts();
+                $npost->userid = htmlentities($user->id);
+                $npost->date = date('Y-m-d H:i:s', time());
+                $npost->text = htmlentities($model1->text);
+                $npost->text = str_replace("\n", "<br>", $model1->text);
+                $imgname = ($imgname === true) ? null : "/" . $imgname;
+                $npost->img = $imgname;
+                $npost->likes = 0;
+                if ($npost->save())
+                    return $this->redirect("/me");
+            }
+    }
+
         $cookiesresp = Yii::$app->response->cookies;
         $cookies = Yii::$app->response->cookies;
         $cookiesresp->add(new \yii\web\Cookie([
@@ -149,7 +186,7 @@ class SearchController extends Controller
                                        'repliers' => $replier, 'users' => $users,
                                        'posts' => $post, 'page' => $p,
                                        'search' => $search, 'mode' => $mode,
-                                       'popular' => $popular]);
+                                       'popular' => $popular, 'model1' => $model1]);
 
     }
 
