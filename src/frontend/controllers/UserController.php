@@ -527,13 +527,48 @@ class UserController extends Controller
                             ->limit(1)
                             ->offset(0)
                             ->one();
-        // get random post
+        $model = new PostForm();
+        if ($model->load(Yii::$app->request->post()) 
+        && $model->validate()) {
+            $model->img = UploadedFile::getInstance($model, 'img');
+            $imgname = $model->upload();
+            if ($imgname) {
+                // count entered words
+                $allwords = explode(" ", htmlentities($model->text));
+                for ($i = 0; $i < count($allwords); $i++) {
+                    $words[$allwords[$i]] = isset($words[$allwords[$i]]) ? 
+                                                  $words[$allwords[$i]] + 1 : 1;
+                }
+                for ($i = 0; $i < count($allwords); $i++) {
+                    $word = Popular::findOne(['text' => $allwords[$i]]);
+                    if ($word) {
+                        $word->count = $word->count + $words[$allwords[$i]];
+                        $word->save();
+                    } else {
+                        $word = new Popular();
+                        $word->text = $allwords[$i];
+                        $word->count = $words[$allwords[$i]];
+                        $word->save();
+                    }
+                }
+                $npost = new Posts();
+                $npost->userid = htmlentities($user->id);
+                $npost->date = date('Y-m-d H:i:s', time());
+                $npost->text = htmlentities($model->text);
+                $npost->text = str_replace("\n", "<br>", $model->text);
+                $imgname = ($imgname === true) ? null : "/" . $imgname;
+                $npost->img = $imgname;
+                $npost->likes = 0;
+                if ($npost->save())
+                    return $this->redirect("/me");
+            }
+    }
         $randpost['authordata'] = User::findOne(['id' => $randpost->userid]);
         $exception = Yii::$app->errorHandler->exception;
         if ($exception !== null) {
             if ($exception->statusCode == 404)
                 return $this->render('error404', [
-                            'exception' => $exception,
+                            'exception' => $exception, 'model' => $model,
                             'user' => $user, 'suber' => $suber,
                             'subs' => $subs, 'posts' => $postscount,
                             'randpost' => $randpost, 'author' => $author]);
@@ -542,14 +577,116 @@ class UserController extends Controller
         }
     }
 
-    public function actionShowSubs($id)
+    public function actionSubscribers($id = 0, $p = 0, $mode = 0)
     {
         $cookies = Yii::$app->request->cookies;
         if (!$cookies->get("auth"))
             return $this->redirect("/login");
         $cookie = $cookies->get('auth');
         $username = $cookie->value;
+        $offset = 50;
         $user  = User::findOne(['username' => htmlentities($username)]);
-        return $this->render('subs-show');
+        $popular = Popular::find()
+            ->orderBy(['count' => SORT_DESC])
+            ->limit(10)
+            ->offset(0)
+            ->all();
+        $modename = $mode == 0 ? 'friendid' : 'userid';
+        if ($id == 0) {
+            $subers = Friends::find()
+                ->where([$modename => $user->id])
+                ->limit($offset)
+                ->offset($p*$offset)
+                ->all();
+        } else {
+            $subers = Friends::find()
+                ->where([$modename => $id])
+                ->limit($offset)
+                ->offset($p*$offset)
+                ->all();
+        }
+        $suber = count(Friends::find()
+            ->where(['userid' => htmlentities($user->id)])
+            ->all());
+        $subs  = count(Friends::find()
+            ->where(['friendid' => htmlentities($user->id)])
+            ->all());
+        $posts = count(Posts::find()
+            ->where(['userid' => htmlentities($user->id)])
+            ->orderBy(['id' => SORT_DESC])
+            ->all());
+        $datasubs = [];
+        for ($i = 0; $i < count($subers); $i++) {
+            $datasubs[$i] = User::findOne(['id' => $subers[$i]['userid']]);
+        }
+        $model = new PostForm();
+        if ($model->load(Yii::$app->request->post()) 
+            && $model->validate()) {
+                $model->img = UploadedFile::getInstance($model, 'img');
+                $imgname = $model->upload();
+                if ($imgname) {
+                    // count entered words
+                    $allwords = explode(" ", htmlentities($model->text));
+                    for ($i = 0; $i < count($allwords); $i++) {
+                        $words[$allwords[$i]] = isset($words[$allwords[$i]]) ? 
+                                                      $words[$allwords[$i]] + 1 : 1;
+                    }
+                    for ($i = 0; $i < count($allwords); $i++) {
+                        $word = Popular::findOne(['text' => $allwords[$i]]);
+                        if ($word) {
+                            $word->count = $word->count + $words[$allwords[$i]];
+                            $word->save();
+                        } else {
+                            $word = new Popular();
+                            $word->text = $allwords[$i];
+                            $word->count = $words[$allwords[$i]];
+                            $word->save();
+                        }
+                    }
+                    $npost = new Posts();
+                    $npost->userid = htmlentities($user->id);
+                    $npost->date = date('Y-m-d H:i:s', time());
+                    $npost->text = htmlentities($model->text);
+                    $npost->text = str_replace("\n", "<br>", $model->text);
+                    $imgname = ($imgname === true) ? null : "/" . $imgname;
+                    $npost->img = $imgname;
+                    $npost->likes = 0;
+                    if ($npost->save())
+                        return $this->redirect("/me");
+                }
+        }
+        return $this->render('subscribers', ['user' => $user, 'popular' => $popular, 'datasubs' => $datasubs,
+                                             'suber' => $suber, 'subs' => $subs, 'posts' => $posts, 'id' => $id,
+                                             'model' => $model, 'mode' => $mode]);
+    }
+
+    public function actionMoreSubs($p = 0, $id = 0, $offset = 50, $limit = 50, $mode = 0) 
+    {
+        $cookies = Yii::$app->request->cookies;
+        if (!$cookies->get("auth"))
+            return $this->redirect("/login");
+        $this->layout = 'none';
+        $cookie = $cookies->get('auth');
+        $username = $cookie->value;
+        $modename = $mode == 0 ? 'friendid' : 'userid';
+        if ($id == 0) {
+            $subers = Friends::find()
+                ->where([$modename => $user->id])
+                ->limit($offset)
+                ->offset($p*$offset)
+                ->all();
+        } else {
+            $subers = Friends::find()
+                ->where([$modename => $id])
+                ->limit($offset)
+                ->offset($p*$offset)
+                ->all();
+
+        }
+        $datasubs = [];
+        for ($i = 0; $i < count($subers); $i++) {
+            $datasubs[$i] = User::findOne(['id' => $subers[$i]['userid']]);
+        }
+        return $this->render('more-subs', ['datasubs' => $datasubs]);
     }
 }

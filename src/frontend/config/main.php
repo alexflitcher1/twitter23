@@ -29,6 +29,8 @@ return [
                 'notifications' => 'notifications/index',
                 'settings-profile' => 'user/settings-profile',
                 'edit' => 'posts/edit',
+                'subscribers' => 'user/subscribers',
+                'suber' => 'user/subscribers',
             ],
         ],
         'request' => [

@@ -150,15 +150,15 @@ $this->title = "Лента";
 			<div class="fl_menu">
 				<div class="fl_menu_block">
 					<div class="fl_menu_n"><?=Html::encode($subs)?></div>
-					<div class="fl_menu_name"><a href="#">Подписчики</a></div>
+					<div class="fl_menu_name"><a href="/subscribers">Подписчики</a></div>
 				</div>
 				<div class="fl_menu_block">
 					<div class="fl_menu_n"><?=Html::encode($suber)?></div>
-					<div class="fl_menu_name"><a href="#">Подписки</a></div>
+					<div class="fl_menu_name"><a href="/suber?mode=1">Подписки</a></div>
 				</div>
 				<div class="fl_menu_block">
 					<div class="fl_menu_n"><?=Html::encode($postscount)?></div>
-					<div class="fl_menu_name"><a href="#">Твиты</a></div>
+					<div class="fl_menu_name"><a href="/me">Твиты</a></div>
 				</div>
 			</div>
 			<div class="page_menu_top">

@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 $this->title = "Упсс...";
 ?>
 <div class="page_body">
@@ -36,7 +37,7 @@ $this->title = "Упсс...";
                             </a>
                         </div>
                         <div class="post_content_nav_right">
-                            <a class="like" data-id="<?=Html::encode($posts[$i]['id'])?>">
+                            <a class="like" data-id="<?=Html::encode($randpost['id'])?>">
                                 Нравится (<?=Html::encode($randpost['likes'])?>)
                             </a>
                         </div>
@@ -99,15 +100,15 @@ $this->title = "Упсс...";
     		<div class="fl_menu">
 	    		<div class="fl_menu_block">
 		    		<div class="fl_menu_n"><?=Html::encode($subs)?></div>
-					<div class="fl_menu_name"><a href="#">Подписчики</a></div>
+					<div class="fl_menu_name"><a href="/subscribers">Подписчики</a></div>
 				</div>
 				<div class="fl_menu_block">
 			    	<div class="fl_menu_n"><?=Html::encode($suber)?></div>
-				    <div class="fl_menu_name"><a href="#">Подписки</a></div>
+				    <div class="fl_menu_name"><a href="/subs?mode=1">Подписки</a></div>
     			</div>
 	    		<div class="fl_menu_block">
 		    		<div class="fl_menu_n"><?=Html::encode(count($posts))?></div>
-					    <div class="fl_menu_name"><a href="#">Твиты</a></div>
+					    <div class="fl_menu_name"><a href="/me">Твиты</a></div>
 				    </div>
 				</div>
     		    <div class="page_menu_nav">
@@ -118,19 +119,43 @@ $this->title = "Упсс...";
 			            <div class="page_menu_nav_link">Редактировать</div>
 				    </a>
     		    </div>
-	    	    <div class="page_menu_newpost">
-		    	    <div class="page_menu_newpost_textarea">
-				    	<textarea placeholder="Что нового?"></textarea>
-				    </div>
-		    	    <div class="page_menu_newpost_bts">
-			        	<div class="page_menu_newpost_tw">
-				    		<a href="#">Прикрепить</a>
-				    	</div>
-		    	    	<div class="page_menu_newpost_bt">
-			        		<button>Опубликовать</button>
-	    			    </div>
-				    </div>
-    		    </div>
+				<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
+				<div class="page_menu_newpost">
+					<div class="page_menu_newpost_textarea">
+						<?=$form->field($model, 'text')->textarea(['rows' => 10, 'placeholder' => "Что нового?"])?>
+					</div>
+					<div class="page_menu_newpost_bts">
+						<div class="page_menu_newpost_tw">
+							<label for="postform-img" class="btn" id="img-label">Прикрепить <a href="#"></a></label>
+							<a href="#"><?=$form->field($model, 'img')->fileInput()?></a>
+						</div>
+						<div class="page_menu_newpost_bt">
+							<button>Опубликовать</button>
+					</div>
+				</div>
+				<?php ActiveForm::end() ?>
 	        </div>
 	    </div>
 </div>
+<?php
+$js = <<<JS
+$('.like').click(function(e) {
+	var postid = $(this).attr("data-id")
+	var it = this
+	$.ajax({
+		method: 'GET', 
+		url: '/posts/like?id=' + postid,
+	}).done(function(data) {
+		it.innerHTML = it.innerHTML.match(/\d+/g) * 1 + data * 1
+		it.innerHTML = "Нравится (" + it.innerHTML + ")"
+		console.log(it.innerHTML.match(/\d+/g))
+	});
+});
+$("#postform-img").change(function() {
+  filename = this.files[0].name
+  $("#img-label a").html(filename)
+  console.log(filename);
+});
+JS;
+$this->registerJs($js);
+?>
