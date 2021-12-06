@@ -541,4 +541,15 @@ class UserController extends Controller
                 return $this->render('error', ['exception' => $exception]);
         }
     }
+
+    public function actionShowSubs($id)
+    {
+        $cookies = Yii::$app->request->cookies;
+        if (!$cookies->get("auth"))
+            return $this->redirect("/login");
+        $cookie = $cookies->get('auth');
+        $username = $cookie->value;
+        $user  = User::findOne(['username' => htmlentities($username)]);
+        return $this->render('subs-show');
+    }
 }
