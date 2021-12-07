@@ -615,6 +615,7 @@ class UserController extends Controller
             ->where(['userid' => htmlentities($user->id)])
             ->orderBy(['id' => SORT_DESC])
             ->all());
+        $modename = $mode == 0 ? 'userid' : 'friendid';
         $datasubs = [];
         for ($i = 0; $i < count($subers); $i++) {
             $datasubs[$i] = User::findOne(['id' => $subers[$i]['userid']]);
@@ -683,6 +684,7 @@ class UserController extends Controller
                 ->all();
 
         }
+        $modename = $mode == 0 ? 'userid' : 'friendid';
         $datasubs = [];
         for ($i = 0; $i < count($subers); $i++) {
             $datasubs[$i] = User::findOne(['id' => $subers[$i]['userid']]);
