@@ -618,7 +618,7 @@ class UserController extends Controller
         $modename = $mode == 0 ? 'userid' : 'friendid';
         $datasubs = [];
         for ($i = 0; $i < count($subers); $i++) {
-            $datasubs[$i] = User::findOne(['id' => $subers[$i]['userid']]);
+            $datasubs[$i] = User::findOne(['id' => $subers[$i][$modename]]);
         }
         $model = new PostForm();
         if ($model->load(Yii::$app->request->post()) 
@@ -687,7 +687,7 @@ class UserController extends Controller
         $modename = $mode == 0 ? 'userid' : 'friendid';
         $datasubs = [];
         for ($i = 0; $i < count($subers); $i++) {
-            $datasubs[$i] = User::findOne(['id' => $subers[$i]['userid']]);
+            $datasubs[$i] = User::findOne(['id' => $subers[$i][$modename]]);
         }
         return $this->render('more-subs', ['datasubs' => $datasubs]);
     }
