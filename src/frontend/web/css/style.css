@@ -644,3 +644,6 @@ span {
  #postform-img {
 	 opacity: 0;
  }
+ html {
+	 display: none;
+ }

@@ -44,4 +44,7 @@ DefaultAsset::register($this);
 <?php $this->endBody() ?>
 </body>
 </html>
-<?php $this->endPage();
+<?php $this->endPage(); ?>
+<script>
+    document.getElementsByTagName('html')[0].style.display = "block"
+</script>

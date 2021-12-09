@@ -24,6 +24,9 @@ $js = <<<JS
 for (i = 0; i < $(".post_content_text").length; i++) {
 	$(".post_content_text")[i].innerHTML = $(".post_content_text")[i].innerHTML.replace(/#(\w*)/ig, "<a href='/search?search=$1'>#$1</a>")
 }
+for (i = 0; i < $(".post_content_text").length; i++) {
+	$(".post_content_text")[i].innerHTML = $(".post_content_text")[i].innerText.replace(/^((?:https?\:)?(?:\/{2})?)?((?:[\w\d_]{1,64})\.(?:[\w\d_\.]{2,64}))(\:\d{2,6})?((?:\/|\?|#|&){1}(?:[\w\d\S]+)?)?/ig, "<a href='$1$2$3'>$1$2$3</a>")
+}
 JS;
 $this->registerJs($js);
 ?>
