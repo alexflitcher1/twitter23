@@ -32,7 +32,7 @@ $this->title = "Поиск";
 						<div class="post_content">
 							<div class="post_content_name">
 								<?=Html::encode($users[$i]->name)?>
-								<a href="/profile?id=<?=Html::encode($users[$i]->username)?>">
+								<a href="/<?=Html::encode($users[$i]->username)?>">
 									@<?=Html::encode($users[$i]->username)?>
 								</a>
 							</div>
@@ -67,7 +67,7 @@ $this->title = "Поиск";
 							<div class="post_content">
 								<div class="post_content_name">
 									<?=Html::encode($posts[$i]['authordata']->name)?>
-									<a href="/profile?id=<?=Html::encode($posts[$i]['authordata']->username)?>">
+									<a href="/<?=Html::encode($posts[$i]['authordata']->username)?>">
 										@<?=Html::encode($posts[$i]['authordata']->username)?>
 									</a>
 								</div>
@@ -105,7 +105,7 @@ $this->title = "Поиск";
 								<div class="post_content">
 									<div class="post_content_name">
 										<?=Html::encode($posts[$i]['authordata']->name)?>
-										<a href="/profile?id=<?=Html::encode($posts[$i]['authordata']->username)?>">
+										<a href="/<?=Html::encode($posts[$i]['authordata']->username)?>">
 											@<?=Html::encode($posts[$i]['authordata']->username)?>
 										</a>
 									</div>
@@ -143,7 +143,7 @@ $this->title = "Поиск";
 										<div class="post_content">
 											<div class="post_content_name">
 												<?=Html::encode($repliers[$i][$j]->name)?> 
-												<a href="/profile?id=<?=Html::encode($repliers[$i][$j]->username)?>">
+												<a href="/<?=Html::encode($repliers[$i][$j]->username)?>">
 													@<?=Html::encode($repliers[$i][$j]->username)?>
 												</a>
 											</div>

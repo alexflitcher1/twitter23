@@ -30,7 +30,7 @@ $this->title = "Лента";
 						</div>
 						<div class="post_content">
 							<div class="post_content_name">
-								<?=Html::encode($posts[$i]['authordata']->name)?> <a href="/profile?id=<?=Html::encode($posts[$i]['authordata']->username)?>">@<?=Html::encode($posts[$i]['authordata']->username)?></a>
+								<?=Html::encode($posts[$i]['authordata']->name)?> <a href="/<?=Html::encode($posts[$i]['authordata']->username)?>">@<?=Html::encode($posts[$i]['authordata']->username)?></a>
 							</div>
 							<div class="post_content_data">
 								<?=Html::encode($posts[$i]['date'])?>
@@ -63,7 +63,7 @@ $this->title = "Лента";
 							</div>
 							<div class="post_content">
 								<div class="post_content_name">
-									<?=Html::encode($posts[$i]['authordata']->name)?> <a href="/profile?id=<?=Html::encode($posts[$i]['authordata']->username)?>">@<?=Html::encode($posts[$i]['authordata']->username)?></a>
+									<?=Html::encode($posts[$i]['authordata']->name)?> <a href="/<?=Html::encode($posts[$i]['authordata']->username)?>">@<?=Html::encode($posts[$i]['authordata']->username)?></a>
 								</div>
 								<div class="post_content_data">
 									<?=Html::encode($posts[$i]['date'])?>
@@ -98,7 +98,7 @@ $this->title = "Лента";
 									</div>
 									<div class="post_content">
 										<div class="post_content_name">
-											<?=Html::encode($repliers[$i][$j]->name)?> <a href="/profile?id=<?=Html::encode($repliers[$i][$j]->username)?>">@<?=Html::encode($repliers[$i][$j]->username)?></a>
+											<?=Html::encode($repliers[$i][$j]->name)?> <a href="/<?=Html::encode($repliers[$i][$j]->username)?>">@<?=Html::encode($repliers[$i][$j]->username)?></a>
 										</div>
 										<div class="post_content_data">
 											<?=Html::encode($posts[$i]['replies'][$j]->date)?>

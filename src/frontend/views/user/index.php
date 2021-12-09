@@ -37,7 +37,7 @@ $this->title = "Профиль";
 						<div class="post_content">
 							<div class="post_content_name">
 								<?=Html::encode($user->name)?>
-								<a href="/profile?id=<?=Html::encode($user->username)?>">
+								<a href="/<?=Html::encode($user->username)?>">
 									@<?=Html::encode($user->username)?>
 								</a>
 							</div>
@@ -81,7 +81,7 @@ $this->title = "Профиль";
 								<div class="post_content">
 									<div class="post_content_name">
 										<?=Html::encode($user->name)?>
-										<a href="/profile?id=<?=Html::encode($user->username)?>">
+										<a href="/<?=Html::encode($user->username)?>">
 											@<?=Html::encode($user->username)?>
 										</a>
 									</div>
@@ -123,7 +123,7 @@ $this->title = "Профиль";
 										<div class="post_content">
 											<div class="post_content_name">
 												<?=Html::encode($repliers[$i][$j]->name)?>
-												<a href="/profile?id=<?=Html::encode($repliers[$i][$j]->username)?>">
+												<a href="/<?=Html::encode($repliers[$i][$j]->username)?>">
 													@<?=Html::encode($repliers[$i][$j]->username)?>
 												</a>
 											</div>

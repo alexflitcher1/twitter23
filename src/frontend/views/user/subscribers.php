@@ -21,7 +21,7 @@ $this->title = "Подписчики";
                </div>
                <div class="post_content">
                   <div class="post_content_name">
-                     <?=$datasubs[$i]->name?> <a href="/profile?id=<?=$datasubs[$i]->username?>">@<?=$datasubs[$i]->username?></a>
+                     <?=$datasubs[$i]->name?> <a href="/<?=$datasubs[$i]->username?>">@<?=$datasubs[$i]->username?></a>
                   </div>
                   <div class="post_content_data">
                      Дата регистрации: <?=Html::encode(date("d.m.Y", strtotime($datasubs[$i]->regdate)))?>

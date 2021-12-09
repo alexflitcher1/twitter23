@@ -9,7 +9,7 @@ use yii\helpers\Html;
 						<div class="post_content">
 							<div class="post_content_name">
 								<?=Html::encode($users[$i]->name)?>
-								<a href="/profile?id=<?=Html::encode($users[$i]->username)?>">
+								<a href="/<?=Html::encode($users[$i]->username)?>">
 									@<?=Html::encode($users[$i]->username)?>
 								</a>
 							</div>

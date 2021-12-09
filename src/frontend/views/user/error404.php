@@ -20,7 +20,7 @@ $this->title = "Упсс...";
                 <div class="post_content">
                     <div class="post_content_name">
                     <?=Html::encode($randpost['authordata']->name)?> 
-                    <a href="/profile?id=<?=Html::encode($randpost['authordata']->username)?>">
+                    <a href="/<?=Html::encode($randpost['authordata']->username)?>">
                         @<?=Html::encode($randpost['authordata']->username)?>
                     </a>
                     </div>

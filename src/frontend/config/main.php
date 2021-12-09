@@ -19,9 +19,9 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
+                '<controller:.+>/<action:.+>' => '<controller>/<action>',
                 'feed' => 'posts/index',
                 'me' => 'user/index',
-                'profile' => 'user/profile',
                 'search' => 'search/index',
                 'signup' => 'user/signup',
                 'settings' => 'user/settings',
@@ -31,6 +31,7 @@ return [
                 'edit' => 'posts/edit',
                 'subscribers' => 'user/subscribers',
                 'suber' => 'user/subscribers',
+                '<id:.+>' => 'user/profile',
             ],
         ],
         'request' => [
