@@ -19,7 +19,7 @@ class PostForm extends Model
     public function rules()
     {
         return [
-            [['text'], 'required', 'message' => ''],
+            [['text'], 'string', 'message' => ''],
             [['img'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, gif, webp'],
         ];
     }
