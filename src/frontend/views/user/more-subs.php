@@ -18,4 +18,12 @@ use yii\helpers\Html;
                   </div>
                </div>
             </div>
-<?php endfor; ?> 
+<?php endfor; ?>
+<?php
+$js = <<<JS
+for (i = 0; i < $(".post_content_text").length; i++) {
+	$(".post_content_text")[i].innerHTML = $(".post_content_text")[i].innerHTML.replace(/#(\w*)/ig, "<a href='/search?search=$1'>#$1</a>")
+}
+JS;
+$this->registerJs($js);
+?>

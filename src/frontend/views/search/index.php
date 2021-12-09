@@ -300,6 +300,9 @@ $('body').on('click', '.load_more', function(e) {
 		});
 	}
 });
+for (i = 0; i < $(".post_content_text").length; i++) {
+	$(".post_content_text")[i].innerHTML = $(".post_content_text")[i].innerHTML.replace(/#(\w*)/ig, "<a href='/search?search=$1'>#$1</a>")
+}
 $("#postform-img").change(function() {
   filename = this.files[0].name
   $("#img-label a").html(filename)

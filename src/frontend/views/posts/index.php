@@ -204,6 +204,9 @@ $this->title = "Лента";
 <?php
 $js = <<<JS
 var p = 1;
+for (i = 0; i < $(".post_content_text").length; i++) {
+	$(".post_content_text")[i].innerHTML = $(".post_content_text")[i].innerHTML.replace(/#(\w*)/ig, "<a href='/search?search=$1'>#$1</a>")
+}
 $('.posts').on('click', '.like', function(e) {
 	var postid = $(this).attr("data-id")
 	var it = e.target;

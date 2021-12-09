@@ -392,6 +392,7 @@ class UserController extends Controller
                                 ->orderBy(['id' => SORT_DESC])
                                 ->all());
         $model = new Settings();
+        $model1 = new PostForm();
         $model->gender   = $user->gender;
         $model->about    = $user->about;
         $model->city     = $user->city;
@@ -432,12 +433,10 @@ class UserController extends Controller
                         'value' => htmlentities($user->username),
                     ]));
                     return $this->render('settingsprofile', ['model' => $model, 'user' => $user, 
-                    'suber' => $suber, 'subs' => $subs, 'posts' => $posts, 'error' => $error]);
+                    'suber' => $suber, 'subs' => $subs, 'posts' => $posts, 'error' => $error, 'model1' => $model1]);
                 }
             }
         }
-
-        $model1 = new PostForm();
         if ($model1->load(Yii::$app->request->post()) 
             && $model1->validate()) {
                 $model1->img = UploadedFile::getInstance($model1, 'img');
