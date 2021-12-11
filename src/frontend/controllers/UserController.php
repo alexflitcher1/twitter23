@@ -14,6 +14,7 @@ use frontend\models\Popular;
 use frontend\models\Friends;
 use frontend\models\Settings;
 use frontend\models\PostForm;
+use frontend\models\Notifications;
 
 /**
  * User controller
@@ -134,6 +135,15 @@ class UserController extends Controller
                         $npost->replyid = htmlentities($replypost);
                         $npost->likes = 0;
                         if ($npost->save()) {
+                            $userids = Posts::findOne(['id' => $replypost])->userid;
+                            $nofitication = new Notifications();
+                            $nofitication->moredata = $replypost;
+                            $nofitication->userid = $userids;
+                            $nofitication->initid = $user->id;
+                            $nofitication->type = 'reply';
+                            $nofitication->checked = 0;
+                            $nofitication->dateadd  = date('Y-m-d H:i:s', time());
+                            $nofitication->save();
                             // redirect to last page where user clicked reply button
                             if (!$cookies->get("id"))
                                 return $this->redirect("/me");
@@ -151,7 +161,7 @@ class UserController extends Controller
                             elseif (isset(unserialize($cookies->get("id"))[0]) && 
                                     unserialize($cookies->get("id"))[0] == "me")
                                 return $this->redirect("/me");
-                            return $this->redirect("/profile?id=" . 
+                            return $this->redirect("/" . 
                                     unserialize($cookies->get("id"))[1]);
                         }
                     }
