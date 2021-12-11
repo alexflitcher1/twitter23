@@ -117,7 +117,7 @@ $this->title = "Twitter23";
 													<a class="delete" data-id="<?=Html::encode($posts[$i]['replies'][$j]->id)?>">Удалить</a> 
 													<a href="/edit?id=<?=Html::encode($posts[$i]['replies'][$j]->id)?>" class="edit">Редактировать</a>
 												<?php endif; ?>
-												<a href="#">Ответить</a>
+												<a href="/me?mode=reply&replypost=<?=Html::encode($posts[$i]['replies'][$j]->id)?>">Ответить</a>
 											</div>
 											<div class="post_content_nav_right">
 												<a class="like" data-id=<?=Html::encode($posts[$i]['replies'][$j]->id)?>

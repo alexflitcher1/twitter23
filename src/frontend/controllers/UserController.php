@@ -84,7 +84,7 @@ class UserController extends Controller
                             $words[$allwords[$i]] = isset($words[$allwords[$i]]) ? 
                                                           $words[$allwords[$i]] + 1 : 1;
                         }
-                        for ($i = 0; $i < count($allwords); $i++) {
+                        for ($i = 0; $i < count($words); $i++) {
                             $word = Popular::findOne(['text' => $allwords[$i]]);
                             if ($word) {
                                 $word->count = $word->count + $words[$allwords[$i]];
@@ -263,7 +263,7 @@ class UserController extends Controller
                         $words[$allwords[$i]] = isset($words[$allwords[$i]]) ? 
                                                       $words[$allwords[$i]] + 1 : 1;
                     }
-                    for ($i = 0; $i < count($allwords); $i++) {
+                    for ($i = 0; $i < count($words); $i++) {
                         $word = Popular::findOne(['text' => $allwords[$i]]);
                         if ($word) {
                             $word->count = $word->count + $words[$allwords[$i]];
@@ -448,7 +448,7 @@ class UserController extends Controller
                         $words[$allwords[$i]] = isset($words[$allwords[$i]]) ? 
                                                       $words[$allwords[$i]] + 1 : 1;
                     }
-                    for ($i = 0; $i < count($allwords); $i++) {
+                    for ($i = 0; $i < count($words); $i++) {
                         $word = Popular::findOne(['text' => $allwords[$i]]);
                         if ($word) {
                             $word->count = $word->count + $words[$allwords[$i]];
@@ -538,7 +538,7 @@ class UserController extends Controller
                     $words[$allwords[$i]] = isset($words[$allwords[$i]]) ? 
                                                   $words[$allwords[$i]] + 1 : 1;
                 }
-                for ($i = 0; $i < count($allwords); $i++) {
+                for ($i = 0; $i < count($words); $i++) {
                     $word = Popular::findOne(['text' => $allwords[$i]]);
                     if ($word) {
                         $word->count = $word->count + $words[$allwords[$i]];
@@ -631,7 +631,7 @@ class UserController extends Controller
                         $words[$allwords[$i]] = isset($words[$allwords[$i]]) ? 
                                                       $words[$allwords[$i]] + 1 : 1;
                     }
-                    for ($i = 0; $i < count($allwords); $i++) {
+                    for ($i = 0; $i < count($words); $i++) {
                         $word = Popular::findOne(['text' => $allwords[$i]]);
                         if ($word) {
                             $word->count = $word->count + $words[$allwords[$i]];

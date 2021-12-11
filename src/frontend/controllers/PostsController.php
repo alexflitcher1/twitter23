@@ -311,9 +311,4 @@ class PostsController extends Controller
         'repliers' => $replier,
         'posts' => $posts, 'page' => $p]);
     }
-
-    public function actionTest() 
-    {
-        return $this->render('test');
-    }
 }
