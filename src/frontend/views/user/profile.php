@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-$this->title = $user->username;
+$this->title = $user->name . " - " . "Twitter23";
 ?>
 <div class="page_body">
 	<div class="page_content">
