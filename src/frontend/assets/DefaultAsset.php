@@ -15,6 +15,7 @@ class DefaultAsset extends AssetBundle
         'css/style.css',
     ];
     public $js = [
+        'js/index.js',
     ];
     public $depends = [
     ];

@@ -1,7 +1,40 @@
-<input type="file">
-<img src="" alt="">
-<?php
-$js = <<<JS
+for (i = 0; i < $(".post_content_text").length; i++) {
+	$(".post_content_text")[i].innerHTML = $(".post_content_text")[i].innerText.replace(/(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*/ig, "<a href='$1$2'>$1$2</a>")
+}
+for (i = 0; i < $(".post_content_text").length; i++) {
+	$(".post_content_text")[i].innerHTML = $(".post_content_text")[i].innerHTML.replace(/#(\w*)/ig, "<a href='/search?search=$1'>#$1</a>")
+}
+$('.posts').on('click', '.like', function(e) {
+	var postid = $(this).attr("data-id")
+	var it = e.target;
+	$.ajax({
+		method: 'GET', 
+		url: '/posts/like?id=' + postid,
+	}).done(function(data) {
+		$.ajax({
+			method: 'GET',
+			url: '/notifications/add-like?postid=' + postid
+		});
+		it.innerHTML = it.innerHTML.match(/\d+/g) * 1 + data * 1
+		it.innerHTML = "Нравится (" + it.innerHTML + ")"
+		console.log(it.innerHTML.match(/\d+/g))
+	});
+});
+$('.posts').on('click', '.delete', function(e) {
+	var postid = $(this).attr("data-id")
+	var it = e.target;
+	$.ajax({
+		method: 'GET', 
+		url: '/posts/delete?id=' + postid,
+	}).done(function(data) {
+		location.reload();
+	});
+});
+$("#postform-img").change(function() {
+  filename = this.files[0].name
+  $("#img-label a").html(filename)
+  console.log(filename);
+});
 if (!window.Clipboard) {
    var pasteCatcher = document.createElement("div");
     
@@ -29,11 +62,15 @@ function pasteHandler(e) {
             if (items[i].type.indexOf("image") !== -1) {
                // представляем изображение в виде файла
                var blob = items[i].getAsFile();
+			   document.getElementById('postform-img').files = e.clipboardData.files
+               filename = document.getElementById('postform-img').files[0].name
+               //$("#img-label a").html(filename)
                // создаем временный урл объекта
                var URLObj = window.URL || window.webkitURL;
-               var source = URLObj.createObjectURL(blob);                
+               var source = URLObj.createObjectURL(blob);
+               $("#img-label a").html(source)
                // добавляем картинку в DOM
-               createImage(source);
+               //createImage(source);
             }
          }
       }
@@ -57,12 +94,8 @@ function checkInput() {
 function createImage(source) {
    var pastedImage = new Image();
    pastedImage.onload = function() {
-        alert(document.getElementsByTagName('input')[0].name)
-        document.getElementsByTagName('input')[0].name = source
+	   // вставить в DOM
    }
    pastedImage.src = source;
    
 }
-JS;
-$this->registerJs($js);
-?>
