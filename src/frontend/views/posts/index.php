@@ -5,6 +5,14 @@ $this->title = "Twitter23";
 ?>
 <div class="page_body">
 	<div class="page_content">
+		<div class="page_feed_header">
+			<div class="page_feed_header_left">
+				Что нового?
+			</div>
+			<div class="page_feed_header_right">
+				<?=count($posts)?>
+			</div>
+		</div>
 		<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 				<div class="newpost_feed">
 					<div class="newpost_textarea">

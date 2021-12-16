@@ -14,6 +14,7 @@ use frontend\models\Signup;
 use frontend\models\Friends;
 use frontend\models\Popular;
 use frontend\models\PostForm;
+use frontend\models\Notifications;
 
 /**
  * Posts controller
@@ -223,6 +224,14 @@ class PostsController extends Controller
         // if this user doesn't subscribe...
         if (empty($friends)) {
             // ... subscribe
+            $nofitication = new Notifications();
+            $nofitication->moredata = "";
+            $nofitication->userid = $user->id;
+            $nofitication->initid = $id;
+            $nofitication->type = 'subscribe';
+            $nofitication->checked = 0;
+            $nofitication->dateadd  = date('Y-m-d H:i:s', time());
+            $nofitication->save();
             $plus = 1;
             $friended = new Friends();
             $friended->userid = $user->id;
@@ -230,6 +239,8 @@ class PostsController extends Controller
             $friended->save();
         } else {
             // ... unsubscribe
+            $nofitication = Notifications::findOne(['userid' => $user->id, 'initid' => $id, 'type' => 'subscribe']);
+            if (!empty($nofitication)) $nofitication->delete();
             $plus = 0;
             $friends->delete();
         }

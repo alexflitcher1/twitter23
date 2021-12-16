@@ -91,13 +91,31 @@ $this->title = "Twitter23";
 								</div>
 								<div class="post_content">
 									<div class="post_content_name">
-										<?=$initer[$i]->name?> <a href="#">@<?=$initer[$i]->usernmae?></a> подписалась на вас
+										<?=$initer[$i]->name?> <a href="/<?=$initer[$i]->username?>">@<?=$initer[$i]->username?></a> подписалась на вас
 									</div>
 									<div class="post_content_data">
 										<?=$notifications[$i]->dateadd?>
 									</div>
 									<div class="post_content_text">
-										<a href="/<?=$initer[$i]->usernmae?>">Подписаться в ответ</a>
+										<a href="/<?=$initer[$i]->username?>">Подписаться в ответ</a>
+									</div>
+								</div>
+							</div>
+						<?php endif; ?>
+						<?php if ($notifications[$i]['type'] == 'system'): ?>
+							<div class="post">
+								<div class="post_ava">
+									<img src="/res/favicon2.png">
+								</div>
+								<div class="post_content">
+									<div class="post_content_name">
+										Системное сообщение
+									</div>
+									<div class="post_content_data">
+										<?=$notifications[$i]->dateadd?>
+									</div>
+									<div class="post_content_text">
+										<?=$notifications[$i]['moredata']?>
 									</div>
 								</div>
 							</div>

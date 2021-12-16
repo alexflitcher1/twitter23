@@ -1,8 +1,10 @@
 for (i = 0; i < $(".post_content_text").length; i++) {
-	$(".post_content_text")[i].innerHTML = $(".post_content_text")[i].innerText.replace(/(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*/ig, "<a href='$1$2'>$1$2</a>")
+   if ($(".post_content_text")[i].innerHTML.match(/(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*/ig))
+	   $(".post_content_text")[i].innerHTML = $(".post_content_text")[i].innerText.replace(/(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*/ig, "<a href='$1$2'>$1$2</a>")
 }
 for (i = 0; i < $(".post_content_text").length; i++) {
-	$(".post_content_text")[i].innerHTML = $(".post_content_text")[i].innerHTML.replace(/#(\w*)/ig, "<a href='/search?search=$1'>#$1</a>")
+   if ($(".post_content_text")[i].innerHTML.match(/#(\w*)/ig))
+	   $(".post_content_text")[i].innerHTML = $(".post_content_text")[i].innerHTML.replace(/#(\w*)/ig, "<a href='/search?search=$1'>#$1</a>")
 }
 $('.posts').on('click', '.like', function(e) {
 	var postid = $(this).attr("data-id")
