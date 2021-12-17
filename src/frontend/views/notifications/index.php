@@ -26,7 +26,7 @@ $this->title = "Twitter23";
 								</div>
 								<div class="post_content">
 									<div class="post_content_name">
-										<?=$initer[$i]->name?> <a href="#">@<?=$initer[$i]->username?></a> оценил ваш твит
+										<?=$initer[$i]->name?> <a href="/<?=$initer[$i]->username?>">@<?=$initer[$i]->username?></a> оценил(а) ваш твит
 									</div>
 									<div class="post_content_data">
 										<?=$notifications[$i]->dateadd?>
@@ -37,7 +37,7 @@ $this->title = "Twitter23";
 										</div>
 										<div class="post_content_nfpost">
 											<div class="post_content_name">
-												<?=$user->name?> <a href="#">@<?=$user->username?></a>
+												<?=$user->name?> <a href="/<?=$initer[$i]->username?>">@<?=$user->username?></a>
 											</div>
 											<div class="post_content_data">
 												<?=$notifications[$i]['moredata']->date?>

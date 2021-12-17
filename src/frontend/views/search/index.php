@@ -211,7 +211,7 @@ $this->title = "Поиск";
 				</div>
 				<div class="fl_menu_block">
 					<div class="fl_menu_n"><?=Html::encode($postscount)?></div>
-					<div class="fl_menu_name"><a href="#">Твиты</a></div>
+					<div class="fl_menu_name"><a href="/me">Твиты</a></div>
 				</div>
 			</div>
 			<div class="page_menu_top">

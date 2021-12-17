@@ -213,7 +213,7 @@ $this->title = $user->name . " - " . "Twitter23";
 					</div>
 					<div class="fl_menu_block">
 						<div class="fl_menu_n"><?=Html::encode(count($posts))?></div>
-						<div class="fl_menu_name"><a href="/profile?id=<?=$user->username?>">Твиты</a></div>
+						<div class="fl_menu_name"><a href="/<?=$user->username?>">Твиты</a></div>
 					</div>
 				</div>
 				<div class="page_menu_nav">

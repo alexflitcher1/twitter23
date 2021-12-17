@@ -9,8 +9,8 @@ use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
-
-DefaultAsset::register($this);
+use frontend\components\ThemeWidget;
+ThemeWidget::widget(['page' => $this]);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

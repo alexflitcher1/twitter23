@@ -14,6 +14,7 @@ use frontend\models\Popular;
 use frontend\models\Friends;
 use frontend\models\Settings;
 use frontend\models\PostForm;
+use frontend\models\MainSettings;
 use frontend\models\Notifications;
 
 /**
@@ -371,7 +372,66 @@ class UserController extends Controller
         $cookies = Yii::$app->request->cookies;
         if (!$cookies->get("auth"))
             return $this->redirect("/login");
-        return $this->render('settings');
+        $cookie = $cookies->get('auth');
+        $username = $cookie->value;
+        $user  = User::findOne(['username' => htmlentities($username)]);
+        $suber = count(Friends::find()
+            ->where(['userid' => htmlentities($user->id)])
+            ->all());
+        $subs  = count(Friends::find()
+            ->where(['friendid' => htmlentities($user->id)])
+            ->all());
+        $posts = count(Posts::find()
+            ->where(['userid' => htmlentities($user->id)])
+            ->orderBy(['id' => SORT_DESC])
+            ->all());
+        $model = new MainSettings();
+        $model1 = new PostForm();
+        if ($model->load(Yii::$app->request->post()) 
+        && $model->validate()) {
+            $user->theme = htmlentities($model->theme);
+            $user->language  = htmlentities($model->lang);
+            if ($user->save()) return $this->render('settings', ['model' => $model, 'user' => $user, 
+                                                                 'suber' => $suber, 'model1' => $model1,
+                                                                 'subs' => $subs, 'posts' => $posts]);
+        }
+        if ($model1->load(Yii::$app->request->post()) 
+        && $model1->validate()) {
+            $model1->img = UploadedFile::getInstance($model1, 'img');
+            $imgname = $model1->upload();
+            if ($imgname) {
+                // count entered words
+                $allwords = explode(" ", htmlentities($model1->text));
+                for ($i = 0; $i < count($allwords); $i++) {
+                    $words[$allwords[$i]] = isset($words[$allwords[$i]]) ? 
+                                                  $words[$allwords[$i]] + 1 : 1;
+                }
+                for ($i = 0; $i < count($words); $i++) {
+                    $word = Popular::findOne(['text' => $allwords[$i]]);
+                    if ($word) {
+                        $word->count = $word->count + $words[$allwords[$i]];
+                        $word->save();
+                    } else {
+                        $word = new Popular();
+                        $word->text = $allwords[$i];
+                        $word->count = $words[$allwords[$i]];
+                        $word->save();
+                    }
+                }
+                $npost = new Posts();
+                $npost->userid = htmlentities($user->id);
+                $npost->date = date('Y-m-d H:i:s', time());
+                $npost->text = htmlentities($model1->text);
+                $npost->text = str_replace("\n", "<br>", $model1->text);
+                $imgname = ($imgname === true) ? null : "/" . $imgname;
+                $npost->img = $imgname;
+                $npost->likes = 0;
+                if ($npost->save())
+                    return $this->redirect("/me");
+            }
+        }
+        return $this->render('settings', ['model' => $model, 'user' => $user, 'suber' => $suber,
+                                          'subs' => $subs, 'posts' => $posts, 'model1' => $model1]);
     }
 
     /**
