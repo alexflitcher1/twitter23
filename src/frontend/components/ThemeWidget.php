@@ -18,14 +18,16 @@ class ThemeWidget extends Widget
     public function run()
     {
         $cookies = Yii::$app->request->cookies;
-        if (!$cookies->get("auth"))
-            return $this->redirect("/login");
-        $cookie = $cookies->get('auth');
-        $username = $cookie->value;
-        $user  = User::findOne(['username' => htmlentities($username)]);
-        switch ($user['theme']) {
-            case 'default':
-                \frontend\assets\DefaultAsset::register($this->page); break;
+        if ($cookies->get("auth")) {
+            $cookie = $cookies->get('auth');
+            $username = $cookie->value;
+            $user  = User::findOne(['username' => htmlentities($username)]);
+            switch ($user['theme']) {
+                case 'default':
+                    \frontend\assets\DefaultAsset::register($this->page); return 0;
+            }
         }
+        \frontend\assets\DefaultAsset::register($this->page);
+        return 0;
     }
 }
