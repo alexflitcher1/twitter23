@@ -25,6 +25,10 @@ class ThemeWidget extends Widget
             switch ($user['theme']) {
                 case 'default':
                     \frontend\assets\DefaultAsset::register($this->page); return 0;
+                case 'twitter23modern':
+                    \frontend\assets\Twitter23ModernAsset::register($this->page); return 0;
+                case 'none':
+                    \frontend\assets\NoneAsset::register($this->page); return 0;
             }
         }
         \frontend\assets\DefaultAsset::register($this->page);

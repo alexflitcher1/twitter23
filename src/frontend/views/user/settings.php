@@ -25,11 +25,12 @@ $this->title = "Ваши настройки";
 				</div>
 				<div class="set_str">
 					<div class="set_name">
-						Основной цвет оформления
+						Тема оформления
 					</div>
 					<div class="set_input">
 						<?=$form->field($model, 'theme')->dropDownList([
 								'default' => 'По умолчанию',
+								'twitter23modern' => 'Twitter23Modern',
 								'none' => 'None',
 							]);
 						?>
