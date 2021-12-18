@@ -1,0 +1,24 @@
+body {
+    background: #9ae89b url(https://i.imgur.com/yAegvoa.png) no-repeat fixed left top;
+}
+.page_menu {
+    background: #c7ffd0;
+}
+a {
+    color: #22bb2c;
+}
+.page_menu_nav_link {
+	border-top: 1px solid #9bd997;
+	border-bottom: 1px solid #9bd997;
+}
+.page_menu_nav_link:hover {
+	background: #bcf7be;
+}
+.page_menu_newpost_bt button {
+    background: #b8f3ba;
+    border: 1px solid #a9e5a3;
+    color: #156a1c;
+}
+.page_menu_newpost_bt button:hover {
+	background: #a5e3af;
+}

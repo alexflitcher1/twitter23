@@ -29,6 +29,20 @@ class ThemeWidget extends Widget
                     \frontend\assets\Twitter23ModernAsset::register($this->page); return 0;
                 case 'none':
                     \frontend\assets\NoneAsset::register($this->page); return 0;
+                case 'blue':
+                    \frontend\assets\BlueAsset::register($this->page); return 0;
+                case 'yellow':
+                    \frontend\assets\YellowAsset::register($this->page); return 0;
+                case 'pink':
+                    \frontend\assets\PinkAsset::register($this->page); return 0;
+                case 'orange':
+                    \frontend\assets\OrangeAsset::register($this->page); return 0;
+                case 'green':
+                    \frontend\assets\GreenAsset::register($this->page); return 0;
+                case 'red':
+                    \frontend\assets\RedAsset::register($this->page); return 0;
+                case 'brown':
+                    \frontend\assets\BrownAsset::register($this->page); return 0;
             }
         }
         \frontend\assets\DefaultAsset::register($this->page);

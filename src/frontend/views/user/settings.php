@@ -32,6 +32,13 @@ $this->title = "Ваши настройки";
 								'default' => 'По умолчанию',
 								'twitter23modern' => 'Twitter23Modern',
 								'none' => 'None',
+								'red' => 'Red',
+								'blue' => 'Blue',
+								'green' => 'Green',
+								'brown' => 'Brown',
+								'orange' => 'Orange',
+								'pink' => 'Pink',
+								'yellow' => 'Yellow',
 							]);
 						?>
 					</div>
