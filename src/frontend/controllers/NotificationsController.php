@@ -54,7 +54,7 @@ class NotificationsController extends Controller
                         ->all();
         $notifications = Notifications::find()
                         ->where("userid=:userid AND checked = 0", ['userid' => $user->id])
-                        ->orderBy(['dateadd' => SORT_ASC])
+                        ->orderBy(['dateadd' => SORT_DESC])
                         ->all();
         $initer = [];
         for ($i = 0; $i < count($notifications); $i++) {

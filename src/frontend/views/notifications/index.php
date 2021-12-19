@@ -40,11 +40,24 @@ $this->title = "Twitter23";
 												<?=$user->name?> <a href="/<?=$initer[$i]->username?>">@<?=$user->username?></a>
 											</div>
 											<div class="post_content_data">
-												<?=$notifications[$i]['moredata']->date?>
+												<?php if (isset($notifications[$i]['moredata'])): ?>
+													<?=$notifications[$i]['moredata']->date?>
+												<?php endif; ?>
 											</div>
 											<div class="post_content_text">
-												<?=$notifications[$i]['moredata']->text?>
+												<?php if (isset($notifications[$i]['moredata']->text)): ?>
+													<?=$notifications[$i]['moredata']->text?>
+												<?php else: ?>
+													<b>Пост удалён</b>
+												<?php endif; ?>
 											</div>
+											<?php if (isset($notifications[$i]['moredata']->img)): ?>
+												<?php if ($notifications[$i]['moredata']->img != null): ?>
+													<div class="post_content_img">
+														<img src="<?=Html::encode($notifications[$i]['moredata']->img)?>">
+													</div>
+												<?php endif; ?>
+											<?php endif; ?>
 										</div>
 									</div>
 								</div>
@@ -72,11 +85,24 @@ $this->title = "Twitter23";
 												<?=$user->name?> <a href="/<?=$user->username?>">@<?=$user->username?></a>
 											</div>
 											<div class="post_content_data">
-												<?=$notifications[$i]->dateadd?>
+												<?php if (isset($notifications[$i]['moredata'])): ?>
+													<?=$notifications[$i]['moredata']->date?>
+												<?php endif; ?>
 											</div>
 											<div class="post_content_text">
-												<a href="/<?=$user->username?>">@<?=$user->username?></a> <?=$notifications[$i]['moredata']->text?>
+												<?php if (isset($notifications[$i]['moredata']->text)): ?>
+													<?=$notifications[$i]['moredata']->text?>
+												<?php else: ?>
+													<b>Пост удалён</b>
+												<?php endif; ?>
 											</div>
+											<?php if (isset($notifications[$i]['moredata']->img)): ?>
+												<?php if ($notifications[$i]['moredata']->img != null): ?>
+													<div class="post_content_img">
+														<img src="<?=Html::encode($notifications[$i]['moredata']->img)?>">
+													</div>
+												<?php endif; ?>
+											<?php endif; ?>
 											<div class="post_content_nav_post">
 											</div>
 										</div>
@@ -129,7 +155,7 @@ $this->title = "Twitter23";
 					<img src="/<?=Html::encode($user->img)?>" class="profile_names_ava">
 				</div>
 				<div class="profile_names_right">
-					<div class="profile_names_username">@<?=Html::encode($user->username)?></div>
+					<div class="profile_names_username"><?=Html::encode($user->username)?></div>
 					<div class="profile_names_name"><?=Html::encode($user->name)?></div>
 				</div>
 			</div>

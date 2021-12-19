@@ -1,6 +1,6 @@
 for (i = 0; i < $(".post_content_text").length; i++) {
    if ($(".post_content_text")[i].innerHTML.match(/(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*/ig))
-	   $(".post_content_text")[i].innerHTML = $(".post_content_text")[i].innerText.replace(/(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*/ig, "<a href='$1$2'>$1$2</a>")
+	   $(".post_content_text")[i].innerHTML = $(".post_content_text")[i].innerText.replace(/(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})([^\s@]*)/ig, "<a href='$1$2$3'>$1$2$3</a>")
 }
 for (i = 0; i < $(".post_content_text").length; i++) {
    if ($(".post_content_text")[i].innerHTML.match(/#(\w*)/ig))
@@ -37,6 +37,7 @@ $("#postform-img").change(function() {
   $("#img-label a").html(filename)
   console.log(filename);
 });
+
 if (!window.Clipboard) {
    var pasteCatcher = document.createElement("div");
     
@@ -101,3 +102,14 @@ function createImage(source) {
    pastedImage.src = source;
    
 }
+var timeOut;
+function goUp() {
+   var top = Math.max(document.body.scrollTop,document.documentElement.scrollTop);
+   if(top > 0) {
+      window.scrollBy(0,-100);
+      timeOut = setTimeout('goUp()', 5);
+   } else clearTimeout(timeOut);
+}
+$('.top').click(function () {
+   goUp()
+})

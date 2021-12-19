@@ -44,7 +44,7 @@ $this->title = "Подписчики";
                   <img src="<?=$user->img?>" class="profile_names_ava">
                </div>
                <div class="profile_names_right">
-                  <div class="profile_names_username">@<?=$user->username?></div>
+                  <div class="profile_names_username"><?=$user->username?></div>
                   <div class="profile_names_name"><?=$user->name?></div>
                </div>
             </div>

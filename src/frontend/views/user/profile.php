@@ -154,7 +154,7 @@ $this->title = $user->name . " - " . "Twitter23";
 						<img src="/<?=Html::encode($user->img)?>" class="profile_names_ava">
 					</div>
 					<div class="profile_names_right">
-						<div class="profile_names_username">@<?=Html::encode($user->username)?></div>
+						<div class="profile_names_username"><?=Html::encode($user->username)?></div>
 						<div class="profile_names_name"><?=Html::encode($user->name)?></div>
 					</div>
 				</div>

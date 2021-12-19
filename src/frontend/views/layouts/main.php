@@ -25,6 +25,9 @@ ThemeWidget::widget(['page' => $this]);
 </head>
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
+<div class="top">
+	Наверх
+</div>
 <div class="loyaut">
 <div class="header">
 	<div class="logo">

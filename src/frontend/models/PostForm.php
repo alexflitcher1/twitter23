@@ -19,7 +19,13 @@ class PostForm extends Model
     public function rules()
     {
         return [
-            [['text'], 'string', 'message' => ''],
+            [['text'], 'required', 'message' => '', 'when' => function($model) {
+                return false;
+            }, 'whenClient' => "function (attribute, value) {
+                if ($('#postform-img').val() != '')
+                    return false;
+                return true;
+            }"],
             [['img'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, gif, webp'],
         ];
     }

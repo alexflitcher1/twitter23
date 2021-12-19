@@ -261,9 +261,8 @@ span {
 .newpost_tw {
 	margin-top: 3px;
 	color: #606060;
+	height: 15px;
 }
-
-
 
 
 
@@ -304,7 +303,9 @@ span {
 	padding-bottom: 3px;
 }
 .page_menu_newpost_tw {
-	margin-top: 4px;
+	margin-top: 3px;
+	height: 25px;
+
 }
 
 
@@ -629,10 +630,11 @@ span {
 	border-bottom: none;
 }
 .pagination {
-    display: flex;
+	display: flex;
 	text-align: center;
-    justify-content: center;
-    width: 100%;
+	justify-content: center;
+	width: 100%;
+	margin-top: 10px;
 }
 .pagination div {
 	display: inline-block;
@@ -647,3 +649,27 @@ span {
  html {
 	 display: none;
  }
+
+ .top {
+	position: fixed;
+	background: #0000005c;
+	padding: 7px;
+	border-radius: 0px 0px 4px 4px;
+	border: 1px solid #4e4e4e;
+	border-top: 0px;
+	color: #ffffffd1;
+	font-weight: bold;
+	margin: 0px 10px 0px;
+	opacity: .0;
+	transition-duration: .1s;
+	cursor: pointer;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.top:hover {
+	opacity: 1;
+}

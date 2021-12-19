@@ -10,7 +10,9 @@ $this->title = "Twitter23";
 				Что нового?
 			</div>
 			<div class="page_feed_header_right">
-				<?=count($posts)?>
+				<b class="page_feed_header_right_entered"></b>
+				/
+				320
 			</div>
 		</div>
 		<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
@@ -53,6 +55,10 @@ $this->title = "Twitter23";
 							<?php endif; ?>
 							<div class="post_content_nav">
 								<div class="post_content_nav_left">
+									<?php if ($posts[$i]->userid == $user->id): ?>
+										<a class="delete" data-id="<?=Html::encode($posts[$i]->id)?>">Удалить</a> 
+										<a href="/edit?id=<?=Html::encode($posts[$i]->id)?>" class="edit">Редактировать</a>
+									<?php endif; ?>
 									<a href="/me?mode=reply&replypost=<?=Html::encode($posts[$i]['id'])?>">
 										Ответить (0)
 									</a>
@@ -86,6 +92,10 @@ $this->title = "Twitter23";
 								<?php endif; ?>
 								<div class="post_content_nav">
 									<div class="post_content_nav_left">
+										<?php if ($posts[$i]->userid == $user->id): ?>
+											<a class="delete" data-id="<?=Html::encode($posts[$i]->id)?>">Удалить</a> 
+											<a href="/edit?id=<?=Html::encode($posts[$i]->id)?>" class="edit">Редактировать</a>
+										<?php endif; ?>
 										<a href="/me?mode=reply&replyid=<?=Html::encode($posts[$i]['userid'])?>&replypost=<?=Html::encode($posts[$i]['id'])?>">
 											Ответить (<?=count($posts[$i]['replies'])?>)
 										</a>
@@ -151,7 +161,7 @@ $this->title = "Twitter23";
 					<img src="/<?=Html::encode($user->img)?>" class="profile_names_ava">
 				</div>
 				<div class="profile_names_right">
-					<div class="profile_names_username">@<?=Html::encode($user->username)?></div>
+					<div class="profile_names_username"><?=Html::encode($user->username)?></div>
 					<div class="profile_names_name"><?=Html::encode($user->name)?></div>
 				</div>
 			</div>
@@ -221,6 +231,11 @@ $('body').on('click', '.load_more', function(e) {
 		$('.posts').append(data);
 	});
 });
+document.querySelector(".page_feed_header_right b").innerHTML = $("textarea[name='PostForm[text]").val().length
+$("textarea[name='PostForm[text]").keyup(function (e) {
+   if ($(this).val().length >= 320) $(this).val($(this).val().slice(0, 320))
+   document.querySelector(".page_feed_header_right b").innerHTML = $(this).val().length
+})
 JS;
 $this->registerJs($js);
 ?>
