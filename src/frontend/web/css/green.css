@@ -22,3 +22,11 @@ a {
 .page_menu_newpost_bt button:hover {
 	background: #a5e3af;
 }
+.page_menu_nav_link_active {
+    border-top: 1px solid #9bd997;
+    border-bottom: 1px solid #9bd997;
+    background: #e9ffe4;
+}
+.page_menu_nav_link_active:hover {
+    background: #c4f7bc;
+}

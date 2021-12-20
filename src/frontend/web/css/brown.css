@@ -5,14 +5,14 @@ body {
     background: #d9bf81;
 }
 a {
-    color: #856019;
+    color: #b98218;
 }
 .page_menu_nav_link {
-	border-top: 1px solid #9f8814;
-	border-bottom: 1px solid #9f8814;
+    border-top: 1px solid #9f8814;
+    border-bottom: 1px solid #9f8814;
 }
 .page_menu_nav_link:hover {
-	background: #d7b76a;
+    background: #ac9e45;
 }
 .page_menu_newpost_bt button {
     background: #ceb16b;
@@ -20,5 +20,13 @@ a {
     color: #856019;
 }
 .page_menu_newpost_bt button:hover {
-	background: #c5a966;
+    background: #c5a966;
+}
+.page_menu_nav_link_active {
+    border-top: 1px solid #9f8814;
+    border-bottom: 1px solid #9f8814;
+    background: #fff4e4;
+}
+.page_menu_nav_link_active:hover {
+    background: #f7debc;
 }
