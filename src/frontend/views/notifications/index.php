@@ -26,7 +26,8 @@ $this->title = "Twitter23";
 								</div>
 								<div class="post_content">
 									<div class="post_content_name">
-										<?=$initer[$i]->name?> <a href="/<?=$initer[$i]->username?>">@<?=$initer[$i]->username?></a> оценил(а) ваш твит
+										<?=$initer[$i]->name?> <a href="/<?=$initer[$i]->username?>">@<?=$initer[$i]->username?></a> оценил(а) 
+										<a href="#">ваш твит</a>
 									</div>
 									<div class="post_content_data">
 										<?=$notifications[$i]->dateadd?>
@@ -70,8 +71,8 @@ $this->title = "Twitter23";
 								</div>
 								<div class="post_content">
 									<div class="post_content_name">
-										<?=$initer[$i]->name?> <a href="/<?=$initer[$i]->username?>">@<?=$initer[$i]->username?></a> упомянул вас в
-										<a href="#">вашем посте</a>
+										<?=$initer[$i]->name?> <a href="/<?=$initer[$i]->username?>">@<?=$initer[$i]->username?></a> ответил на 
+										<a href="#">ваш пост</a>
 									</div>
 									<div class="post_content_data">
 										<?=$notifications[$i]->dateadd?>
@@ -124,6 +125,52 @@ $this->title = "Twitter23";
 									</div>
 									<div class="post_content_text">
 										<a href="/<?=$initer[$i]->username?>">Подписаться в ответ</a>
+									</div>
+								</div>
+							</div>
+						<?php endif; ?>
+						<?php if ($notifications[$i]['type'] == 'tag'): ?>
+							<div class="post">
+								<div class="post_ava">
+									<img src="<?=$initer[$i]->img?>">
+								</div>
+								<div class="post_content">
+									<div class="post_content_name">
+										<?=$initer[$i]->name?> <a href="/<?=$initer[$i]->username?>">@<?=$initer[$i]->username?></a> упомянул вас
+									</div>
+									<div class="post_content_data">
+										<?=$notifications[$i]->dateadd?>
+									</div>
+									<div class="post_content_post">
+										<div class="post_ava">
+											<img src="<?=$user->img?>">
+										</div>
+										<div class="post_content_nfpost">
+											<div class="post_content_name">
+												<?=$user->name?> <a href="/<?=$user->username?>">@<?=$user->username?></a>
+											</div>
+											<div class="post_content_data">
+												<?php if (isset($notifications[$i]['moredata'])): ?>
+													<?=$notifications[$i]['moredata']->date?>
+												<?php endif; ?>
+											</div>
+											<div class="post_content_text">
+												<?php if (isset($notifications[$i]['moredata']->text)): ?>
+													<?=$notifications[$i]['moredata']->text?>
+												<?php else: ?>
+													<b>Пост удалён</b>
+												<?php endif; ?>
+											</div>
+											<?php if (isset($notifications[$i]['moredata']->img)): ?>
+												<?php if ($notifications[$i]['moredata']->img != null): ?>
+													<div class="post_content_img">
+														<img src="<?=Html::encode($notifications[$i]['moredata']->img)?>">
+													</div>
+												<?php endif; ?>
+											<?php endif; ?>
+											<div class="post_content_nav_post">
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>

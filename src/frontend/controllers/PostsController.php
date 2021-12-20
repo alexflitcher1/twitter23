@@ -115,8 +115,27 @@ class PostsController extends Controller
                     $imgname = ($imgname === true) ? null : "/" . $imgname;
                     $npost->img = $imgname;
                     $npost->likes = 0;
-                    if ($npost->save())
+                    $lastinsertid = "";
+                    if ($npost->save() && ($lastinsertid = Yii::$app->db->getLastInsertID())) {
+                        $matches = [];
+                        if (preg_match_all("/@\w+/i", htmlentities($model->text), $matches)) {
+                            for ($i = 0; $i < count($matches[0]); $i++) {
+                                $taguname = str_replace('@', '', $matches[0][$i]);
+                                $tagudata = User::findOne(['username' => $taguname]);
+                                if (!empty($tagudata)) {
+                                    $nofitication           = new Notifications();
+                                    $nofitication->userid   = $tagudata->id;
+                                    $nofitication->type     = 'tag';
+                                    $nofitication->checked  = 0;
+                                    $nofitication->moredata = $lastinsertid;
+                                    $nofitication->initid   = $user->id;
+                                    $nofitication->dateadd  = date('Y-m-d H:i:s', time());
+                                    $nofitication->save();
+                                }
+                            }
+                        }
                         return $this->redirect("/feed?p=" . $p);
+                    }
                 }
         }
 

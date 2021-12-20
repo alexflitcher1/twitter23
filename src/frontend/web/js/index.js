@@ -6,6 +6,10 @@ for (i = 0; i < $(".post_content_text").length; i++) {
    if ($(".post_content_text")[i].innerHTML.match(/#(\w*)/ig))
 	   $(".post_content_text")[i].innerHTML = $(".post_content_text")[i].innerHTML.replace(/#(\w*)/ig, "<a href='/search?search=$1'>#$1</a>")
 }
+for (i = 0; i < $(".post_content_text").length; i++) {
+   if ($(".post_content_text")[i].innerHTML.match(/@(\w+)/ig))
+	   $(".post_content_text")[i].innerHTML = $(".post_content_text")[i].innerHTML.replace(/@(\w+)/ig, "<a href='/$1'>@$1</a>")
+}
 $('.posts').on('click', '.like', function(e) {
 	var postid = $(this).attr("data-id")
 	var it = e.target;
@@ -112,4 +116,8 @@ function goUp() {
 }
 $('.top').click(function () {
    goUp()
+})
+
+$("textarea[name='PostForm[text]").keyup(function (e) {
+   if ($(this).val().length >= 320) $(this).val($(this).val().slice(0, 320))
 })

@@ -58,7 +58,9 @@ class NotificationsController extends Controller
                         ->all();
         $initer = [];
         for ($i = 0; $i < count($notifications); $i++) {
-            if ($notifications[$i]['type'] == 'like' || $notifications[$i]['type'] == 'reply') {
+            if ($notifications[$i]['type'] == 'like' 
+                || $notifications[$i]['type'] == 'reply' 
+                || $notifications[$i]['type'] == 'tag') {
                 $notifications[$i]['moredata'] = Posts::findOne(['id' => $notifications[$i]['moredata']]);
                 $initer[$i] = User::findOne(['id' => $notifications[$i]['initid']]);
             } elseif ($notifications[$i]['type'] == 'subscribe') {
