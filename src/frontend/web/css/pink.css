@@ -8,11 +8,11 @@ a {
     color: #b322bb;
 }
 .page_menu_nav_link {
-	border-top: 1px solid #d997d9;
-	border-bottom: 1px solid #d997d9;
+    border-top: 1px solid #d997d9;
+    border-bottom: 1px solid #d997d9;
 }
 .page_menu_nav_link:hover {
-	background: #f6bcf7;
+    background: #f6bcf7;
 }
 .page_menu_newpost_bt button {
     background: #e9b8f3;
@@ -20,5 +20,13 @@ a {
     color: #60156a;
 }
 .page_menu_newpost_bt button:hover {
-	background: #d9a5e3;
+    background: #d9a5e3;
+}
+.page_menu_nav_link_active {
+    border-top: 1px solid #d997d9;
+    border-bottom: 1px solid #d997d9;
+    background: #ffe4fb;
+}
+.page_menu_nav_link_active:hover {
+    background: #f7bcf5;
 }
