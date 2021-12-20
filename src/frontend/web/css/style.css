@@ -364,6 +364,9 @@ span {
 	margin-left: 10px;
     width: 427px;
 }
+.post_content_nfpost .post_content_img img {
+		width: 427px;
+}
 .post_content_nav_post {
 	display: flex;
     justify-content: space-between;
