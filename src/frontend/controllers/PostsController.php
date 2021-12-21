@@ -245,8 +245,8 @@ class PostsController extends Controller
             // ... subscribe
             $nofitication = new Notifications();
             $nofitication->moredata = "";
-            $nofitication->userid = $user->id;
-            $nofitication->initid = $id;
+            $nofitication->userid = $id;
+            $nofitication->initid = $user->id;
             $nofitication->type = 'subscribe';
             $nofitication->checked = 0;
             $nofitication->dateadd  = date('Y-m-d H:i:s', time());
@@ -258,7 +258,7 @@ class PostsController extends Controller
             $friended->save();
         } else {
             // ... unsubscribe
-            $nofitication = Notifications::findOne(['userid' => $user->id, 'initid' => $id, 'type' => 'subscribe']);
+            $nofitication = Notifications::findOne(['userid' => $id, 'initid' => $user->id, 'type' => 'subscribe']);
             if (!empty($nofitication)) $nofitication->delete();
             $plus = 0;
             $friends->delete();
