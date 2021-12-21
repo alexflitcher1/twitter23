@@ -74,7 +74,8 @@ span {
     margin-top: 17px;*/
 }
 .logo a:active {
-    margin-top: 18px;
+/*     margin-top: 18px; */
+	margin-top: 15px;
 }
 .nav {
 	background: #fff;
@@ -263,6 +264,8 @@ span {
 	color: #606060;
 	height: 15px;
 }
+
+/* vova love u */
 
 
 
