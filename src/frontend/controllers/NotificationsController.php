@@ -119,7 +119,7 @@ class NotificationsController extends Controller
         $userid = Posts::findOne(['id' => $postid])->userid;
         $notif = Notifications::find()
         ->where('userid = :userid AND initid = :initid AND moredata = :moredata', 
-        [':userid' => $user->id, ':initid' => $userid, ':moredata' => $postid])->one();
+        [':userid' => $userid, ':initid' => $user->id, ':moredata' => $postid])->one();
         if (!empty($notif)) {
             if ($notif->delete())
                 return 1;
