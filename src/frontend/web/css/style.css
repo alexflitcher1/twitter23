@@ -679,3 +679,11 @@ span {
 .top:hover {
 	opacity: 1;
 }
+
+#postform-img {
+	display: none;
+}
+
+label:hover {
+	cursor: pointer;
+}
