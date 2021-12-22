@@ -83,7 +83,7 @@ use yii\helpers\Html;
 							<?=Html::encode($posts[$i]['replies'][$j]->date)?>
 						</div>
 						<div class="post_content_text">
-							<a href="#">@<?=Html::encode($posts[$i]['authordata']->username)?></a> <?=$posts[$i]['replies'][$j]->text?>
+							<?=$posts[$i]['replies'][$j]->text?>
 						</div>
 						<?php if ($posts[$i]['replies'][$j]->img != null): ?>
 							<div class="post_content_img">
@@ -96,7 +96,7 @@ use yii\helpers\Html;
 									<a class="delete" data-id="<?=Html::encode($posts[$i]['replies'][$j]->id)?>">Удалить</a> 
 									<a href="/edit?id=<?=Html::encode($posts[$i]['replies'][$j]->id)?>" class="edit">Редактировать</a>
 								<?php endif; ?>
-								<a href="#">Ответить</a>
+								<a href="/me?mode=reply&replierid=<?=$posts[$i]['replies'][$j]->id?>&replypost=<?=Html::encode($posts[$i]->id)?>">Ответить</a>
 							</div>
 							<div class="post_content_nav_right">
 								<a class="like" data-id=<?=Html::encode($posts[$i]['replies'][$j]->id)?>>

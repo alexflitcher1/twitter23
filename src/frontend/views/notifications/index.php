@@ -141,19 +141,8 @@ $this->title = "Twitter23";
 									<div class="post_content_data">
 										<?=$notifications[$i]->dateadd?>
 									</div>
-									<div class="post_content_post">
-										<div class="post_ava">
-											<img src="<?=$user->img?>">
-										</div>
+									<div class="post_content_post" style="margin-left:-10px">
 										<div class="post_content_nfpost">
-											<div class="post_content_name">
-												<?=$user->name?> <a href="/<?=$user->username?>">@<?=$user->username?></a>
-											</div>
-											<div class="post_content_data">
-												<?php if (isset($notifications[$i]['moredata'])): ?>
-													<?=$notifications[$i]['moredata']->date?>
-												<?php endif; ?>
-											</div>
 											<div class="post_content_text">
 												<?php if (isset($notifications[$i]['moredata']->text)): ?>
 													<?=$notifications[$i]['moredata']->text?>

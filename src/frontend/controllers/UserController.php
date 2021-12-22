@@ -33,7 +33,7 @@ class UserController extends Controller
      * @param int $replypost depricated
      * @return mixed
     */
-    public function actionIndex($mode = "add", $replypost = 0)
+    public function actionIndex($mode = "add", $replypost = 0, $replierid = 0)
     {
         // check auth
         $cookies = Yii::$app->request->cookies;
@@ -118,10 +118,13 @@ class UserController extends Controller
             ]));
         } elseif ($mode == "reply") {
             if ($replypost != 0) {
+                if ($replierid == 0) $replierid = $replypost;
                 $postr = Posts::findOne("userid = :userid AND id = :postid",
                                 [':userid' => $user->id, ':id' => $replypost]);
-
-                if ($model->load(Yii::$app->request->post()) 
+                $thispost = Posts::findOne(['id' => $replierid]);
+                $authorpost = User::findOne(['id' => $thispost->userid]);
+                $model->text = "@" . $authorpost->username . ", ";
+                if ($model->load(Yii::$app->request->post())
                     && $model->validate()) {
                     $model->img = UploadedFile::getInstance($model, 'img');
                     $imgname = $model->upload();
@@ -136,10 +139,9 @@ class UserController extends Controller
                         $npost->replyid = htmlentities($replypost);
                         $npost->likes = 0;
                         if ($npost->save()) {
-                            $userids = Posts::findOne(['id' => $replypost])->userid;
                             $nofitication = new Notifications();
-                            $nofitication->moredata = $replypost;
-                            $nofitication->userid = $userids;
+                            $nofitication->moredata = $replierid;
+                            $nofitication->userid = $authorpost->id;
                             $nofitication->initid = $user->id;
                             $nofitication->type = 'reply';
                             $nofitication->checked = 0;
@@ -761,3 +763,4 @@ class UserController extends Controller
         return $this->render('more-subs', ['datasubs' => $datasubs]);
     }
 }
+    

@@ -111,9 +111,6 @@ $this->title = $user->name . " - " . "Twitter23";
 											<?=Html::encode($posts[$i]['replies'][$j]->date)?>
 										</div>
 										<div class="post_content_text">
-											<a href="#">
-												@<?=Html::encode($user->username)?>
-											</a>
 											<?=$posts[$i]['replies'][$j]->text?>
 										</div>
 										<?php if ($posts[$i]['replies'][$j]->img != null): ?>
@@ -131,7 +128,7 @@ $this->title = $user->name . " - " . "Twitter23";
 														Редактировать
 													</a>
 												<?php endif; ?>
-												<a href="#">Ответить</a>
+												<a href="/me?mode=reply&replierid=<?=$posts[$i]['replies'][$j]->id?>&replypost=<?=Html::encode($posts[$i]->id)?>">Ответить</a>
 											</div>
 											<div class="post_content_nav_right">
 												<a class="like" data-id=<?=Html::encode($posts[$i]['replies'][$j]->id)?>>
