@@ -332,6 +332,7 @@ span {
 }*/
 .post_content {
 	margin-left: 10px;
+	word-break: break-all;
 }
 .post_content_name {
 	font-weight: bold;
@@ -687,3 +688,4 @@ span {
 label:hover {
 	cursor: pointer;
 }
+
