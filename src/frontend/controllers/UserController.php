@@ -209,7 +209,7 @@ class UserController extends Controller
                 return $this->redirect('/feed');
             } else {
                 return $this->render('login', ['model' => $model,
-                'error' => 'Не правильный пароль']);
+                'error' => 'Неправильный пароль']);
             }
         }
         return $this->render('login', ['model' => $model]);
