@@ -10,7 +10,7 @@ sudo apt install php-curl php-zip php-yaml composer git mariadb-server
 ```
 2) Clone repository and move folders from /src directory to root directory. Install requirements
 ```bash
-git clone https://github.com/alexflitcher1/twitter23
+git clone https://github.com/twitter23/twitter23
 composer install
 ```
 3) Create database `twitter23` or change database name in [db.php](http://github.com/twitter23/twitter23/blob/master/src/frontend/config/db.php  "db.php")
@@ -22,4 +22,4 @@ php init
 5) For test start `php -S localhost:8080` in /frontend/web/index.php.
 
 ## How can I make bug report?
-You can do it in [issues](https://github.com/alexflitcher1/twitter23/issues "issues")
+You can do it in [issues](https://github.com/twitter23/twitter23/issues "issues")
