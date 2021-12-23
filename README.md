@@ -13,8 +13,8 @@ sudo apt install php-curl php-zip php-yaml composer git mariadb-server
 git clone https://github.com/alexflitcher1/twitter23
 composer install
 ```
-3) Create database `twitter23` or change database name in [db.php](http://github.com/alexflitcher1/twitter23/blob/master/src/frontend/config/db.php  "db.php")
-Now make migration [twitter23.sql](http://github.com/alexflitcher1/twitter23/blob/master/mysql/twitter23.sql "twitter23.sql")
+3) Create database `twitter23` or change database name in [db.php](http://github.com/twitter23/twitter23/blob/master/src/frontend/config/db.php  "db.php")
+Now make migration [twitter23.sql](http://github.com/twitter23/twitter23/blob/master/mysql/twitter23.sql "twitter23.sql")
 4) Init twitter23. Choose need responses
 ```bash
 php init
