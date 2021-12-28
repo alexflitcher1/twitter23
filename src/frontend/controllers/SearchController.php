@@ -61,6 +61,7 @@ class SearchController extends Controller
         $post  = [];
         $replier = [];
         $users = [];
+        $likes = [];
         $model = new SearchForm();
         // if user inputed search string
         if ($model->load(Yii::$app->request->post()) 
@@ -83,6 +84,8 @@ class SearchController extends Controller
                             ->all();
                 for ($i = 0; $i < count($posts); $i++)
                 {
+                    if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['id']]))
+                        $likes["{$posts[$i]['id']}"] = 1;
                     $post[$i] = $posts[$i];
                     $post[$i]['authordata'] = User::findOne(['id' => $post[$i]['userid']]);
                 }
@@ -97,6 +100,8 @@ class SearchController extends Controller
                         $post[$i]['replies'] = $replies;
                         for ($j = 0; $j < count($replies); $j++)
                         {
+                            if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['replies'][$j]['id']]))
+                                $likes["{$posts[$i]['replies'][$j]['id']}"] = 1;
                             $replier[$i][$j] = User::findOne(['id' => $post[$i]['replies'][$j]['userid']]);
                         }
                     }
@@ -113,6 +118,8 @@ class SearchController extends Controller
                         ->all();
                 for ($i = 0; $i < count($posts); $i++)
                 {
+                    if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['id']]))
+                        $likes["{$posts[$i]['id']}"] = 1;
                     $post[$i] = $posts[$i];
                     $post[$i]['authordata'] = User::findOne(['id' => $post[$i]['userid']]);
                 }
@@ -126,6 +133,8 @@ class SearchController extends Controller
                         $post[$i]['replies'] = $replies;
                         for ($j = 0; $j < count($replies); $j++)
                         {
+                            if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['replies'][$j]['id']]))
+                                $likes["{$posts[$i]['replies'][$j]['id']}"] = 1;
                             $replier[$i][$j] = User::findOne(['id' => $post[$i]['replies'][$j]['userid']]);
                         }
                     }
@@ -170,7 +179,7 @@ class SearchController extends Controller
                 if ($npost->save())
                     return $this->redirect("/me");
             }
-    }
+        }
 
         $cookiesresp = Yii::$app->response->cookies;
         $cookies = Yii::$app->response->cookies;
@@ -181,7 +190,7 @@ class SearchController extends Controller
         ]));
 
         return $this->render('index', ['user' => $user, 'model' => $model,
-                                       'postscount' => $postscount,
+                                       'postscount' => $postscount, 'liked' => $likes,
                                        'suber' => $suber, 'subs' => $subs,
                                        'repliers' => $replier, 'users' => $users,
                                        'posts' => $post, 'page' => $p,
@@ -206,9 +215,12 @@ class SearchController extends Controller
                             ->offset($p*$offset)
                             ->all();
         $post  = [];
+        $likes = [];
         for ($i = 0; $i < count($posts); $i++)
         {
             // get author post data
+            if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['id']]))
+                $likes["{$posts[$i]['id']}"] = 1;
             $posts[$i]['authordata'] = User::findOne(['id' => $posts[$i]['userid']]);
         }
         $replier = [];
@@ -221,12 +233,14 @@ class SearchController extends Controller
                 for ($j = 0; $j < count($replies); $j++)
                 {
                     // find reply author
+                    if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['replies'][$j]['id']]))
+                        $likes["{$posts[$i]['replies'][$j]['id']}"] = 1;
                     $replier[$i][$j] = User::findOne(['id' => $posts[$i]['replies'][$j]['userid']]);
                 }
             }
         }
         return $this->render('search-posts', ['user' => $user,
-        'repliers' => $replier,
+        'repliers' => $replier, 'liked' => $likes,
         'posts' => $posts, 'page' => $p]);
     }
 

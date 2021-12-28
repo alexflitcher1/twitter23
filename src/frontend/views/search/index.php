@@ -89,8 +89,13 @@ $this->title = "Поиск";
 										</a>
 									</div>
 									<div class="post_content_nav_right">
-										<a class="like" data-id="<?=Html::encode($posts[$i]['id'])?>">
-											Нравится (<?=Html::encode($posts[$i]['likes'])?>)
+										<a
+										<?php if (isset($liked["{$posts[$i]['id']}"])): ?>
+											<?= $liked["{$posts[$i]['id']}"] ? "class='like underline'" : "class='like'" ?>
+										<?php else: ?>
+											<?="class='like'"?>
+										<?php endif; ?>
+										data-id="<?=Html::encode($posts[$i]['id'])?>">Нравится (<?=Html::encode($posts[$i]['likes'])?>)
 										</a>
 									</div>
 								</div>
@@ -127,8 +132,13 @@ $this->title = "Поиск";
 											</a>
 										</div>
 										<div class="post_content_nav_right">
-											<a class="like" data-id="<?=Html::encode($posts[$i]['id'])?>">
-												Нравится (<?=Html::encode($posts[$i]['likes'])?>)
+											<a
+											<?php if (isset($liked["{$posts[$i]['id']}"])): ?>
+												<?= $liked["{$posts[$i]['id']}"] ? "class='like underline'" : "class='like'" ?>
+											<?php else: ?>
+												<?="class='like'"?>
+											<?php endif; ?>
+											data-id="<?=Html::encode($posts[$i]['id'])?>">Нравится (<?=Html::encode($posts[$i]['likes'])?>)
 											</a>
 										</div>
 									</div>
@@ -171,8 +181,13 @@ $this->title = "Поиск";
 													<a href="/me?mode=reply&replierid=<?=$posts[$i]['replies'][$j]->id?>&replypost=<?=Html::encode($posts[$i]->id)?>">Ответить</a>
 												</div>
 												<div class="post_content_nav_right">
-													<a class="like" data-id=<?=Html::encode($posts[$i]['replies'][$j]->id)?>>
-														Нравится (<?=$posts[$i]['replies'][$j]->likes?>)
+													<a
+													<?php if (isset($liked["{$posts[$i]['replies'][$j]->id}"])): ?>
+														<?= $liked["{$posts[$i]['replies'][$j]->id}"] ? "class='like underline'" : "class='like'" ?>
+													<?php else: ?>
+														<?="class='like'"?>
+													<?php endif; ?>
+													data-id="<?=Html::encode($posts[$i]['replies'][$j]->id)?>">Нравится (<?=Html::encode($posts[$i]['replies'][$j]->likes)?>)
 													</a>
 												</div>
 											</div>

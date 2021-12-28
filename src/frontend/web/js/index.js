@@ -23,6 +23,8 @@ $('.posts').on('click', '.like', function(e) {
 		});
 		it.innerHTML = it.innerHTML.match(/\d+/g) * 1 + data * 1
 		it.innerHTML = "Нравится (" + it.innerHTML + ")"
+      if (data * 1 == -1) it.classList.remove("underline")
+      else it.classList.add("underline")
 		console.log(it.innerHTML.match(/\d+/g))
 	});
 });

@@ -31,6 +31,7 @@ return [
                 'edit' => 'posts/edit',
                 'subscribers' => 'user/subscribers',
                 'suber' => 'user/subscribers',
+                'show' => 'posts/show',
                 '<id:.+>' => 'user/profile',
             ],
         ],

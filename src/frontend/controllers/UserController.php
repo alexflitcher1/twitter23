@@ -54,8 +54,11 @@ class UserController extends Controller
                         ->all();
         $post  = [];
         $words = [];
+        $likes = [];
         for ($i = 0; $i < count($posts); $i++)
         {
+            if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['id']]))
+                $likes["{$posts[$i]['id']}"] = 1;
             $post[$i] = $posts[$i];
         }
         $replier = [];
@@ -67,6 +70,8 @@ class UserController extends Controller
                 $post[$i]['replies'] = $replies;
                 for ($j = 0; $j < count($replies); $j++)
                 {
+                    if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['replies'][$j]['id']]))
+                        $likes["{$posts[$i]['replies'][$j]['id']}"] = 1;
                     $replier[$i][$j] = User::findOne(['id' => $post[$i]['replies'][$j]['userid']]);
                 }
             }
@@ -172,7 +177,8 @@ class UserController extends Controller
             }
         }
         return $this->render('index', ['user' => $user, 'posts' => $post,
-                                       'suber' => $suber, 'subs' => $subs,
+                                       'suber' => $suber, 'subs' => $subs, 
+                                       'liked' => $likes,
                                        'repliers' => $replier, 'model' => $model]);
     }
 
@@ -247,8 +253,11 @@ class UserController extends Controller
                             ->orderBy(['id' => SORT_DESC])
                             ->all();
         $post  = [];
+        $likes = [];
         for ($i = 0; $i < count($posts); $i++)
         {
+            if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['id']]))
+                $likes["{$posts[$i]['id']}"] = 1;
             $post[$i] = $posts[$i];
         }
         $replier = [];
@@ -260,6 +269,8 @@ class UserController extends Controller
                 $post[$i]['replies'] = $replies;
                 for ($j = 0; $j < count($replies); $j++)
                 {
+                    if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['replies'][$j]['id']]))
+                        $likes["{$posts[$i]['replies'][$j]['id']}"] = 1;
                     $replier[$i][$j] = User::findOne(['id' => $post[$i]['replies'][$j]]);
                 }
             }
@@ -311,7 +322,7 @@ class UserController extends Controller
 
         return $this->render('profile', ['user' => $user, 'posts' => $post,
                                        'suber' => $suber, 'subs' => $subs,
-                                       'repliers' => $replier, 
+                                       'repliers' => $replier, 'liked' => $likes,
                                        'status' => $status, 'model' => $model]);
     }
 

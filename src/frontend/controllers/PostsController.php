@@ -63,9 +63,12 @@ class PostsController extends Controller
                             ->offset(0)
                             ->all();
         $post  = [];
+        $likes = [];
         for ($i = 0; $i < count($posts); $i++)
         {
             // get author post data
+            if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['id']]))
+                $likes["{$posts[$i]['id']}"] = 1;
             $posts[$i]['authordata'] = User::findOne(['id' => $posts[$i]['userid']]);
         }
         $replier = [];
@@ -78,6 +81,8 @@ class PostsController extends Controller
                 for ($j = 0; $j < count($replies); $j++)
                 {
                     // find reply author
+                    if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['replies'][$j]['id']]))
+                        $likes["{$posts[$i]['replies'][$j]['id']}"] = 1;
                     $replier[$i][$j] = User::findOne(['id' => $posts[$i]['replies'][$j]['userid']]);
                 }
             }
@@ -151,7 +156,7 @@ class PostsController extends Controller
         return $this->render('index', ['user' => $user, 
                                        'postscount' => $postscount,
                                        'suber' => $suber, 'subs' => $subs,
-                                       'repliers' => $replier, 
+                                       'repliers' => $replier, 'liked' => $likes, 
                                        'popular' => $popular, 'model' => $model,
                                        'posts' => $posts, 'page' => $p]);
     }
@@ -318,9 +323,12 @@ class PostsController extends Controller
                             ->offset($p*$offset)
                             ->all();
         $post  = [];
+        $likes = [];
         for ($i = 0; $i < count($posts); $i++)
         {
             // get author post data
+            if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['id']]))
+                $likes["{$posts[$i]['id']}"] = 1;
             $posts[$i]['authordata'] = User::findOne(['id' => $posts[$i]['userid']]);
         }
         $replier = [];
@@ -333,12 +341,68 @@ class PostsController extends Controller
                 for ($j = 0; $j < count($replies); $j++)
                 {
                     // find reply author
+                    if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['replies'][$j]['id']]))
+                        $likes["{$posts[$i]['replies'][$j]['id']}"] = 1;
                     $replier[$i][$j] = User::findOne(['id' => $posts[$i]['replies'][$j]['userid']]);
                 }
             }
         }
         return $this->render('load-more', ['user' => $user,
-        'repliers' => $replier,
+        'repliers' => $replier, 'liked' => $likes,
         'posts' => $posts, 'page' => $p]);
+    }
+
+    public function actionShow($postid, $userid)
+    {
+        $cookies = Yii::$app->request->cookies;
+        if (!$cookies->get("auth"))
+            return $this->redirect("/login");
+        $cookie = $cookies->get('auth');
+        $username = $cookie->value;
+        $user  = User::findOne(['username' => htmlentities($username)]);
+        $userid = User::findOne(['id' => htmlentities($userid)]);
+        if (empty($userid)) return $this->redirect("/feed");
+        $postid = Posts::findOne(['id' => htmlentities($postid)]);
+        if (empty($postid)) return $this->redirect("/feed");
+        $postid['replies'] = Posts::find()->where(['replyid' => $postid['id']])->all();
+
+        $model = new PostForm();
+        if ($model->load(Yii::$app->request->post()) 
+        && $model->validate()) {
+                $model->img = UploadedFile::getInstance($model, 'img');
+                $imgname = $model->upload();
+                if ($imgname) {
+                    // count entered words
+                    $allwords = explode(" ", htmlentities($model->text));
+                    for ($i = 0; $i < count($allwords); $i++) {
+                        $words[$allwords[$i]] = isset($words[$allwords[$i]]) ? 
+                                                      $words[$allwords[$i]] + 1 : 1;
+                    }
+                    for ($i = 0; $i < count($allwords); $i++) {
+                        $word = Popular::findOne(['text' => $allwords[$i]]);
+                        if ($word) {
+                            $word->count = $word->count + $words[$allwords[$i]];
+                            $word->save();
+                        } else {
+                            $word = new Popular();
+                            $word->text = $allwords[$i];
+                            $word->count = $words[$allwords[$i]];
+                            $word->save();
+                        }
+                    }
+                    $npost = new Posts();
+                    $npost->userid = htmlentities($user->id);
+                    $npost->date = date('Y-m-d H:i:s', time());
+                    $npost->text = htmlentities($model->text);
+                    $npost->text = str_replace("\n", "<br>", $model->text);
+                    $imgname = ($imgname === true) ? null : "/" . $imgname;
+                    $npost->img = $imgname;
+                    $npost->likes = 0;
+                    if ($npost->save())
+                        return $this->redirect("/feed");
+                }
+        }
+        return $this->render('show', ['user' => $user, 'author' => $userid, 'post' => $postid,
+                                      'model' => $model]);
     }
 }

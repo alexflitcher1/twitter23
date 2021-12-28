@@ -27,7 +27,7 @@ $this->title = "Twitter23";
 								<div class="post_content">
 									<div class="post_content_name">
 										<?=$initer[$i]->name?> <a href="/<?=$initer[$i]->username?>">@<?=$initer[$i]->username?></a> оценил(а) 
-										<a href="#">ваш твит</a>
+										<a href="/show?userid=<?=$initer[$i]->id?>&postid=<?=$notifications[$i]['moredata']->id?>">ваш твит</a>
 									</div>
 									<div class="post_content_data">
 										<?=$notifications[$i]->dateadd?>
@@ -72,7 +72,7 @@ $this->title = "Twitter23";
 								<div class="post_content">
 									<div class="post_content_name">
 										<?=$initer[$i]->name?> <a href="/<?=$initer[$i]->username?>">@<?=$initer[$i]->username?></a> ответил на 
-										<a href="#">ваш пост</a>
+										<a href="/show?userid=<?=$initer[$i]->id?>&postid=<?=$notifications[$i]['moredata']->id?>">ваш пост</a>
 									</div>
 									<div class="post_content_data">
 										<?=$notifications[$i]->dateadd?>
