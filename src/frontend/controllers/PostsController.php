@@ -360,11 +360,46 @@ class PostsController extends Controller
         $cookie = $cookies->get('auth');
         $username = $cookie->value;
         $user  = User::findOne(['username' => htmlentities($username)]);
+        $suber = count(Friends::find()
+                            ->where(['userid' => htmlentities($user->id)])
+                            ->all());
+        $subs  = count(Friends::find()
+                            ->where(['friendid' => htmlentities($user->id)])
+                            ->all());
+        $postscount = count(Posts::find()
+                            ->where(['userid' => htmlentities($user->id)])
+                            ->orderBy(['id' => SORT_DESC])
+                            ->all());
         $userid = User::findOne(['id' => htmlentities($userid)]);
         if (empty($userid)) return $this->redirect("/feed");
-        $postid = Posts::findOne(['id' => htmlentities($postid)]);
-        if (empty($postid)) return $this->redirect("/feed");
-        $postid['replies'] = Posts::find()->where(['replyid' => $postid['id']])->all();
+        
+        $posts = Posts::find()->where(['id' => htmlentities($postid)])->all();
+
+        $post  = [];
+        $likes = [];
+        for ($i = 0; $i < count($posts); $i++)
+        {
+            // get author post data
+            if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['id']]))
+                $likes["{$posts[$i]['id']}"] = 1;
+            $posts[$i]['authordata'] = User::findOne(['id' => $posts[$i]['userid']]);
+        }
+        $replier = [];
+        for ($i = 0; $i < count($posts); $i++)
+        {
+            // find all notes where replyid = postid
+            $replies = Posts::find()->where(['replyid' => $posts[$i]['id']])->all();
+            if (count($replies)) {
+                $posts[$i]['replies'] = $replies;
+                for ($j = 0; $j < count($replies); $j++)
+                {
+                    // find reply author
+                    if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['replies'][$j]['id']]))
+                        $likes["{$posts[$i]['replies'][$j]['id']}"] = 1;
+                    $replier[$i][$j] = User::findOne(['id' => $posts[$i]['replies'][$j]['userid']]);
+                }
+            }
+        }
 
         $model = new PostForm();
         if ($model->load(Yii::$app->request->post()) 
@@ -402,7 +437,10 @@ class PostsController extends Controller
                         return $this->redirect("/feed");
                 }
         }
-        return $this->render('show', ['user' => $user, 'author' => $userid, 'post' => $postid,
-                                      'model' => $model]);
+        return $this->render('show', ['user' => $user, 
+                                       'postscount' => $postscount,
+                                       'suber' => $suber, 'subs' => $subs,
+                                       'repliers' => $replier, 'liked' => $likes, 
+                                       'model' => $model, 'posts' => $posts]);
     }
 }
