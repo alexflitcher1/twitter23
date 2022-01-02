@@ -400,9 +400,9 @@ class UserController extends Controller
             ->all());
         $model = new MainSettings();
         $model1 = new PostForm();
-        if ($model->load(Yii::$app->request->post()) 
+        if ($model->load(Yii::$app->request->post())
         && $model->validate()) {
-            $user->theme = htmlentities($model->theme);
+            $user->theme = htmlentities($model->color);
             $user->language  = htmlentities($model->lang);
             if ($user->save()) return $this->render('settings', ['model' => $model, 'user' => $user, 
                                                                  'suber' => $suber, 'model1' => $model1,

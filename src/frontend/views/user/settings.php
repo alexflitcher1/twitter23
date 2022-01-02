@@ -32,13 +32,23 @@ $this->title = "Ваши настройки";
 								'default' => 'По умолчанию',
 								'twitter23modern' => 'Twitter23Modern',
 								'none' => 'None',
-								'red' => 'Red',
-								'blue' => 'Blue',
-								'green' => 'Green',
-								'brown' => 'Brown',
-								'orange' => 'Orange',
-								'pink' => 'Pink',
-								'yellow' => 'Yellow',
+							]);
+						?>
+					</div>
+				</div>
+				<div class="set_str">
+					<div class="set_name">
+						Цветовая схема
+					</div>
+					<div class="set_input">
+						<?=$form->field($model, 'color')->dropDownList([
+								'default-red' => 'Red',
+								'default-blue' => 'Blue',
+								'default-green' => 'Green',
+								'default-brown' => 'Brown',
+								'default-orange' => 'Orange',
+								'default-pink' => 'Pink',
+								'default-yellow' => 'Yellow',
 							]);
 						?>
 					</div>
@@ -146,3 +156,50 @@ $this->title = "Ваши настройки";
 	</div>
 		</div>
 	</div>
+<?php
+$js = <<<JS
+$('#mainsettings-color').html('')
+$.ajax({
+	url: "/site/get-themes",
+	method: 'get',
+}).done(function(data) {
+	data = JSON.parse(data)
+	value = $('#mainsettings-theme').val()
+	for (i = 0; i < data[value].length; i++) {
+		if (data[value][i] != "none")
+			$('#mainsettings-color').append($('<option>', {
+   				value: value + "-" + data[value][i],
+   				text: data[value][i],
+			}));
+		else
+			$('#mainsettings-color').append($('<option>', {
+   				value: value,
+   				text: data[value][i],
+			}));
+	}
+})
+$('body').on('change', '#mainsettings-theme', function(e) { 
+	$('#mainsettings-color').html('')
+	$.ajax({
+		url: "/site/get-themes",
+		method: 'get',
+	}).done(function(data) {
+		data = JSON.parse(data)
+		value = $('#mainsettings-theme').val()
+		for (i = 0; i < data[value].length; i++) {
+			if (data[value][i] != "none")
+				$('#mainsettings-color').append($('<option>', {
+   					value: value + "-" + data[value][i],
+	   				text: data[value][i],
+				}));
+			else
+				$('#mainsettings-color').append($('<option>', {
+   					value: value,
+	   				text: data[value][i],
+				}));
+		}
+	})
+})
+JS;
+$this->registerJs($js);
+?>

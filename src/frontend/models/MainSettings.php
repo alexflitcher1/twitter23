@@ -11,12 +11,12 @@ use yii\base\Model;
  */
 class MainSettings extends Model 
 {
-    public $lang, $theme;
+    public $lang, $theme, $color;
 
     public function rules()
     {
         return [ 
-            [['lang', 'theme'], 'required', 'message' => ''],
+            [['lang', 'theme', 'color'], 'required', 'message' => ''],
         ];
     }
 
@@ -25,6 +25,7 @@ class MainSettings extends Model
         return [
             'lang' => '',
             'theme' => '',
+            'color' => '',
         ];
     }
 }

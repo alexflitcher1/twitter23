@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 $this->title = "Твит";
+
 ?>
 
 		<div class="page_body">
