@@ -26,8 +26,10 @@ $this->title = "Twitter23";
 								</div>
 								<div class="post_content">
 									<div class="post_content_name">
+										<?php if (isset($initer[$i]->id) && isset($notifications[$i]['moredata']->id)): ?>
 										<?=$initer[$i]->name?> <a href="/<?=$initer[$i]->username?>">@<?=$initer[$i]->username?></a> оценил(а) 
 										<a href="/show?userid=<?=$initer[$i]->id?>&postid=<?=$notifications[$i]['moredata']->id?>">ваш твит</a>
+										<?php endif; ?>
 									</div>
 									<div class="post_content_data">
 										<?=$notifications[$i]->dateadd?>
@@ -71,8 +73,10 @@ $this->title = "Twitter23";
 								</div>
 								<div class="post_content">
 									<div class="post_content_name">
+										<?php if (isset($initer[$i]->id) && isset($notifications[$i]['moredata']->id)): ?>
 										<?=$initer[$i]->name?> <a href="/<?=$initer[$i]->username?>">@<?=$initer[$i]->username?></a> ответил на 
 										<a href="/show?userid=<?=$initer[$i]->id?>&postid=<?=$notifications[$i]['moredata']->id?>">ваш пост</a>
+										<?php endif; ?>
 									</div>
 									<div class="post_content_data">
 										<?=$notifications[$i]->dateadd?>
