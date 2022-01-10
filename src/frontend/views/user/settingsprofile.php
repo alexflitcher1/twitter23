@@ -36,10 +36,10 @@ $this->title = "Ваши настройки";
 				</div>
 				<div class="set_input">
 					<?=$form->field($model, 'gender')->dropDownList([
-							'2' => 'Женский',
-							'1' => 'Мужской',
-							'3' => 'Другой',
-						]);
+							'woman' => 'Женский',
+							'man' => 'Мужской',
+							'other' => 'Другой',
+						], ['options'=>[$model->gender=>['Selected'=>true]]]);
 					?>
 				</div>
 			</div>

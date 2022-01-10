@@ -42,6 +42,7 @@ class UserController extends Controller
         $cookie = $cookies->get('auth');
         $username = $cookie->value;
         $user  = User::findOne(['username' => htmlentities($username)]);
+        $thisuser = $user;
         $suber = count(Friends::find()
                         ->where(['userid' => htmlentities($user->id)])
                         ->all());
@@ -52,27 +53,33 @@ class UserController extends Controller
                         ->where(['userid' => htmlentities($user->id)])
                         ->orderBy(['id' => SORT_DESC])
                         ->all();
+        $status = Friends::find()
+                        ->where(['friendid' => $user->id])
+                        ->andWhere(['userid' => $thisuser->id])
+                        ->one() ? "Отписаться" : "Подписаться";
         $post  = [];
         $words = [];
         $likes = [];
         for ($i = 0; $i < count($posts); $i++)
         {
+            // get author post data
             if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['id']]))
                 $likes["{$posts[$i]['id']}"] = 1;
-            $post[$i] = $posts[$i];
+            $posts[$i]['authordata'] = User::findOne(['id' => $posts[$i]['userid']]);
         }
         $replier = [];
-        // get all repliers for this posts
         for ($i = 0; $i < count($posts); $i++)
         {
-            $replies = Posts::find()->where(['replyid' => $post[$i]['id']])->all();
+            // find all notes where replyid = postid
+            $replies = Posts::find()->where(['replyid' => $posts[$i]['id']])->all();
             if (count($replies)) {
-                $post[$i]['replies'] = $replies;
+                $posts[$i]['replies'] = $replies;
                 for ($j = 0; $j < count($replies); $j++)
                 {
+                    // find reply author
                     if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['replies'][$j]['id']]))
                         $likes["{$posts[$i]['replies'][$j]['id']}"] = 1;
-                    $replier[$i][$j] = User::findOne(['id' => $post[$i]['replies'][$j]['userid']]);
+                    $replier[$i][$j] = User::findOne(['id' => $posts[$i]['replies'][$j]['userid']]);
                 }
             }
         }
@@ -112,7 +119,7 @@ class UserController extends Controller
                         $npost->img = $imgname;
                         $npost->likes = 0;
                         if ($npost->save())
-                            return $this->redirect("/me");
+                            return $this->redirect("/" . $user->username);
                     }
             }
             $cookiesresp = Yii::$app->response->cookies;
@@ -176,9 +183,9 @@ class UserController extends Controller
                 }
             }
         }
-        return $this->render('index', ['user' => $user, 'posts' => $post,
+        return $this->render('index', ['thisuser' => $user, 'user' => $user, 'posts' => $posts,
                                        'suber' => $suber, 'subs' => $subs, 
-                                       'liked' => $likes,
+                                       'liked' => $likes, 'status' => $status,
                                        'repliers' => $replier, 'model' => $model]);
     }
 
@@ -235,43 +242,46 @@ class UserController extends Controller
         $cookies = Yii::$app->request->cookies;
         if (!$cookies->get("auth"))
             return $this->redirect("/login");
-        $user  = User::findOne(['username' => htmlentities($id)]);
-        $thisuser = User::findOne(['username' => $cookies->get("auth")]);
+        $thisuser  = User::findOne(['username' => htmlentities($id)]);
+        $user = User::findOne(['username' => $cookies->get("auth")]);
 
         $status = Friends::find()
-                            ->where(['friendid' => $user->id])
-                            ->andWhere(['userid' => $thisuser->id])
+                            ->where(['friendid' => $thisuser->id])
+                            ->andWhere(['userid' => $user->id])
                             ->one() ? "Отписаться" : "Подписаться";
         $suber = count(Friends::find()
-                            ->where(['userid' => htmlentities($user->id)])
+                            ->where(['userid' => htmlentities($thisuser->id)])
                             ->all());
         $subs  = count(Friends::find()
-                            ->where(['friendid' => htmlentities($user->id)])
+                            ->where(['friendid' => htmlentities($thisuser->id)])
                             ->all());
         $posts = Posts::find()
-                            ->where(['userid' => htmlentities($user->id)])
+                            ->where(['userid' => htmlentities($thisuser->id)])
                             ->orderBy(['id' => SORT_DESC])
                             ->all();
         $post  = [];
+        $words = [];
         $likes = [];
         for ($i = 0; $i < count($posts); $i++)
         {
+            // get author post data
             if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['id']]))
                 $likes["{$posts[$i]['id']}"] = 1;
-            $post[$i] = $posts[$i];
+            $posts[$i]['authordata'] = User::findOne(['id' => $posts[$i]['userid']]);
         }
         $replier = [];
         for ($i = 0; $i < count($posts); $i++)
         {
-            // get all repliers
-            $replies = Posts::find()->where(['replyid' => $post[$i]['id']])->all();
+            // find all notes where replyid = postid
+            $replies = Posts::find()->where(['replyid' => $posts[$i]['id']])->all();
             if (count($replies)) {
-                $post[$i]['replies'] = $replies;
+                $posts[$i]['replies'] = $replies;
                 for ($j = 0; $j < count($replies); $j++)
                 {
+                    // find reply author
                     if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['replies'][$j]['id']]))
                         $likes["{$posts[$i]['replies'][$j]['id']}"] = 1;
-                    $replier[$i][$j] = User::findOne(['id' => $post[$i]['replies'][$j]]);
+                    $replier[$i][$j] = User::findOne(['id' => $posts[$i]['replies'][$j]['userid']]);
                 }
             }
         }
@@ -300,7 +310,7 @@ class UserController extends Controller
                         }
                     }
                     $npost = new Posts();
-                    $npost->userid = htmlentities($user->id);
+                    $npost->userid = htmlentities($thisuser->id);
                     $npost->date = date('Y-m-d H:i:s', time());
                     $npost->text = htmlentities($model->text);
                     $npost->text = str_replace("\n", "<br>", $model->text);
@@ -319,11 +329,16 @@ class UserController extends Controller
             'expire' => time() + 31*24*60*60,
             'value' => serialize(['profile', $id]),
         ]));
-
-        return $this->render('profile', ['user' => $user, 'posts' => $post,
+        if ($thisuser->id == $user->id)
+            return $this->render('index', ['thisuser' => $user, 'user' => $user, 'posts' => $posts,
+                'suber' => $suber, 'subs' => $subs, 
+                'liked' => $likes, 'status' => $status,
+                'repliers' => $replier, 'model' => $model]);
+        return $this->render('profile', ['user' => $user, 'posts' => $posts,
                                        'suber' => $suber, 'subs' => $subs,
                                        'repliers' => $replier, 'liked' => $likes,
-                                       'status' => $status, 'model' => $model]);
+                                       'status' => $status, 'model' => $model,
+                                       'thisuser' => $thisuser]);
     }
 
     /**
@@ -400,13 +415,13 @@ class UserController extends Controller
             ->all());
         $model = new MainSettings();
         $model1 = new PostForm();
+        $model->theme = $user->theme;
+        $model->lang = $user->language;
         if ($model->load(Yii::$app->request->post())
         && $model->validate()) {
             $user->theme = htmlentities($model->color);
             $user->language  = htmlentities($model->lang);
-            if ($user->save()) return $this->render('settings', ['model' => $model, 'user' => $user, 
-                                                                 'suber' => $suber, 'model1' => $model1,
-                                                                 'subs' => $subs, 'posts' => $posts]);
+            if ($user->save()) return $this->redirect('/settings');
         }
         if ($model1->load(Yii::$app->request->post()) 
         && $model1->validate()) {
@@ -515,8 +530,7 @@ class UserController extends Controller
                         'expire' => time() + 14*24*60*60,
                         'value' => htmlentities($user->username),
                     ]));
-                    return $this->render('settingsprofile', ['model' => $model, 'user' => $user, 
-                    'suber' => $suber, 'subs' => $subs, 'posts' => $posts, 'error' => $error, 'model1' => $model1]);
+                    return $this->redirect('/settings-profile');
                 }
             }
         }
