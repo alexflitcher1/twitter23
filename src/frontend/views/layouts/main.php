@@ -35,7 +35,11 @@ ThemeWidget::widget(['page' => $this]);
 	</div>
 	<div class="nav">
 		<a href="/feed">Новости</a>
-		<a href="/me">Профиль</a>
+		<?php if ((Yii::$app->request->cookies->get("auth"))): ?>
+			<a href="<?=Yii::$app->request->cookies->get("auth")?>">Профиль</a>
+		<?php else: ?>
+			<a href="/me">Профиль</a>
+		<?php endif; ?>
 		<a href="/notifications">Уведомления</a>
 		<a href="/search">Поиск</a>
 		<a href="/settings-profile">Настройки</a>

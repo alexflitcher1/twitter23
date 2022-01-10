@@ -17,9 +17,9 @@ $this->title = "Ваши настройки";
 					</div>
 					<div class="set_input">
 							<?=$form->field($model, 'lang')->dropDownList([
-								'1' => 'Русский',
-								'2' => 'English',
-							]);
+								'russian' => 'Русский',
+								'english' => 'English',
+							], ['options'=>[$model->lang=>['Selected'=>true]]]);
 						?>
 					</div>
 				</div>
@@ -32,7 +32,7 @@ $this->title = "Ваши настройки";
 								'default' => 'По умолчанию',
 								'twitter23modern' => 'Twitter23Modern',
 								'none' => 'None',
-							]);
+							], ['options'=>[$model->theme=>['Selected'=>true]]]);
 						?>
 					</div>
 				</div>
