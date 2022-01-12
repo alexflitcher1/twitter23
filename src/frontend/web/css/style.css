@@ -75,7 +75,7 @@ span {
 }
 .logo a:active {
 /*     margin-top: 18px; */
-	margin-top: 15px;
+	margin-top: 18px;
 }
 .nav {
 	background: #fff;
@@ -646,9 +646,6 @@ span {
 .pagination div {
 	display: inline-block;
 	flex-grow: 1;
-}
-.newpost_feed {
-	margin-bottom: 2%;
 }
  #postform-img {
 	 opacity: 0;
