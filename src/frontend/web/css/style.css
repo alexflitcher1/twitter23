@@ -11,6 +11,7 @@ a {
     text-decoration: none;
     /*color: #2276BB;*/
     color: #9c22bb;
+	cursor: pointer;
 }
 a:hover {
     text-decoration: underline;
@@ -688,4 +689,31 @@ label:hover {
 
 .underline {
 	color: #720087;
+}
+.newtweetbody {
+	background: #00000054;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	z-index: 1000;
+	display: none;
+}
+  
+.newtweet {
+	background: #fff;
+	padding: 10px;
+	border-radius: 5px;
+	width: 412px;
+	margin: auto;
+	margin-top: calc(50vh - 140px);
+}
+.newtweet_textarea textarea {
+	width: 400px;
+}
+.newpost_tw_newtweet {
+	margin-top: 6px;
+	color: #606060;
+}
+.close {
+	cursor: pointer;
 }

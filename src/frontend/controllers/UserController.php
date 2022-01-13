@@ -409,10 +409,10 @@ class UserController extends Controller
         $subs  = count(Friends::find()
             ->where(['friendid' => htmlentities($user->id)])
             ->all());
-        $posts = count(Posts::find()
+        $posts = Posts::find()
             ->where(['userid' => htmlentities($user->id)])
             ->orderBy(['id' => SORT_DESC])
-            ->all());
+            ->all();
         $model = new MainSettings();
         $model1 = new PostForm();
         $model->theme = $user->theme;
@@ -479,16 +479,17 @@ class UserController extends Controller
         $cookie = $cookies->get('auth');
         $username = $cookie->value;
         $user  = User::findOne(['username' => htmlentities($username)]);
+        $thisuser = User::findOne(['username' => htmlentities($username)]);
         $suber = count(Friends::find()
                                 ->where(['userid' => htmlentities($user->id)])
                                 ->all());
         $subs  = count(Friends::find()
                                 ->where(['friendid' => htmlentities($user->id)])
                                 ->all());
-        $posts = count(Posts::find()
+        $posts = Posts::find()
                                 ->where(['userid' => htmlentities($user->id)])
                                 ->orderBy(['id' => SORT_DESC])
-                                ->all());
+                                ->all();
         $model = new Settings();
         $model1 = new PostForm();
         $model->gender   = $user->gender;
@@ -569,8 +570,9 @@ class UserController extends Controller
                         return $this->redirect("/me");
                 }
         }
-        return $this->render('settingsprofile', ['model' => $model, 'user' => $user, 
-        'suber' => $suber, 'subs' => $subs, 'posts' => $posts, 'error' => null, 'model1' => $model1]);
+        return $this->render('settingsprofile', ['model' => $model, 'user' => $user, 'posts' => $posts,
+        'suber' => $suber, 'subs' => $subs, 'posts' => $posts, 'error' => null, 'model1' => $model1,
+        'thisuser' => $thisuser]);
     }
 
     /**

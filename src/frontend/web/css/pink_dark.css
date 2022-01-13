@@ -1,0 +1,94 @@
+body {
+    color: #ffe1fc;
+/*     background: #2d254e; */
+    background: #5c205c url(https://i.imgur.com/iA4BMQW.png) no-repeat;
+}
+.page_content {
+    background: #3a2136;
+}
+.page_menu {
+    background: #9d588d;
+}
+.page_menu_bio_str_name {
+    color: #ffe1fb;
+}
+a {
+    color: #ffb9f4;
+}
+.nav {
+    background: #9d5890;
+}
+.post_content_name a {
+    color: #e7a1e0;
+}
+.newpost_tw {
+    color: #d1a6c7;
+}
+textarea {
+    border: 1px solid #ab4f9f;
+    background: #dbdbdb;
+}
+input {
+    border: 1px solid #ab4f9f;
+    background: #dbdbdb;
+}
+select {
+    border: 1px solid #ab4f9f;
+    background: #dbdbdb;
+}
+#settings-img {
+    border: none;
+    background: none;
+}
+#settings-bgimage {
+    border: none;
+    background: none;
+}
+button {
+    background-color: #8f608d;
+    border: 1px solid #ab4f96;
+    color: #ede1ff;
+}
+button:hover {
+    background-color: #7c4b76;
+    border: 1px solid #ab4f96;
+}
+.post {
+    border-bottom: 1px solid #4c2e4c;
+}
+.post_replay {
+    border-bottom: 1px solid #4c2e4c;
+}
+.post_replay_bl {
+    background: #83517f;
+}
+.page_menu_nav_link {
+    border-top: 1px solid #914286;
+    border-bottom: 1px solid #914286;
+}
+.page_menu_nav_link:hover {
+    border-top: 1px solid #914286;
+    border-bottom: 1px solid #914286;
+    background: #994b89;
+}
+.page_menu_newpost_bt button {
+    background: #b761aa;
+    border: 1px solid #914280;
+    color: #efc0e6;
+}
+.page_menu_newpost_bt button:hover {
+    background: #a3518f;
+    border: 1px solid #914280;
+    color: #efc0e6;
+}
+.page_menu_nav_link_active {
+    border-top: 1px solid #914286;
+    border-bottom: 1px solid #914286;
+    background: #c571b4;
+}
+.page_menu_nav_link_active:hover {
+    background: #b1659b;
+}
+.underline {
+    color: #9f628b;
+}

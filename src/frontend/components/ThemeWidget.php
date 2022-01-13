@@ -25,6 +25,14 @@ class ThemeWidget extends Widget
             switch ($user['theme']) {
                 case 'default':
                     \frontend\assets\DefaultAsset::register($this->page); return 0;
+                case 'default-dark':
+                    \frontend\assets\DefaultDarkAsset::register($this->page); return 0;
+                case 'default-dark-yellow':
+                    \frontend\assets\DefaultDarkYellowAsset::register($this->page); return 0;
+                case 'default-dark-blue':
+                    \frontend\assets\DefaultDarkBlueAsset::register($this->page); return 0;
+                case 'default-dark-pink':
+                    \frontend\assets\DefaultDarkPinkAsset::register($this->page); return 0;
                 case 'twitter23modern':
                     \frontend\assets\Twitter23ModernAsset::register($this->page); return 0;
                 case 'none':

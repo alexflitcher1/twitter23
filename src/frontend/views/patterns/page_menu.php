@@ -38,7 +38,7 @@ use yii\widgets\ActiveForm;
 					<div class="page_menu_bio_str">
 						<?php if (strlen($user->site)): ?>
 							<span class="page_menu_bio_str_name">Сайт</span>
-							<a href="<?=Html::encode($user->site)?>">
+							<a href="https://<?=Html::encode($user->site)?>">
 								<?=Html::encode($user->site)?>
 							</a>
 						<?php endif; ?>

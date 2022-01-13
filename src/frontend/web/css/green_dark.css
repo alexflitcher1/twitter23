@@ -1,0 +1,94 @@
+body {
+    color: #e2ffe1;
+/*     background: #2d254e; */
+    background: #205c2d url(https://i.imgur.com/uY0ESe4.png) no-repeat;
+}
+.page_content {
+    background: #233a21;
+}
+.page_menu {
+    background: #649d58;
+}
+.page_menu_bio_str_name {
+    color: #e3ffe1;
+}
+a {
+    color: #bfffb9;
+}
+.nav {
+    background: #599d58;
+}
+.post_content_name a {
+    color: #a1e7a2;
+}
+.newpost_tw {
+    color: #abd1a6;
+}
+textarea {
+    border: 1px solid #4fab54;
+    background: #dbdbdb;
+}
+input {
+    border: 1px solid #4fab54;
+    background: #dbdbdb;
+}
+select {
+    border: 1px solid #4fab54;
+    background: #dbdbdb;
+}
+#settings-img {
+    border: none;
+    background: none;
+}
+#settings-bgimage {
+    border: none;
+    background: none;
+}
+button {
+    background-color: #608f61;
+    border: 1px solid #4fab54;
+    color: #ede1ff;
+}
+button:hover {
+    background-color: #4b7c4e;
+    border: 1px solid #4fab54;
+}
+.post {
+    border-bottom: 1px solid #2e4c2f;
+}
+.post_replay {
+    border-bottom: 1px solid #304c2e;
+}
+.post_replay_bl {
+    background: #548351;
+}
+.page_menu_nav_link {
+    border-top: 1px solid #4d9142;
+    border-bottom: 1px solid #459142;
+}
+.page_menu_nav_link:hover {
+    border-top: 1px solid #4d9142;
+    border-bottom: 1px solid #4d9142;
+    background: #52994b;
+}
+.page_menu_newpost_bt button {
+    background: #61b762;
+    border: 1px solid #429142;
+    color: #c0efc2;
+}
+.page_menu_newpost_bt button:hover {
+    background: #54a351;
+    border: 1px solid #429142;
+    color: #c4efc0;
+}
+.page_menu_nav_link_active {
+    border-top: 1px solid #4d9142;
+    border-bottom: 1px solid #4d9142;
+    background: #71c580;
+}
+.page_menu_nav_link_active:hover {
+    background: #66b165;
+}
+.underline {
+    color: #649f62;
+}
