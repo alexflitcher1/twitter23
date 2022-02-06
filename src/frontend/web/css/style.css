@@ -349,6 +349,10 @@ span {
 .post_content_text {
 	margin-top: 2px;
 	word-wrap: break-word;
+	hyphens: auto;
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+	-ms-hyphens: auto;
 }
 .post_content_img img {
 	width: 487px;

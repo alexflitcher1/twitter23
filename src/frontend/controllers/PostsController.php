@@ -15,6 +15,7 @@ use frontend\models\Friends;
 use frontend\models\Popular;
 use frontend\models\PostForm;
 use frontend\models\Notifications;
+use frontend\components\ActionBanFilter;
 
 /**
  * Posts controller
@@ -23,6 +24,14 @@ use frontend\models\Notifications;
  */
 class PostsController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => 'frontend\components\ActionBanFilter',
+            ],
+        ];
+    }
     /**
      * Feed funcitons
      * 
@@ -219,7 +228,7 @@ class PostsController extends Controller
         $post = Posts::findOne(['id' => $id]);
         $user = User::findOne(['username' => $username]);
         // if this user id equal author post id...
-        if ($user->id == $post->userid) {
+        if ($user->id == $post->userid || $user->status == 'admin') {
             // ... delete post
             if ($post->delete()) return 1;
         }
@@ -290,7 +299,7 @@ class PostsController extends Controller
         $user  = User::findOne(['username' => htmlentities($username)]);
         $post = Posts::findOne(['id' => $id]);
         $model = new PostForm();
-        if ($user->id == $post->userid) {
+        if ($user->id == $post->userid || $user->status == 'admin') {
             if ($model->load(Yii::$app->request->post()) 
             && $model->validate()) {
                 $model->img = UploadedFile::getInstance($model, 'img');

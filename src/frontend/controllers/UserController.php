@@ -16,7 +16,7 @@ use frontend\models\Settings;
 use frontend\models\PostForm;
 use frontend\models\MainSettings;
 use frontend\models\Notifications;
-
+use frontend\components\ActionBanFilter;
 /**
  * User controller
  * 
@@ -24,6 +24,15 @@ use frontend\models\Notifications;
  */
 class UserController extends Controller
 {
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => 'frontend\components\ActionBanFilter',
+            ],
+        ];
+    }
     /**
      * Index function
      * 
@@ -176,6 +185,13 @@ class UserController extends Controller
                             elseif (isset(unserialize($cookies->get("id"))[0]) && 
                                     unserialize($cookies->get("id"))[0] == "me")
                                 return $this->redirect("/me");
+                            elseif (isset(unserialize($cookies->get("id"))[0]) && 
+                                    unserialize($cookies->get("id"))[0] == "admin/index")
+                                return $this->redirect("/admin/index?p=" . 
+                                    unserialize($cookies->get("id"))[1] . 
+                                    "&search=" . unserialize($cookies->get("id"))[2] 
+                                    . "&mode=" . 
+                                    unserialize($cookies->get("id"))[3]);
                             return $this->redirect("/" . 
                                     unserialize($cookies->get("id"))[1]);
                         }
@@ -790,4 +806,3 @@ class UserController extends Controller
         return $this->render('more-subs', ['datasubs' => $datasubs]);
     }
 }
-    

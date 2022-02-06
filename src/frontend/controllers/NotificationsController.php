@@ -15,6 +15,7 @@ use frontend\models\Friends;
 use frontend\models\Settings;
 use frontend\models\PostForm;
 use frontend\models\Notifications;
+use frontend\components\ActionBanFilter;
 
 /**
  * Notifications controller
@@ -24,6 +25,14 @@ use frontend\models\Notifications;
  */
 class NotificationsController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => 'frontend\components\ActionBanFilter',
+            ],
+        ];
+    }
     /**
      * Index function
      * 
