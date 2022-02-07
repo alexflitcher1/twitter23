@@ -16,6 +16,7 @@ use frontend\models\Settings;
 use frontend\models\PostForm;
 use frontend\models\Notifications;
 use frontend\components\ActionBanFilter;
+use frontend\components\ActionTechFilter;
 
 /**
  * Notifications controller
@@ -30,6 +31,9 @@ class NotificationsController extends Controller
         return [
             [
                 'class' => 'frontend\components\ActionBanFilter',
+            ],
+            [
+                'class' => 'frontend\components\ActionTechFilter',
             ],
         ];
     }

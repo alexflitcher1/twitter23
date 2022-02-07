@@ -5,8 +5,9 @@ use Yii;
 use yii\helpers\Url;
 use frontend\models\User;
 use yii\base\ActionFilter;
+use frontend\models\SiteSettings;
 
-class ActionBanFilter extends ActionFilter
+class ActionTechFilter extends ActionFilter
 {
     public function beforeAction($action)
     {
@@ -20,10 +21,12 @@ class ActionBanFilter extends ActionFilter
             return parent::afterAction($action, $result);
         $cookie = $cookies->get('auth');
         $username = $cookie->value;
-        $user  = User::findOne(['username' => htmlentities($username)]);
-        if ($user->status == 'ban')
-            if (Url::to() != "/ban")
-                Yii::$app->response->redirect(Url::to('/ban'));
+        $user = User::findOne(['username' => $username]);
+        $siteset = SiteSettings::findOne(['name' => 'tech']);
+        if ($user->status != 'admin')
+            if (!$siteset->status)
+                if (Url::to() != "/tech")
+                    Yii::$app->response->redirect(Url::to('/tech'));
         return parent::afterAction($action, $result);
     }
 }

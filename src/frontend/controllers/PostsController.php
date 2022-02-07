@@ -16,6 +16,7 @@ use frontend\models\Popular;
 use frontend\models\PostForm;
 use frontend\models\Notifications;
 use frontend\components\ActionBanFilter;
+use frontend\components\ActionTechFilter;
 
 /**
  * Posts controller
@@ -29,6 +30,9 @@ class PostsController extends Controller
         return [
             [
                 'class' => 'frontend\components\ActionBanFilter',
+            ],
+            [
+                'class' => 'frontend\components\ActionTechFilter',
             ],
         ];
     }

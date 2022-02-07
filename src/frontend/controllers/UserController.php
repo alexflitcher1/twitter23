@@ -15,8 +15,11 @@ use frontend\models\Friends;
 use frontend\models\Settings;
 use frontend\models\PostForm;
 use frontend\models\MainSettings;
+use frontend\models\SiteSettings;
 use frontend\models\Notifications;
 use frontend\components\ActionBanFilter;
+use frontend\components\ActionTechFilter;
+
 /**
  * User controller
  * 
@@ -30,6 +33,9 @@ class UserController extends Controller
         return [
             [
                 'class' => 'frontend\components\ActionBanFilter',
+            ],
+            [
+                'class' => 'frontend\components\ActionTechFilter',
             ],
         ];
     }
@@ -371,7 +377,7 @@ class UserController extends Controller
         $cookies = Yii::$app->request->cookies;
         if ($cookies->get("auth"))
             return $this->redirect("/feed");
-
+        $siteset = SiteSettings::find()->all();
         $model = new Signup();
         if ($model->load(Yii::$app->request->post()) 
             && $model->validate()) {
@@ -396,9 +402,9 @@ class UserController extends Controller
                 ]));
                 return $this->redirect('/feed');
             }
-            return $this->render('signup', ['model' => $model]);
+            return $this->render('signup', ['model' => $model, 'siteset' => $siteset]);
         }
-        return $this->render('signup', ['model' => $model]);
+        return $this->render('signup', ['model' => $model, 'siteset' => $siteset]);
     }
 
     /**

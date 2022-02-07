@@ -14,6 +14,9 @@ use yii\widgets\ActiveForm;
 							</div>
 							<div class="post_content_data">
 								<?=Html::encode($posts[$i]['date'])?>
+								<?php if ($posts[$i]['authordata']->status == 'ban'): ?>
+									(заблокирован)
+								<?php endif; ?>
 							</div>
 							<div class="post_content_text">
 								<?=$posts[$i]['text']?>
@@ -58,6 +61,9 @@ use yii\widgets\ActiveForm;
 								</div>
 								<div class="post_content_data">
 									<?=Html::encode($posts[$i]['date'])?>
+									<?php if ($posts[$i]['authordata']->status == 'ban'): ?>
+										(заблокирован)
+									<?php endif; ?>
 								</div>
 								<div class="post_content_text">
 									<?=$posts[$i]['text']?>
@@ -102,6 +108,9 @@ use yii\widgets\ActiveForm;
 										</div>
 										<div class="post_content_data">
 											<?=Html::encode($posts[$i]['replies'][$j]->date)?>
+											<?php if ($repliers[$i][$j]->status == 'ban'): ?>
+												(заблокирован)
+											<?php endif; ?>
 										</div>
 										<div class="post_content_text">
 											<?=$posts[$i]['replies'][$j]->text?>

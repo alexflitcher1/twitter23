@@ -10,6 +10,7 @@ $this->title = "Регистрация";
                 Регистрация
             </div>
         </div>
+        <?php if ($siteset[1]['status'] == 1): ?>
         <?php $form = ActiveForm::begin(); ?>
             <div class="set_str">
                 <div class="set_name">
@@ -80,6 +81,11 @@ $this->title = "Регистрация";
                 <?=Html::submitButton('Регистрация', ['class' => 'btn btn-success'])?>
             </div>
         <?php ActiveForm::end(); ?>
+        <?php else: ?>
+            <div>
+                Регистрация временно закрыта
+            </div>
+        <?php endif; ?>
     </div>
     <div class="page_body_login_right">
         <div class="page_body_login_right_name">Пожалуйста, войдите</div>

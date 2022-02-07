@@ -15,7 +15,10 @@ use frontend\models\Friends;
 use frontend\models\Popular;
 use frontend\models\PostForm;
 use frontend\models\SearchForm;
+use frontend\models\SiteSettings;
+use frontend\models\SiteSettingsManager;
 use frontend\components\ActionBanFilter;
+use frontend\components\ActionTechFilter;
 
 class AdminController extends Controller 
 {
@@ -24,6 +27,9 @@ class AdminController extends Controller
         return [
             [
                 'class' => 'frontend\components\ActionBanFilter',
+            ],
+            [
+                'class' => 'frontend\components\ActionTechFilter',
             ],
         ];
     }
@@ -186,7 +192,11 @@ class AdminController extends Controller
         $cookie = $cookies->get('auth');
         $offset = 50;
         $username = $cookie->value;
-        $banuser = User::findOne(['id' => htmlentities($id)]);
+        try {
+            $banuser = User::findOne(['id' => htmlentities($id)]);
+        } catch (Exception $e) {
+            return $this->redirect('/admin/index');
+        }
         $user  = User::findOne(['username' => htmlentities($username)]);
         if ($user->status != 'admin')
             return $this->redirect('/feed');
@@ -198,4 +208,149 @@ class AdminController extends Controller
         $banuser->save();
         return $this->redirect('/admin/index');
     }
+
+    public function actionUsers($mode = 1, $search = null, $p = 0) 
+    {
+        // check auth
+        $cookies = Yii::$app->request->cookies;
+        if (!$cookies->get("auth"))
+            return $this->redirect("/login");
+        $cookie = $cookies->get('auth');
+        $offset = 50;
+        $username = $cookie->value;
+        $user  = User::findOne(['username' => htmlentities($username)]);
+        if ($user->status != 'admin')
+            return $this->redirect('/feed');
+
+        $model = new SearchForm();
+        // if user inputed search string
+        if ($model->load(Yii::$app->request->post()) 
+            && $model->validate()) {
+            $search = htmlentities($model->text);
+        }
+        if ($search)
+            if ($search == "%admins%")
+                $users = User::find()
+                    ->where(['status' => 'admin'])
+                    ->limit($offset)
+                    ->offset($p*$offset)
+                    ->all();
+            else
+                $users = User::find()
+                    ->where(['like', 'username',  '%' . htmlentities($search) . '%', false])
+                    ->offset($p*$offset)->limit($offset)
+                    ->all();
+        else
+            $users = User::find()
+                ->limit($offset)
+                ->offset($p*$offset)
+                ->all();
+
+        $cookiesresp = Yii::$app->response->cookies;
+        $cookies = Yii::$app->response->cookies;
+        $cookiesresp->add(new \yii\web\Cookie([
+            'name' => 'id',
+            'expire' => time() + 31*24*60*60,
+            'value' => serialize(['admin/users', $p, $search, $mode]),
+        ]));
+
+        return $this->render('admins', ['user' => $user, 'users' => $users,
+                                        'page' => $p, 'search' => $search,
+                                        'mode' => $mode, 'model' => $model]);
+    }
+
+    public function actionSearchUsers($search, $p, $offset, $limit)
+    {
+        $cookies = Yii::$app->request->cookies;
+        if (!$cookies->get("auth"))
+            return $this->redirect("/login");
+        $this->layout = "none";
+        $username = $cookies->get("auth")->value;
+        $user  = User::findOne(['username' => htmlentities($username)]);
+        if ($user->status != 'admin')
+            return $this->redirect('/feed');
+        
+        if ($search)
+            if ($search == "%admins%")
+                $users = User::find()
+                    ->where(['status' => 'admin'])
+                    ->limit($offset)
+                    ->offset($p*$offset)
+                    ->all();
+            else
+                $users = User::find()
+                    ->where(['like', 'username',  '%' . htmlentities($search) . '%', false])
+                    ->offset($p*$offset)->limit($offset)
+                    ->all();
+        else
+            $users = User::find()
+                ->limit($offset)
+                ->offset($p*$offset)
+                ->all();
+        
+        return $this->render('search-users', ['user' => $user, 
+                             'users' => $users, 'page' => $p]);
+    }
+
+    public function actionAdd($id = 0, $mode = 1, $sure = null) 
+    {
+        // check auth
+        $cookies = Yii::$app->request->cookies;
+        if (!$cookies->get("auth"))
+            return $this->redirect("/login");
+        $cookie = $cookies->get('auth');
+        $offset = 50;
+        $username = $cookie->value;
+        $user  = User::findOne(['username' => htmlentities($username)]);
+        if ($user->status != 'admin')
+            return $this->redirect('/feed');
+        
+        if ($id == 0)
+            return $this->redirect('/admin/users');
+        
+        try {
+            $simadmin = User::findOne(['id' => htmlentities($id)]);
+        } catch (Exception $e) {
+            return $this->redirect('/admin/users');
+        }
+        if (($mode == 1 || $mode == 2) && $sure == null)
+            return $this->render('add', ['mode' => $mode, 'simadmin' => $simadmin]);
+        elseif ($mode == 1 && $sure == true) {
+            $simadmin->status = 'admin';
+            $simadmin->save();
+        } elseif ($mode == 2 && $sure == true) {
+            $simadmin->status = 'user';
+            $simadmin->save();
+        }
+
+        return $this->redirect('/admin/users');
+    }
+
+    public function actionFunctions() 
+    {
+        // check auth
+        $cookies = Yii::$app->request->cookies;
+        if (!$cookies->get("auth"))
+            return $this->redirect("/login");
+        $cookie = $cookies->get('auth');
+        $offset = 50;
+        $username = $cookie->value;
+        $user  = User::findOne(['username' => htmlentities($username)]);
+        if ($user->status != 'admin')
+            return $this->redirect('/feed');
+
+        $siteset = SiteSettings::find()->all();
+        $model = new SiteSettingsManager();
+        $model->tech = $siteset[0]['status'];
+        $model->reg = $siteset[1]['status'];
+        if ($model->load(Yii::$app->request->post())
+        && $model->validate()) {
+            $siteset[0]['status'] = htmlentities($model->tech);
+            $siteset[1]['status'] = htmlentities($model->reg);
+            for ($i = 0; $i < count($siteset); $i++)
+                $siteset[$i]->save();
+        }
+        return $this->render('sets', ['user' => $user, 'model' => $model]);
+    }
+
 }

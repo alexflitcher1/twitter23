@@ -15,6 +15,7 @@ use frontend\models\Popular;
 use frontend\models\PostForm;
 use frontend\models\SearchForm;
 use frontend\components\ActionBanFilter;
+use frontend\components\ActionTechFilter;
 
 /**
  * Search controller
@@ -28,6 +29,9 @@ class SearchController extends Controller
         return [
             [
                 'class' => 'frontend\components\ActionBanFilter',
+            ],
+            [
+                'class' => 'frontend\components\ActionTechFilter',
             ],
         ];
     }
