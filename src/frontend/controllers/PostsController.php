@@ -174,6 +174,143 @@ class PostsController extends Controller
                                        'posts' => $posts, 'page' => $p]);
     }
 
+    public function actionMyfeed($p = 0) 
+    {
+        // check auth
+        $cookies = Yii::$app->request->cookies;
+        if (!$cookies->get("auth"))
+            return $this->redirect("/login");
+        $cookie = $cookies->get('auth');
+        $offset = 50;
+        $username = $cookie->value;
+        $user  = User::findOne(['username' => htmlentities($username)]);
+        $suber = count(Friends::find()
+                            ->where(['userid' => htmlentities($user->id)])
+                            ->all());
+        $subs  = count(Friends::find()
+                            ->where(['friendid' => htmlentities($user->id)])
+                            ->all());
+        $postscount = count(Posts::find()
+                            ->where(['userid' => htmlentities($user->id)])
+                            ->orderBy(['id' => SORT_DESC])
+                            ->all());
+        $popular = Popular::find()
+                            ->orderBy(['count' => SORT_DESC])
+                            ->limit(10)
+                            ->offset(0)
+                            ->all();
+        $friends = Friends::find()->where(['userid' => $user->id])->all();
+        $ids = [];
+
+        for ($i = 0; $i < count($friends); $i++)
+            $ids[$i] = $friends[$i]['friendid'];
+        
+        $posts = Posts::find()
+            ->where(['replyid' => '0'])
+            ->andWhere(['in', 'userid', $ids])
+            ->orderBy(['date' => SORT_DESC])
+            ->limit($offset)
+            ->offset($p*$offset)
+            ->all();
+        $post  = [];
+        $likes = [];
+        for ($i = 0; $i < count($posts); $i++)
+        {
+            // get author post data
+            if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['id']]))
+                $likes["{$posts[$i]['id']}"] = 1;
+            $posts[$i]['authordata'] = User::findOne(['id' => $posts[$i]['userid']]);
+        }
+        $replier = [];
+        for ($i = 0; $i < count($posts); $i++)
+        {
+            // find all notes where replyid = postid
+            $replies = Posts::find()->where(['replyid' => $posts[$i]['id']])->all();
+            if (count($replies)) {
+                $posts[$i]['replies'] = $replies;
+                for ($j = 0; $j < count($replies); $j++)
+                {
+                    // find reply author
+                    if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['replies'][$j]['id']]))
+                        $likes["{$posts[$i]['replies'][$j]['id']}"] = 1;
+                    $replier[$i][$j] = User::findOne(['id' => $posts[$i]['replies'][$j]['userid']]);
+                }
+            }
+        }
+        
+        $model = new PostForm();
+        if ($model->load(Yii::$app->request->post()) 
+        && $model->validate()) {
+                $model->img = UploadedFile::getInstance($model, 'img');
+                $imgname = $model->upload();
+                if ($imgname) {
+                    // count entered words
+                    $allwords = explode(" ", htmlentities($model->text));
+                    for ($i = 0; $i < count($allwords); $i++) {
+                        $words[$allwords[$i]] = isset($words[$allwords[$i]]) ? 
+                                                      $words[$allwords[$i]] + 1 : 1;
+                    }
+                    for ($i = 0; $i < count($allwords); $i++) {
+                        $word = Popular::findOne(['text' => $allwords[$i]]);
+                        if ($word) {
+                            $word->count = $word->count + $words[$allwords[$i]];
+                            $word->save();
+                        } else {
+                            $word = new Popular();
+                            $word->text = $allwords[$i];
+                            $word->count = $words[$allwords[$i]];
+                            $word->save();
+                        }
+                    }
+                    $npost = new Posts();
+                    $npost->userid = htmlentities($user->id);
+                    $npost->date = date('Y-m-d H:i:s', time());
+                    $npost->text = htmlentities($model->text);
+                    $npost->text = str_replace("\n", "<br>", $model->text);
+                    $imgname = ($imgname === true) ? null : "/" . $imgname;
+                    $npost->img = $imgname;
+                    $npost->likes = 0;
+                    $lastinsertid = "";
+                    if ($npost->save() && ($lastinsertid = Yii::$app->db->getLastInsertID())) {
+                        $matches = [];
+                        if (preg_match_all("/@\w+/i", htmlentities($model->text), $matches)) {
+                            for ($i = 0; $i < count($matches[0]); $i++) {
+                                $taguname = str_replace('@', '', $matches[0][$i]);
+                                $tagudata = User::findOne(['username' => $taguname]);
+                                if (!empty($tagudata)) {
+                                    $nofitication           = new Notifications();
+                                    $nofitication->userid   = $tagudata->id;
+                                    $nofitication->type     = 'tag';
+                                    $nofitication->checked  = 0;
+                                    $nofitication->moredata = $lastinsertid;
+                                    $nofitication->initid   = $user->id;
+                                    $nofitication->dateadd  = date('Y-m-d H:i:s', time());
+                                    $nofitication->save();
+                                }
+                            }
+                        }
+                        return $this->redirect("/myfeed?p=" . $p);
+                    }
+                }
+        }
+        
+        $model = new PostForm();
+        $cookiesresp = Yii::$app->response->cookies;
+        $cookies = Yii::$app->response->cookies;
+        $cookiesresp->add(new \yii\web\Cookie([
+            'name' => 'id',
+            'expire' => time() + 31*24*60*60,
+            'value' => serialize(['feed', $p]),
+        ]));
+        
+        return $this->render('myfeed', ['user' => $user, 
+                                       'postscount' => $postscount,
+                                       'suber' => $suber, 'subs' => $subs,
+                                       'repliers' => $replier, 'liked' => $likes, 
+                                       'popular' => $popular, 'model' => $model,
+                                        'posts' => $posts, 'page' => $p]);
+    }
+
     /**
      * Like function
      * 
@@ -361,6 +498,57 @@ class PostsController extends Controller
             }
         }
         return $this->render('load-more', ['user' => $user,
+        'repliers' => $replier, 'liked' => $likes,
+        'posts' => $posts, 'page' => $p]);
+    }
+
+    public function actionLoadMoreMyfeed($offset, $limit, $p)
+    {
+        $cookies = Yii::$app->request->cookies;
+        if (!$cookies->get("auth"))
+            return $this->redirect("/login");
+        $this->layout = "none";
+        $username = $cookies->get("auth")->value;
+        $user  = User::findOne(['username' => htmlentities($username)]);
+        $friends = Friends::find()->where(['userid' => $user->id])->all();
+        $ids = [];
+
+        for ($i = 0; $i < count($friends); $i++)
+            $ids[$i] = $friends[$i]['friendid'];
+        
+        $posts = Posts::find()
+            ->where(['replyid' => '0'])
+            ->andWhere(['in', 'userid', $ids])
+            ->orderBy(['date' => SORT_DESC])
+            ->limit($limit)
+            ->offset($p*$offset)
+            ->all();
+        $post  = [];
+        $likes = [];
+        for ($i = 0; $i < count($posts); $i++)
+        {
+            // get author post data
+            if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['id']]))
+                $likes["{$posts[$i]['id']}"] = 1;
+            $posts[$i]['authordata'] = User::findOne(['id' => $posts[$i]['userid']]);
+        }
+        $replier = [];
+        for ($i = 0; $i < count($posts); $i++)
+        {
+            // find all notes where replyid = postid
+            $replies = Posts::find()->where(['replyid' => $posts[$i]['id']])->all();
+            if (count($replies)) {
+                $posts[$i]['replies'] = $replies;
+                for ($j = 0; $j < count($replies); $j++)
+                {
+                    // find reply author
+                    if (Likes::findOne(['userid' => $user->id, 'postid' => $posts[$i]['replies'][$j]['id']]))
+                        $likes["{$posts[$i]['replies'][$j]['id']}"] = 1;
+                    $replier[$i][$j] = User::findOne(['id' => $posts[$i]['replies'][$j]['userid']]);
+                }
+            }
+        }
+        return $this->render('load-more-myfeed', ['user' => $user,
         'repliers' => $replier, 'liked' => $likes,
         'posts' => $posts, 'page' => $p]);
     }

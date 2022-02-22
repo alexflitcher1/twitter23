@@ -23,6 +23,7 @@ return [
             'rules' => [
                 '<controller:.+>/<action:.+>' => '<controller>/<action>',
                 'feed' => 'posts/index',
+                'myfeed' => 'posts/myfeed',
                 'me' => 'user/index',
                 'search' => 'search/index',
                 'signup' => 'user/signup',

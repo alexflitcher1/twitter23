@@ -37,8 +37,8 @@ use yii\widgets\ActiveForm;
 				<?php endfor; ?>
 			</div>
 			<div class="page_menu_nav">
-				<a href="/feed">
-					<div class="page_menu_nav_link_active">Мои Новости</div>
+				<a href="/myfeed">
+					<div class="page_menu_nav_link">Мои Новости</div>
 				</a>
 				<a href="/feed">
 					<div class="page_menu_nav_link">Все новости</div>
