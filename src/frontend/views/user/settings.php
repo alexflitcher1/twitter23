@@ -54,6 +54,11 @@ $this->title = "Ваши настройки";
 						?>
 					</div>
 				</div>
+				<div class="set_str">
+					<div class="set_input">
+						<a href="/changepas">Сменить пароль</a>
+					</div>
+				</div>
 				<div class="set_bt">
 					<button>Сохранить</button>
 				</div>
