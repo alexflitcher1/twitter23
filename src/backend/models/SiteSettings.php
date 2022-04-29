@@ -1,17 +1,17 @@
 <?php
-namespace frontend\models;
+namespace backend\models;
 
 use yii\db\ActiveRecord;
 
 /**
- * User model
+ * Comments model
  * 
  * Table: user
  */
-class User extends ActiveRecord
+class SiteSettings extends ActiveRecord
 {
     public static function tableName()
     {
-        return '{{users}}';
+        return '{{settings}}';
     }
 }

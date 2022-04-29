@@ -2,12 +2,13 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 $this->title = "Twitter23";
+$language = \Yii::$app->request->cookies->get("language");
 ?>
 <div class="page_body">
 	<div class="page_content">
 		<div class="page_feed_header">
 			<div class="page_feed_header_left">
-				Что нового?
+			<?=\Yii::$app->params['locales']["$language"][27]?>
 			</div>
 			<div class="page_feed_header_right">
 				<b class="page_feed_header_right_entered"></b>
@@ -18,15 +19,16 @@ $this->title = "Twitter23";
 		<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 				<div class="newpost_feed">
 					<div class="newpost_textarea">
-						<?=$form->field($model, 'text')->textarea(['rows' => 10, 'placeholder' => "Что нового?"])?>
+						<?=$form->field($model, 'text')->textarea(['rows' => 10, 'placeholder' => \Yii::$app->params['locales']["$language"][26]])?>
 					</div>
 					<div class="newpost_bts">
 						<div class="newpost_tw">
-							<label for="postform-img" class="btn" id="img-label">Прикрепить <a href="#"></a></label>
+							<label for="postform-img" class="btn" id="img-label">
+								<?=\Yii::$app->params['locales']["$language"][24]?> <a href="#"></a></label>
 							<a href="#"><?=$form->field($model, 'img')->fileInput()?></a>
 						</div>
 						<div class="newpost_bt">
-							<button>Опубликовать</button>
+							<button><?=\Yii::$app->params['locales']["$language"][25]?></button>
 						</div>
 					</div>
 				</div>
@@ -41,15 +43,15 @@ $this->title = "Twitter23";
 			<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 			<div class="page_menu_newpost">
 				<div class="page_menu_newpost_textarea">
-					<?=$form->field($model, 'text')->textarea(['rows' => 10, 'placeholder' => "Что нового?"])?>
+					<?=$form->field($model, 'text')->textarea(['rows' => 10, 'placeholder' => \Yii::$app->params['locales']["$language"][26]])?>
 				</div>
 				<div class="page_menu_newpost_bts">
 					<div class="page_menu_newpost_tw">
-						<label for="postform-img" class="btn" id="img-label">Прикрепить <a href="#"></a></label>
+						<label for="postform-img" class="btn" id="img-label"><?=\Yii::$app->params['locales']["$language"][24]?> <a href="#"></a></label>
 						<a href="#"><?=$form->field($model, 'img')->fileInput()?></a>
 					</div>
 					<div class="page_menu_newpost_bt">
-						<button>Опубликовать</button>
+						<button><?=\Yii::$app->params['locales']["$language"][25]?></button>
 					</div>
 				</div>
 			<?php ActiveForm::end() ?>

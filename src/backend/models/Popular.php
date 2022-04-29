@@ -1,11 +1,11 @@
 <?php
-namespace frontend\models;
+namespace backend\models;
 
 use yii\db\ActiveRecord;
 
 /**
  * Pupular model
- *
+ * 
  * Table: popular
  */
 class Popular extends ActiveRecord

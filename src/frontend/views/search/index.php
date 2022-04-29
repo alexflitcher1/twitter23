@@ -1,13 +1,14 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-$this->title = "Поиск";
+$language = \Yii::$app->request->cookies->get("language");
+$this->title = \Yii::$app->params['locales']["$language"][34];
 ?>
 <div class="page_body">
 	<div class="page_content">
 		<div class="page_feed_header">
 			<div class="page_feed_header_left">
-				Поиск
+				<?=\Yii::$app->params['locales']["$language"][34]?>
 			</div>
 			<div class="page_feed_header_right"></div>
 		</div>
@@ -18,7 +19,7 @@ $this->title = "Поиск";
 				</div>
 				<div class="search_choose"></div>
 				<div class="search_bt">
-					<?=Html::submitButton('Поиск', ['class' => 'btn btn-success'])?>
+					<?=Html::submitButton(\Yii::$app->params['locales']["$language"][34], ['class' => 'btn btn-success'])?>
 				</div>
 			</div>
 		<?php ActiveForm::end(); ?>
@@ -52,7 +53,7 @@ $this->title = "Поиск";
 				<?php if ($mode == 0): ?>
 					<div class="showmore">
 						<a href="/search?search=<?=Html::encode($search)?>&mode=1">
-							<button class='.load_more'>Показать ещё</button>
+							<button class='.load_more'><?=\Yii::$app->params['locales']["$language"][26]?></button>
 						</a>
 					</div>
 				<?php endif; ?>
@@ -66,15 +67,15 @@ $this->title = "Поиск";
 			<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 			<div class="page_menu_newpost">
 				<div class="page_menu_newpost_textarea">
-					<?=$form->field($model1, 'text')->textarea(['rows' => 10, 'placeholder' => "Что нового?"])?>
+					<?=$form->field($model1, 'text')->textarea(['rows' => 10, 'placeholder' => \Yii::$app->params['locales']["$language"][27]])?>
 				</div>
 				<div class="page_menu_newpost_bts">
 					<div class="page_menu_newpost_tw">
-						<label for="postform-img" class="btn" id="img-label">Прикрепить <a href="#"></a></label>
+						<label for="postform-img" class="btn" id="img-label"><?=\Yii::$app->params['locales']["$language"][24]?> <a href="#"></a></label>
 						<a href="#"><?=$form->field($model1, 'img')->fileInput()?></a>
 					</div>
 					<div class="page_menu_newpost_bt">
-						<button>Опубликовать</button>
+						<button><?=\Yii::$app->params['locales']["$language"][25]?></button>
 					</div>
 				</div>
 			<?php ActiveForm::end(); ?>

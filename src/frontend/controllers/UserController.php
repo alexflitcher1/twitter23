@@ -242,6 +242,11 @@ class UserController extends Controller
                     'expire' => time() + 31*24*60*60,
                     'value' => htmlentities($model->username),
                 ]));
+                $cookies->add(new \yii\web\Cookie([
+                    'name' => 'language',
+                    'expire' => time() + 31*24*60*60,
+                    'value' => htmlentities($user->language),
+                ]));
                 return $this->redirect('/feed');
             } else {
                 return $this->render('login', ['model' => $model,
@@ -401,6 +406,11 @@ class UserController extends Controller
                     'expire' => time() + 14*24*60*60,
                     'value' => htmlentities($model->username),
                 ]));
+                $cookies->add(new \yii\web\Cookie([
+                    'name' => 'lang',
+                    'expire' => time() + 14*24*60*60,
+                    'value' => htmlentities($model->language),
+                ]));
                 return $this->redirect('/feed');
             }
             return $this->render('signup', ['model' => $model, 'siteset' => $siteset]);
@@ -444,7 +454,15 @@ class UserController extends Controller
         && $model->validate()) {
             $user->theme = htmlentities($model->color);
             $user->language  = htmlentities($model->lang);
-            if ($user->save()) return $this->redirect('/settings');
+            if ($user->save()) {
+                $cookies = Yii::$app->response->cookies;
+                $cookies->add(new \yii\web\Cookie([
+                    'name' => 'language',
+                    'expire' => time() + 14*24*60*60,
+                    'value' => htmlentities($user->language),
+                ]));
+                return $this->redirect('/settings');
+            }
         }
         if ($model1->load(Yii::$app->request->post()) 
         && $model1->validate()) {
@@ -477,8 +495,9 @@ class UserController extends Controller
                 $imgname = ($imgname === true) ? null : "/" . $imgname;
                 $npost->img = $imgname;
                 $npost->likes = 0;
-                if ($npost->save())
+                if ($npost->save()) {
                     return $this->redirect("/me");
+                }
             }
         }
         return $this->render('settings', ['model' => $model, 'user' => $user, 'suber' => $suber,

@@ -5,7 +5,8 @@ $params = array_merge(
     require __DIR__ . '/params.php',
     require __DIR__ . '/themes.php',
     require __DIR__ . '/params-local.php',
-    require __DIR__ . '/pathtopatterns.php'
+    require __DIR__ . '/pathtopatterns.php',
+    require __DIR__ . '/locales.php',
 );
 $db = require __DIR__ . '/db.php';
 return [

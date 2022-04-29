@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+$language = \Yii::$app->request->cookies->get("language");
 ?>
 			<?php for ($i = 0; $i < count($posts); $i++): ?>
 				<?php if (empty($posts[$i]['replies']) && $posts[$i]['replyid'] == 0): ?>
@@ -26,11 +27,14 @@ use yii\widgets\ActiveForm;
 							<div class="post_content_nav">
 								<div class="post_content_nav_left">
 									<?php if ($posts[$i]->userid == $user->id): ?>
-										<a class="delete" data-id="<?=Html::encode($posts[$i]->id)?>">Удалить</a> 
-										<a href="/edit?id=<?=Html::encode($posts[$i]->id)?>" class="edit">Редактировать</a>
+										<a class="delete" data-id="<?=Html::encode($posts[$i]->id)?>">
+										<?=\Yii::$app->params['locales']["$language"][22]?>
+										</a> 
+										<a href="/edit?id=<?=Html::encode($posts[$i]->id)?>" class="edit">
+										<?=\Yii::$app->params['locales']["$language"][21]?></a>
 									<?php endif; ?>
 									<a href="/me?mode=reply&replypost=<?=Html::encode($posts[$i]['id'])?>">
-										Ответить (0)
+									<?=\Yii::$app->params['locales']["$language"][20]?> (0)
 									</a>
 								</div>
 								<div class="post_content_nav_right">
@@ -40,7 +44,8 @@ use yii\widgets\ActiveForm;
 									<?php else: ?>
 										<?="class='like'"?>
 									<?php endif; ?>
-									data-id="<?=Html::encode($posts[$i]['id'])?>">Нравится (<?=Html::encode($posts[$i]['likes'])?>)
+									data-id="<?=Html::encode($posts[$i]['id'])?>">
+									<?=\Yii::$app->params['locales']["$language"][23]?> (<?=Html::encode($posts[$i]['likes'])?>)
 									</a>
 								</div>
 							</div>
@@ -70,11 +75,13 @@ use yii\widgets\ActiveForm;
 								<div class="post_content_nav">
 									<div class="post_content_nav_left">
 										<?php if ($posts[$i]->userid == $user->id): ?>
-											<a class="delete" data-id="<?=Html::encode($posts[$i]->id)?>">Удалить</a> 
-											<a href="/edit?id=<?=Html::encode($posts[$i]->id)?>" class="edit">Редактировать</a>
+											<a class="delete" data-id="<?=Html::encode($posts[$i]->id)?>">
+											<?=\Yii::$app->params['locales']["$language"][22]?></a> 
+											<a href="/edit?id=<?=Html::encode($posts[$i]->id)?>" class="edit">
+											<?=\Yii::$app->params['locales']["$language"][21]?></a>
 										<?php endif; ?>
 										<a href="/me?mode=reply&replyid=<?=Html::encode($posts[$i]['userid'])?>&replypost=<?=Html::encode($posts[$i]['id'])?>">
-											Ответить (<?=count($posts[$i]['replies'])?>)
+										<?=\Yii::$app->params['locales']["$language"][20]?> (<?=count($posts[$i]['replies'])?>)
 										</a>
 									</div>
 									<div class="post_content_nav_right">
@@ -84,7 +91,8 @@ use yii\widgets\ActiveForm;
 										<?php else: ?>
 											<?="class='like'"?>
 										<?php endif; ?>
-										data-id="<?=Html::encode($posts[$i]['id'])?>">Нравится (<?=Html::encode($posts[$i]['likes'])?>)
+										data-id="<?=Html::encode($posts[$i]['id'])?>">
+										<?=\Yii::$app->params['locales']["$language"][23]?> (<?=Html::encode($posts[$i]['likes'])?>)
 										</a>
 									</div>
 								</div>
@@ -114,10 +122,13 @@ use yii\widgets\ActiveForm;
 										<div class="post_content_nav">
 											<div class="post_content_nav_left">
 												<?php if ($posts[$i]['replies'][$j]->userid == $user->id): ?>
-													<a class="delete" data-id="<?=Html::encode($posts[$i]['replies'][$j]->id)?>">Удалить</a> 
-													<a href="/edit?id=<?=Html::encode($posts[$i]['replies'][$j]->id)?>" class="edit">Редактировать</a>
+													<a class="delete" data-id="<?=Html::encode($posts[$i]['replies'][$j]->id)?>">
+													<?=\Yii::$app->params['locales']["$language"][22]?></a> 
+													<a href="/edit?id=<?=Html::encode($posts[$i]['replies'][$j]->id)?>" class="edit">
+													<?=\Yii::$app->params['locales']["$language"][21]?></a>
 												<?php endif; ?>
-												<a href="/me?mode=reply&replierid=<?=$posts[$i]['replies'][$j]->id?>&replypost=<?=Html::encode($posts[$i]->id)?>">Ответить</a>
+												<a href="/me?mode=reply&replierid=<?=$posts[$i]['replies'][$j]->id?>&replypost=<?=Html::encode($posts[$i]->id)?>">
+												<?=\Yii::$app->params['locales']["$language"][20]?></a>
 											</div>
 											<div class="post_content_nav_right">
 												<a
@@ -126,7 +137,8 @@ use yii\widgets\ActiveForm;
 												<?php else: ?>
 													<?="class='like'"?>
 												<?php endif; ?>
-												data-id="<?=Html::encode($posts[$i]['replies'][$j]->id)?>">Нравится (<?=$posts[$i]['replies'][$j]->likes?>)
+												data-id="<?=Html::encode($posts[$i]['replies'][$j]->id)?>">
+												<?=\Yii::$app->params['locales']["$language"][23]?> (<?=$posts[$i]['replies'][$j]->likes?>)
 												</a>
 											</div>
 										</div>

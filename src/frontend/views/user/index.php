@@ -2,7 +2,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\file\FileInput;
-$this->title = "Профиль";
+$language = \Yii::$app->request->cookies->get("language");
+$this->title = \Yii::$app->params['locales']["$language"][1];
 ?>
 <div class="page_body">
 	<div class="page_content">
@@ -14,15 +15,15 @@ $this->title = "Профиль";
 		<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 			<div class="newpost_pr">
 				<div class="newpost_textarea">
-					<?=$form->field($model, 'text')->textarea(['rows' => 10, 'placeholder' => "Что нового?"])?>
+					<?=$form->field($model, 'text')->textarea(['rows' => 10, 'placeholder' => \Yii::$app->params['locales']["$language"][27]])?>
 				</div>
 				<div class="newpost_bts">
 					<div class="newpost_tw">
-						<label for="postform-img" class="btn" id="img-label">Прикрепить <a href="#"></a></label>
+						<label for="postform-img" class="btn" id="img-label"><?=\Yii::$app->params['locales']["$language"][24]?> <a href="#"></a></label>
 						<a href="#"><?=$form->field($model, 'img')->fileInput()?></a>
 					</div>
 					<div class="newpost_bt">
-						<button>Опубликовать</button>
+						<button><?=\Yii::$app->params['locales']["$language"][25]?></button>
 					</div>
 				</div>
 			</div>
@@ -36,16 +37,16 @@ $this->title = "Профиль";
 					<div class="page_menu_newpost">
 					<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 						<div class="page_menu_newpost_textarea">
-							<?=$form->field($model, 'text')->textarea(['rows' => 10, 'placeholder' => "Что нового?"])?>
+							<?=$form->field($model, 'text')->textarea(['rows' => 10, 'placeholder' => \Yii::$app->params['locales']["$language"][27]])?>
 						</div>
 						<div class="page_menu_newpost_bts">
 							<div class="page_menu_newpost_tw">
-								<label for="postform-img" class="btn" id="img-label">Прикрепить <a href="#"></a></label>
+								<label for="postform-img" class="btn" id="img-label"><?=\Yii::$app->params['locales']["$language"][24]?> <a href="#"></a></label>
 								<a href="#"><?=$form->field($model, 'img')->fileInput()?></a>
 								
 							</div>
 							<div class="page_menu_newpost_bt">
-								<button>Опубликовать</button>
+								<button><?=\Yii::$app->params['locales']["$language"][25]?></button>
 							</div>
 						</div>
 					<?php ActiveForm::end() ?>

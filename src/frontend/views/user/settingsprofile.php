@@ -1,19 +1,20 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-$this->title = "Ваши настройки";
-?>		
+$language = \Yii::$app->request->cookies->get("language");
+$this->title = \Yii::$app->params['locales']["$language"][37];
+?>
 <div class="page_body">
 	<div class="page_content">
 		<div class="page_feed_header">
 			<div class="page_feed_header_left">
-				Настройки
+				<?=\Yii::$app->params['locales']["$language"][37]?>
 			</div>
 		</div>
 		<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 			<div class="set_str">
 				<div class="set_name">
-					Имя
+					<?=\Yii::$app->params['locales']["$language"][38]?>
 				</div>
 				<div class="set_input">
 					<?=$form->field($model, 'name')?>
@@ -21,7 +22,7 @@ $this->title = "Ваши настройки";
 			</div>
 			<div class="set_str">
 				<div class="set_name">
-					Имя пользователя <span>@username</span>
+					<?=\Yii::$app->params['locales']["$language"][39]?> <span>@username</span>
 				</div>
 				<div class="set_input">
 					<?=$form->field($model, 'username')?>
@@ -32,7 +33,7 @@ $this->title = "Ваши настройки";
 			</div>
 			<div class="set_str">
 				<div class="set_name">
-					Пол / Гендер
+					<?=\Yii::$app->params['locales']["$language"][40]?>
 				</div>
 				<div class="set_input">
 					<?=$form->field($model, 'gender')->dropDownList([
@@ -45,7 +46,7 @@ $this->title = "Ваши настройки";
 			</div>
 			<div class="set_str">
 				<div class="set_name">
-					О себе
+					<?=\Yii::$app->params['locales']["$language"][41]?>
 				</div>
 				<div class="set_input">
 					<?=$form->field($model, 'about')->textarea(['rows' => 10, 'placeholder' => "Что нового?"])?>
@@ -53,7 +54,7 @@ $this->title = "Ваши настройки";
 			</div>
 			<div class="set_str">
 				<div class="set_name">
-					Город
+					<?=\Yii::$app->params['locales']["$language"][42]?>
 				</div>
 				<div class="set_input">
 					<?=$form->field($model, 'city')?>
@@ -61,7 +62,7 @@ $this->title = "Ваши настройки";
 			</div>
 			<div class="set_str">
 				<div class="set_name">
-					Сайт
+					<?=\Yii::$app->params['locales']["$language"][43]?>
 				</div>
 				<div class="set_input">
 					<?=$form->field($model, 'site')?>
@@ -69,7 +70,7 @@ $this->title = "Ваши настройки";
 			</div>
 			<div class="set_str">
 				<div class="set_name">
-					Telegram
+				<?=\Yii::$app->params['locales']["$language"][44]?>
 				</div>
 				<div class="set_input">
 					<?=$form->field($model, 'telegram')?>
@@ -77,7 +78,7 @@ $this->title = "Ваши настройки";
 			</div>
 			<div class="set_str">
 				<div class="set_name">
-					Аватар
+				<?=\Yii::$app->params['locales']["$language"][45]?>
 				</div>
 				<div class="set_input">
 					<div class="set_bt_input">
@@ -89,7 +90,7 @@ $this->title = "Ваши настройки";
 			</div>
 			<div class="set_str">
 				<div class="set_name">
-					Фон
+				<?=\Yii::$app->params['locales']["$language"][46]?>
 				</div>
 				<div class="set_input">
 					<div class="set_bt_input">
@@ -100,7 +101,7 @@ $this->title = "Ваши настройки";
 				</div>
 			</div>
 			<div class="set_bt">
-				<button>Сохранить</button>
+				<button><?=\Yii::$app->params['locales']["$language"][47]?></button>
 			</div>
 		<?php ActiveForm::end() ?>
 	</div>
@@ -110,15 +111,15 @@ $this->title = "Ваши настройки";
 			<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 			<div class="page_menu_newpost">
 				<div class="page_menu_newpost_textarea">
-					<?=$form->field($model1, 'text')->textarea(['rows' => 10, 'placeholder' => "Что нового?"])?>
+					<?=$form->field($model1, 'text')->textarea(['rows' => 10, 'placeholder' => \Yii::$app->params['locales']["$language"][26]])?>
 				</div>
 				<div class="page_menu_newpost_bts">
 					<div class="page_menu_newpost_tw">
-						<label for="postform-img" class="btn" id="img-label">Прикрепить <a href="#"></a></label>
+						<label for="postform-img" class="btn" id="img-label"><?=\Yii::$app->params['locales']["$language"][24]?> <a href="#"></a></label>
 						<a href="#"><?=$form->field($model1, 'img')->fileInput()?></a>
 					</div>
 					<div class="page_menu_newpost_bt">
-							<button>Опубликовать</button>
+							<button><?=\Yii::$app->params['locales']["$language"][25]?></button>
 						</div>
 					</div>
 				</div>

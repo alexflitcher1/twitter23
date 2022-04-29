@@ -34,16 +34,49 @@ ThemeWidget::widget(['page' => $this]);
 		<a href="/feed">Twitter23</a>
 	</div>
 	<div class="nav">
-		<a href="/feed">Новости</a>
+		<a href="/feed">
+			<?php if ((Yii::$app->request->cookies->get("auth"))): ?>
+			<?php $language = \Yii::$app->request->cookies->get("language"); ?>
+			<?=\Yii::$app->params['locales']["$language"][0]?>
+			<?php else: ?>
+			<?=\Yii::$app->params['locales']["russian"][0]?>
+			<?php endif; ?>
+		</a>
 		<?php if ((Yii::$app->request->cookies->get("auth"))): ?>
-			<a href="/<?=Yii::$app->request->cookies->get("auth")?>">Профиль</a>
+			<a href="/<?=Yii::$app->request->cookies->get("auth")?>">
+				<?=\Yii::$app->params['locales']["$language"][1]?>
+			</a>
 		<?php else: ?>
-			<a href="/me">Профиль</a>
+			<a href="/me"><?=\Yii::$app->params['locales']["russian"][1]?></a>
 		<?php endif; ?>
-		<a href="/notifications">Уведомления</a>
-		<a href="/search">Поиск</a>
-		<a href="/settings-profile">Настройки</a>
-		<a href="/user/quit">Выйти</a>
+		<a href="/notifications">
+			<?php if ((Yii::$app->request->cookies->get("auth"))): ?>
+			<?=\Yii::$app->params['locales']["$language"][2]?>
+			<?php else: ?>
+			<?=\Yii::$app->params['locales']["russian"][2]?>
+			<?php endif; ?>
+		</a>
+		<a href="/search">
+			<?php if ((Yii::$app->request->cookies->get("auth"))): ?>
+			<?=\Yii::$app->params['locales']["$language"][3]?>
+			<?php else: ?>
+			<?=\Yii::$app->params['locales']["russian"][3]?>
+			<?php endif; ?>
+		</a>
+		<a href="/settings-profile">
+			<?php if ((Yii::$app->request->cookies->get("auth"))): ?>
+			<?=\Yii::$app->params['locales']["$language"][4]?>
+			<?php else: ?>
+			<?=\Yii::$app->params['locales']["russian"][4]?>
+			<?php endif; ?>
+		</a>
+		<a href="/user/quit">
+			<?php if ((Yii::$app->request->cookies->get("auth"))): ?>
+			<?=\Yii::$app->params['locales']["$language"][5]?>
+			<?php else: ?>
+			<?=\Yii::$app->params['locales']["russian"][5]?>
+			<?php endif; ?>
+		</a>
 	</div>
 </div>
 <?=$content?>
