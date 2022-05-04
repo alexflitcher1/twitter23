@@ -409,7 +409,7 @@ class UserController extends Controller
                 $cookies->add(new \yii\web\Cookie([
                     'name' => 'language',
                     'expire' => time() + 14*24*60*60,
-                    'value' => htmlentities($model->language),
+                    'value' => htmlentities($user->language ? 'russian' : 'english'),
                 ]));
                 return $this->redirect('/feed');
             }
