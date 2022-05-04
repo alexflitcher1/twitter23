@@ -209,6 +209,7 @@ $language = \Yii::$app->request->cookies->get("language");
 			<?php ActiveForm::end() ?>
 			</div></div>
 		</div>
+</div>
 <?php
 $js = <<<JS
 
