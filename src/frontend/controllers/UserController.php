@@ -407,7 +407,7 @@ class UserController extends Controller
                     'value' => htmlentities($model->username),
                 ]));
                 $cookies->add(new \yii\web\Cookie([
-                    'name' => 'lang',
+                    'name' => 'language',
                     'expire' => time() + 14*24*60*60,
                     'value' => htmlentities($model->language),
                 ]));
