@@ -2,19 +2,19 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 $language = \Yii::$app->request->cookies->get("language");
-$this->title = \Yii::$app->params['locales']["$language"][37];
+$this->title = \Yii::$app->params['locales']["$language"][36];
 ?>
 <div class="page_body">
 	<div class="page_content">
 		<div class="page_feed_header">
 			<div class="page_feed_header_left">
-				<?=\Yii::$app->params['locales']["$language"][37]?>
+				<?=\Yii::$app->params['locales']["$language"][36]?>
 			</div>
 		</div>
 		<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 			<div class="set_str">
 				<div class="set_name">
-					<?=\Yii::$app->params['locales']["$language"][38]?>
+					<?=\Yii::$app->params['locales']["$language"][37]?>
 				</div>
 				<div class="set_input">
 					<?=$form->field($model, 'name')?>
@@ -22,7 +22,7 @@ $this->title = \Yii::$app->params['locales']["$language"][37];
 			</div>
 			<div class="set_str">
 				<div class="set_name">
-					<?=\Yii::$app->params['locales']["$language"][39]?> <span>@username</span>
+					<?=\Yii::$app->params['locales']["$language"][38]?> <span>@username</span>
 				</div>
 				<div class="set_input">
 					<?=$form->field($model, 'username')?>
@@ -33,7 +33,7 @@ $this->title = \Yii::$app->params['locales']["$language"][37];
 			</div>
 			<div class="set_str">
 				<div class="set_name">
-					<?=\Yii::$app->params['locales']["$language"][40]?>
+					<?=\Yii::$app->params['locales']["$language"][39]?>
 				</div>
 				<div class="set_input">
 					<?=$form->field($model, 'gender')->dropDownList([
@@ -46,7 +46,7 @@ $this->title = \Yii::$app->params['locales']["$language"][37];
 			</div>
 			<div class="set_str">
 				<div class="set_name">
-					<?=\Yii::$app->params['locales']["$language"][41]?>
+					<?=\Yii::$app->params['locales']["$language"][40]?>
 				</div>
 				<div class="set_input">
 					<?=$form->field($model, 'about')->textarea(['rows' => 10, 'placeholder' => "Что нового?"])?>
@@ -54,7 +54,7 @@ $this->title = \Yii::$app->params['locales']["$language"][37];
 			</div>
 			<div class="set_str">
 				<div class="set_name">
-					<?=\Yii::$app->params['locales']["$language"][42]?>
+					<?=\Yii::$app->params['locales']["$language"][41]?>
 				</div>
 				<div class="set_input">
 					<?=$form->field($model, 'city')?>
@@ -62,7 +62,7 @@ $this->title = \Yii::$app->params['locales']["$language"][37];
 			</div>
 			<div class="set_str">
 				<div class="set_name">
-					<?=\Yii::$app->params['locales']["$language"][43]?>
+					<?=\Yii::$app->params['locales']["$language"][42]?>
 				</div>
 				<div class="set_input">
 					<?=$form->field($model, 'site')?>
@@ -70,7 +70,7 @@ $this->title = \Yii::$app->params['locales']["$language"][37];
 			</div>
 			<div class="set_str">
 				<div class="set_name">
-				<?=\Yii::$app->params['locales']["$language"][44]?>
+				<?=\Yii::$app->params['locales']["$language"][43]?>
 				</div>
 				<div class="set_input">
 					<?=$form->field($model, 'telegram')?>
@@ -78,7 +78,7 @@ $this->title = \Yii::$app->params['locales']["$language"][37];
 			</div>
 			<div class="set_str">
 				<div class="set_name">
-				<?=\Yii::$app->params['locales']["$language"][45]?>
+				<?=\Yii::$app->params['locales']["$language"][44]?>
 				</div>
 				<div class="set_input">
 					<div class="set_bt_input">
@@ -90,7 +90,7 @@ $this->title = \Yii::$app->params['locales']["$language"][37];
 			</div>
 			<div class="set_str">
 				<div class="set_name">
-				<?=\Yii::$app->params['locales']["$language"][46]?>
+				<?=\Yii::$app->params['locales']["$language"][45]?>
 				</div>
 				<div class="set_input">
 					<div class="set_bt_input">
@@ -101,7 +101,7 @@ $this->title = \Yii::$app->params['locales']["$language"][37];
 				</div>
 			</div>
 			<div class="set_bt">
-				<button><?=\Yii::$app->params['locales']["$language"][47]?></button>
+				<button><?=\Yii::$app->params['locales']["$language"][46]?></button>
 			</div>
 		<?php ActiveForm::end() ?>
 	</div>
@@ -127,7 +127,6 @@ $this->title = \Yii::$app->params['locales']["$language"][37];
 			</div>
 		</div>
 	</div>
-</div>
 <?php
 $js = <<<JS
 

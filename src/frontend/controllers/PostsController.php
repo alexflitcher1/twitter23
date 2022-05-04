@@ -553,12 +553,14 @@ class PostsController extends Controller
         'posts' => $posts, 'page' => $p]);
     }
 
-    public function actionShow($postid, $userid)
+    public function actionShow($p = 0, $userid, $postid)
     {
+        // check auth
         $cookies = Yii::$app->request->cookies;
         if (!$cookies->get("auth"))
             return $this->redirect("/login");
         $cookie = $cookies->get('auth');
+        $offset = 50;
         $username = $cookie->value;
         $user  = User::findOne(['username' => htmlentities($username)]);
         $suber = count(Friends::find()
@@ -571,11 +573,18 @@ class PostsController extends Controller
                             ->where(['userid' => htmlentities($user->id)])
                             ->orderBy(['id' => SORT_DESC])
                             ->all());
-        $userid = User::findOne(['id' => htmlentities($userid)]);
-        if (empty($userid)) return $this->redirect("/feed");
-        
-        $posts = Posts::find()->where(['id' => htmlentities($postid)])->all();
-
+        $posts = Posts::find()
+                            ->where(['id' => $postid])
+                            ->all();
+        if ($posts[0]['replyid'] != 0)
+            $posts = Posts::find()
+                ->where(['id' => $posts[0]['replyid']])
+                ->all();
+        $popular = Popular::find()
+                            ->orderBy(['count' => SORT_DESC])
+                            ->limit(10)
+                            ->offset(0)
+                            ->all();
         $post  = [];
         $likes = [];
         for ($i = 0; $i < count($posts); $i++)
@@ -634,14 +643,44 @@ class PostsController extends Controller
                     $imgname = ($imgname === true) ? null : "/" . $imgname;
                     $npost->img = $imgname;
                     $npost->likes = 0;
-                    if ($npost->save())
-                        return $this->redirect("/feed");
+                    $lastinsertid = "";
+                    if ($npost->save() && ($lastinsertid = Yii::$app->db->getLastInsertID())) {
+                        $matches = [];
+                        if (preg_match_all("/@\w+/i", htmlentities($model->text), $matches)) {
+                            for ($i = 0; $i < count($matches[0]); $i++) {
+                                $taguname = str_replace('@', '', $matches[0][$i]);
+                                $tagudata = User::findOne(['username' => $taguname]);
+                                if (!empty($tagudata)) {
+                                    $nofitication           = new Notifications();
+                                    $nofitication->userid   = $tagudata->id;
+                                    $nofitication->type     = 'tag';
+                                    $nofitication->checked  = 0;
+                                    $nofitication->moredata = $lastinsertid;
+                                    $nofitication->initid   = $user->id;
+                                    $nofitication->dateadd  = date('Y-m-d H:i:s', time());
+                                    $nofitication->save();
+                                }
+                            }
+                        }
+                        return $this->redirect("/feed?p=" . $p);
+                    }
                 }
         }
-        return $this->render('show', ['user' => $user, 
+
+        $model = new PostForm();
+        $cookiesresp = Yii::$app->response->cookies;
+        $cookies = Yii::$app->response->cookies;
+        $cookiesresp->add(new \yii\web\Cookie([
+            'name' => 'id',
+            'expire' => time() + 31*24*60*60,
+            'value' => serialize(['feed', $p]),
+        ]));
+
+        return $this->render('index', ['user' => $user, 
                                        'postscount' => $postscount,
                                        'suber' => $suber, 'subs' => $subs,
                                        'repliers' => $replier, 'liked' => $likes, 
-                                       'model' => $model, 'posts' => $posts]);
+                                       'popular' => $popular, 'model' => $model,
+                                       'posts' => $posts, 'page' => $p]);
     }
 }

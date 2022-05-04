@@ -452,16 +452,21 @@ class UserController extends Controller
         $model->lang = $user->language;
         if ($model->load(Yii::$app->request->post())
         && $model->validate()) {
-            $user->theme = htmlentities($model->color);
-            $user->language  = htmlentities($model->lang);
-            if ($user->save()) {
-                $cookies = Yii::$app->response->cookies;
-                $cookies->add(new \yii\web\Cookie([
-                    'name' => 'language',
-                    'expire' => time() + 14*24*60*60,
-                    'value' => htmlentities($user->language),
-                ]));
-                return $this->redirect('/settings');
+            $model->pcss = UploadedFile::getInstance($model, 'pcss');
+            $filename = $model->upload();
+            if ($filename) {
+                $user->theme = htmlentities($model->color);
+                $user->language  = htmlentities($model->lang);
+                $user->pcss = htmlentities($filename);
+                if ($user->save()) {
+                    $cookies = Yii::$app->response->cookies;
+                    $cookies->add(new \yii\web\Cookie([
+                        'name' => 'language',
+                        'expire' => time() + 14*24*60*60,
+                        'value' => htmlentities($user->language),
+                    ]));
+                    return $this->redirect('/settings');
+                }
             }
         }
         if ($model1->load(Yii::$app->request->post()) 

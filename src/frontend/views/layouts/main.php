@@ -80,6 +80,12 @@ ThemeWidget::widget(['page' => $this]);
 	</div>
 </div>
 <?=$content?>
+<div class="footer"> 
+
+<div class="footer_span">Twitter23 2022</div> 
+
+<div class="footer_links"> О сайте Контакты Помощь Telegram-Канал Telegram-Чат GitHub</div> 
+</div>
 </div>
 <?php $this->endBody() ?>
 </body>

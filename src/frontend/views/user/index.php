@@ -5,6 +5,7 @@ use kartik\file\FileInput;
 $language = \Yii::$app->request->cookies->get("language");
 $this->title = \Yii::$app->params['locales']["$language"][1];
 ?>
+<link rel="stylesheet" href="/<?=$user->pcss?>">
 <div class="page_body">
 	<div class="page_content">
 		<div class="page_content_header" style="background: url(/<?=Html::encode($user->bgimage)?>)">
@@ -56,7 +57,21 @@ $this->title = \Yii::$app->params['locales']["$language"][1];
 </div>
 <?php
 $js = <<<JS
-
+var p = 1;
+$('body').on('click', '.load_more', function(e) {
+	$.ajax({
+		method: 'GET',
+		url: '/posts/load-more?offset=50&limit=50&p=' + p,
+	}).done(function(data) {
+		p += 1;
+		$('.posts').append(data);
+	});
+});
+document.querySelector(".page_feed_header_right b").innerHTML = $("textarea[name='PostForm[text]").val().length
+$("textarea[name='PostForm[text]").keyup(function (e) {
+   if ($(this).val().length >= 320) $(this).val($(this).val().slice(0, 320))
+   document.querySelector(".page_feed_header_right b").innerHTML = $(this).val().length
+})
 JS;
 $this->registerJs($js);
 ?>

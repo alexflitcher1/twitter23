@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 $this->title = $thisuser->name . " - " . "Twitter23";
 ?>
+<link rel="stylesheet" href="/<?=$thisuser->pcss?>">
 <div class="page_body">
 	<div class="page_content">
 		<div class="page_content_header" style="background: url(/<?=Html::encode($thisuser->bgimage)?>)">

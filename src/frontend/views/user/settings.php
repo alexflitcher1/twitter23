@@ -10,7 +10,7 @@ $this->title = "Ваши настройки";
 						Настройки
 					</div>
 				</div>
-				<?php $form = ActiveForm::begin() ?>
+				<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 				<div class="set_str">
 					<div class="set_name">
 						Язык / Language
@@ -55,6 +55,14 @@ $this->title = "Ваши настройки";
 					</div>
 				</div>
 				<div class="set_str">
+					<div class="set_name">
+						Кастомный CSS профиля
+					</div>
+					<div class="set_input">
+						<?=$form->field($model, 'pcss')->fileInput()?>
+					</div>
+				</div>
+				<div class="set_str">
 					<div class="set_input">
 						<a href="/changepas">Сменить пароль</a>
 					</div>
@@ -84,8 +92,6 @@ $this->title = "Ваши настройки";
 				</div>
 			<?php ActiveForm::end(); ?>
 			</div>
-		</div>
-	</div>
 		</div>
 	</div>
 <?php

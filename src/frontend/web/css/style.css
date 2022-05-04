@@ -317,10 +317,10 @@ span {
 
 .post {
 	display: flex;
-	width: 547px;
-	border-bottom: 1px solid #ededed;
-	padding-bottom: 5px;
-	padding-top: 5px;
+    width: 527px;
+	padding: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
 }
 .post_ava img {
 	width: 50px;
@@ -334,6 +334,7 @@ span {
 .post_content {
 	margin-left: 10px;
 	word-break: break-all;
+	width: 466px;
 }
 .post_content_name {
 	font-weight: bold;
@@ -355,14 +356,15 @@ span {
 	-ms-hyphens: auto;
 }
 .post_content_img img {
-	width: 487px;
-	margin-top: 2px;
+	width: 467px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 .post_content_nav {
 	display: flex;
 	justify-content: space-between;
 	margin-top: 2px;
-	width: 487px;
+	width: 466px;
 }
 .post_content_post {
 	display: flex;
@@ -371,16 +373,16 @@ span {
 }
 .post_content_nfpost {
 	margin-left: 10px;
-    width: 427px;
+    width: 407px;
 }
 .post_content_nfpost .post_content_img img {
-		width: 427px;
+	width: 407px;
 }
 .post_content_nav_post {
 	display: flex;
     justify-content: space-between;
     margin-top: 2px;
-    width: 427px;
+    width: 407px;
 }
 
 
@@ -391,23 +393,23 @@ span {
 }
 .post_replay_top {
 	display: flex;
-	width: 547px;
-	padding-bottom: 5px;
-	padding-top: 5px;
+    width: 527px;
+	padding: 10px;
 }
 .post_replay_bottom {
 	display: flex;
-	width: 547px;
-	padding-bottom: 5px;
-	padding-top: 5px;
+    width: 527px;
+	padding: 10px;
+    padding-bottom: 0px;
 	margin-top: 5px;
+	border: none;
 }
 .post_replay_bl {
 	width: 4px;
     height: 18px;
-    background: #cdcdcd;
     margin-left: 22px;
-    border-radius: 2px;
+    background: #ccccd5;
+    margin-top: 10px;
 }
 .post_content_post_replay {
 	display: flex;
@@ -435,6 +437,31 @@ span {
 
 
 
+.post_replay_bottom.blackpost {
+	padding-bottom: 10px;
+}
+.blackpost {
+	background: #EEF;
+}
+.blackpost .post_ava img {
+	margin-top: 5px;
+}
+
+
+
+.like {
+	background: url(/res/like.png) no-repeat;
+    padding-right: 22px;
+    background-position-x: 100%;
+}
+.underline {
+	background: url(/res/liked.png) no-repeat;
+    padding-right: 22px;
+    background-position-x: 100%;
+}
+
+
+
 .page_feed_header {
 	display: flex;
 	justify-content: space-between;
@@ -458,11 +485,12 @@ span {
 
 
 .post_list {
-	display: flex;
-	width: 547px;
-	border-bottom: 1px solid #ededed;
-	padding-bottom: 5px;
-	padding-top: 5px;
+    display: flex;
+    width: 527px;
+    padding: 10px;
+}
+.post_list.blackpost .post_ava img {
+    margin-top: 2px;
 }
 .search {
 	display: flex;

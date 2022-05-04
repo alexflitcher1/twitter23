@@ -2,13 +2,13 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 $language = \Yii::$app->request->cookies->get("language");
-$this->title = \Yii::$app->params['locales']["$language"][34];
+$this->title = \Yii::$app->params['locales']["$language"][33];
 ?>
 <div class="page_body">
 	<div class="page_content">
 		<div class="page_feed_header">
 			<div class="page_feed_header_left">
-				<?=\Yii::$app->params['locales']["$language"][34]?>
+				<?=\Yii::$app->params['locales']["$language"][33]?>
 			</div>
 			<div class="page_feed_header_right"></div>
 		</div>
@@ -19,7 +19,7 @@ $this->title = \Yii::$app->params['locales']["$language"][34];
 				</div>
 				<div class="search_choose"></div>
 				<div class="search_bt">
-					<?=Html::submitButton(\Yii::$app->params['locales']["$language"][34], ['class' => 'btn btn-success'])?>
+					<?=Html::submitButton(\Yii::$app->params['locales']["$language"][33], ['class' => 'btn btn-success'])?>
 				</div>
 			</div>
 		<?php ActiveForm::end(); ?>

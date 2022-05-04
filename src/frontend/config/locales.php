@@ -90,7 +90,6 @@ return [
         'What are new?',
         'liked your tweet',
         'subscribed to you',
-        'mentioned you',
         'following you',
         'Following to reply',
         'replayed to you',
