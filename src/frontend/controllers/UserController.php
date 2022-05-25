@@ -18,6 +18,7 @@ use frontend\models\ChangePas;
 use frontend\models\MainSettings;
 use frontend\models\SiteSettings;
 use frontend\models\Notifications;
+use frontend\models\TelegramBotSend;
 use frontend\components\ActionBanFilter;
 use frontend\components\ActionTechFilter;
 
@@ -134,8 +135,12 @@ class UserController extends Controller
                         $imgname = ($imgname === true) ? null : "/" . $imgname;
                         $npost->img = $imgname;
                         $npost->likes = 0;
-                        if ($npost->save())
+                        if ($npost->save()) {
+                            $lastinsertid = Yii::$app->db->getLastInsertID();
+                            $telegram = new TelegramBotSend();
+                            $telegram->sendSubs($lastinsertid);
                             return $this->redirect("/" . $user->username);
+                        }
                     }
             }
             $cookiesresp = Yii::$app->response->cookies;
@@ -345,8 +350,12 @@ class UserController extends Controller
                     $imgname = ($imgname === true) ? null : "/" . $imgname;
                     $npost->img = $imgname;
                     $npost->likes = 0;
-                    if ($npost->save())
+                    if ($npost->save()) {
+                        $lastinsertid = Yii::$app->db->getLastInsertID();
+                        $telegram = new TelegramBotSend();
+                        $telegram->sendSubs($lastinsertid);
                         return $this->redirect("/me");
+                    }
                 }
         }
 
@@ -501,6 +510,9 @@ class UserController extends Controller
                 $npost->img = $imgname;
                 $npost->likes = 0;
                 if ($npost->save()) {
+                    $lastinsertid = Yii::$app->db->getLastInsertID();
+                    $telegram = new TelegramBotSend();
+                    $telegram->sendSubs($lastinsertid);
                     return $this->redirect("/me");
                 }
             }
@@ -613,8 +625,12 @@ class UserController extends Controller
                     $imgname = ($imgname === true) ? null : "/" . $imgname;
                     $npost->img = $imgname;
                     $npost->likes = 0;
-                    if ($npost->save())
+                    if ($npost->save()) {
+                        $lastinsertid = Yii::$app->db->getLastInsertID();
+                        $telegram = new TelegramBotSend();
+                        $telegram->sendSubs($lastinsertid);
                         return $this->redirect("/me");
+                    }
                 }
         }
         return $this->render('settingsprofile', ['model' => $model, 'user' => $user, 'posts' => $posts,
@@ -704,8 +720,12 @@ class UserController extends Controller
                 $imgname = ($imgname === true) ? null : "/" . $imgname;
                 $npost->img = $imgname;
                 $npost->likes = 0;
-                if ($npost->save())
+                if ($npost->save()) {
+                    $lastinsertid = Yii::$app->db->getLastInsertID();
+                    $telegram = new TelegramBotSend();
+                    $telegram->sendSubs($lastinsertid);
                     return $this->redirect("/me");
+                }
             }
     }
         $randpost['authordata'] = User::findOne(['id' => $randpost->userid]);
@@ -797,8 +817,12 @@ class UserController extends Controller
                     $imgname = ($imgname === true) ? null : "/" . $imgname;
                     $npost->img = $imgname;
                     $npost->likes = 0;
-                    if ($npost->save())
+                    if ($npost->save()) {
+                        $lastinsertid = Yii::$app->db->getLastInsertID();
+                        $telegram = new TelegramBotSend();
+                        $telegram->sendSubs($lastinsertid);
                         return $this->redirect("/me");
+                    }
                 }
         }
         return $this->render('subscribers', ['user' => $user, 'popular' => $popular, 'datasubs' => $datasubs,
@@ -901,8 +925,12 @@ class UserController extends Controller
                 $imgname = ($imgname === true) ? null : "/" . $imgname;
                 $npost->img = $imgname;
                 $npost->likes = 0;
-                if ($npost->save())
+                if ($npost->save()) {
+                    $lastinsertid = Yii::$app->db->getLastInsertID();
+                    $telegram = new TelegramBotSend();
+                    $telegram->sendSubs($lastinsertid);
                     return $this->redirect("/me");
+                }
             }
         }
         return $this->render('changepas', ['model' => $model, 'user' => $user, 'suber' => $suber,

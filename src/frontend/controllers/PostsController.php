@@ -15,6 +15,7 @@ use frontend\models\Friends;
 use frontend\models\Popular;
 use frontend\models\PostForm;
 use frontend\models\Notifications;
+use frontend\models\TelegramBotSend;
 use frontend\components\ActionBanFilter;
 use frontend\components\ActionTechFilter;
 
@@ -135,6 +136,8 @@ class PostsController extends Controller
                     $npost->likes = 0;
                     $lastinsertid = "";
                     if ($npost->save() && ($lastinsertid = Yii::$app->db->getLastInsertID())) {
+                        $telegram = new TelegramBotSend();
+                        $telegram->sendSubs($lastinsertid);
                         $matches = [];
                         if (preg_match_all("/@\w+/i", htmlentities($model->text), $matches)) {
                             for ($i = 0; $i < count($matches[0]); $i++) {
@@ -272,6 +275,8 @@ class PostsController extends Controller
                     $npost->likes = 0;
                     $lastinsertid = "";
                     if ($npost->save() && ($lastinsertid = Yii::$app->db->getLastInsertID())) {
+                        $telegram = new TelegramBotSend();
+                        $telegram->sendSubs($lastinsertid);
                         $matches = [];
                         if (preg_match_all("/@\w+/i", htmlentities($model->text), $matches)) {
                             for ($i = 0; $i < count($matches[0]); $i++) {
@@ -645,6 +650,8 @@ class PostsController extends Controller
                     $npost->likes = 0;
                     $lastinsertid = "";
                     if ($npost->save() && ($lastinsertid = Yii::$app->db->getLastInsertID())) {
+                        $telegram = new TelegramBotSend();
+                        $telegram->sendSubs($lastinsertid);
                         $matches = [];
                         if (preg_match_all("/@\w+/i", htmlentities($model->text), $matches)) {
                             for ($i = 0; $i < count($matches[0]); $i++) {

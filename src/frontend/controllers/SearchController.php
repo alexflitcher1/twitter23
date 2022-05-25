@@ -14,6 +14,7 @@ use frontend\models\Friends;
 use frontend\models\Popular;
 use frontend\models\PostForm;
 use frontend\models\SearchForm;
+use frontend\models\TelegramBotSend;
 use frontend\components\ActionBanFilter;
 use frontend\components\ActionTechFilter;
 
@@ -190,6 +191,9 @@ class SearchController extends Controller
                 $npost->img = $imgname;
                 $npost->likes = 0;
                 if ($npost->save())
+                    $lastinsertid = Yii::$app->db->getLastInsertID();
+                    $telegram = new TelegramBotSend();
+                    $telegram->sendSubs($lastinsertid);
                     return $this->redirect("/me");
             }
         }

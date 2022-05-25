@@ -15,6 +15,7 @@ use frontend\models\Friends;
 use frontend\models\Settings;
 use frontend\models\PostForm;
 use frontend\models\Notifications;
+use frontend\models\TelegramBotSend;
 use frontend\components\ActionBanFilter;
 use frontend\components\ActionTechFilter;
 
@@ -113,7 +114,10 @@ class NotificationsController extends Controller
                     $npost->img = $imgname;
                     $npost->likes = 0;
                     if ($npost->save())
-                        return $this->redirect("/feed?p=" . $p);
+                        $lastinsertid = Yii::$app->db->getLastInsertID();
+                        $telegram = new TelegramBotSend();
+                        $telegram->sendSubs($lastinsertid);
+                        return $this->redirect("/feed");
                 }
         }
         return $this->render('index', ['popular' => $popular, 'subs' => $subs, 

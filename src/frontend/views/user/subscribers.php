@@ -102,6 +102,7 @@ $this->title = "Подписчики";
          </div>
       </div>
    </div>
+</div>
 <?php
 $js = <<<JS
 var p = 1;
