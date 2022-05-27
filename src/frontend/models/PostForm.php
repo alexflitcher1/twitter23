@@ -16,6 +16,11 @@ class PostForm extends Model
      */
     public $img, $text;
 
+    public function afterValidate()
+    {
+        $this->text = htmlentities($this->text);
+    }
+
     public function rules()
     {
         return [
