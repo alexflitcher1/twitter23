@@ -395,8 +395,14 @@ class UserController extends Controller
     {
         // check auth
         $cookies = Yii::$app->request->cookies;
-        if ($cookies->get("auth"))
-            return $this->redirect("/feed");
+        if (!$cookies->get("auth")) {
+            $cookies = Yii::$app->response->cookies;
+            $cookies->add(new \yii\web\Cookie([
+                'name' => 'auth',
+                'expire' => time() + 31*24*60*60,
+                'value' => htmlentities("user"),
+            ]));
+        }
         $siteset = SiteSettings::find()->all();
         $model = new Signup();
         if ($model->load(Yii::$app->request->post()) 
