@@ -228,9 +228,14 @@ class UserController extends Controller
     {
         // check auth
         $cookies = Yii::$app->request->cookies;
-        if ($cookies->get("auth"))
-            return $this->redirect("/feed");
-        
+        if (!$cookies->get("auth")) {
+            $cookies = Yii::$app->response->cookies;
+            $cookies->add(new \yii\web\Cookie([
+                'name' => 'auth',
+                'expire' => time() + 31*24*60*60,
+                'value' => htmlentities("user"),
+            ]));
+        }
         $model = new Login();
         if ($model->load(Yii::$app->request->post()) 
             && $model->validate()) {
@@ -241,7 +246,7 @@ class UserController extends Controller
             if (Yii::$app->getSecurity()->validatePassword(
                 htmlentities(htmlentities($model->password)), $hash)) {
                 $cookies = Yii::$app->response->cookies;
-
+                $cookies->remove("auth");
                 $cookies->add(new \yii\web\Cookie([
                     'name' => 'auth',
                     'expire' => time() + 31*24*60*60,
